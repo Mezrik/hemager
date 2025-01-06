@@ -1,12 +1,11 @@
-# `desktop`
+# `common`
 
 > TODO: description
 
 ## Usage
 
 ```
-const desktop = require('desktop');
+const common = require('common');
 
 // TODO: DEMONSTRATE API
 ```
-# hemager

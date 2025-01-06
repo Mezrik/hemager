@@ -1,0 +1,19 @@
+{
+  "name": "common",
+  "version": "0.0.0",
+  "description": "> TODO: description",
+  "author": "Martin Petr <martin.petr.276@gmail.com>",
+  "homepage": "",
+  "license": "ISC",
+  "main": "lib/common.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "test": "node ./__tests__/common.test.js"
+  }
+}

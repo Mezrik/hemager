@@ -1,0 +1,346 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2024-06-23 21:19+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: cs\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
+
+#: src/features/competitions/helpers.ts:49
+msgid "-"
+msgstr ""
+
+#: src/app/routes/not-found.tsx:9
+msgid "404 - Not Found"
+msgstr "404 - Stránka nenalezena"
+
+#: src/components/layouts/app-shell/aside-menu.tsx:79
+msgid "Account"
+msgstr "Účet"
+
+#: src/app/routes/app/competitors/competitors.tsx:37
+msgid "Add competitor"
+msgstr "Přidat soutěžící"
+
+#: src/features/competitions/components/competition/overview.tsx:46
+msgid "Assign competitor"
+msgstr "Přiřadit soutěžící"
+
+#: src/features/competitors/components/participant/assign-participant.tsx:43
+msgid "Assign Competitor"
+msgstr "Přiřadit soutěžící"
+
+#: src/features/competitions/components/competition-card.tsx:63
+msgid "Average match time"
+msgstr "Průměrné trvání zápasu"
+
+#: src/features/competitions/components/competition/overview.tsx:20
+msgid "Basic information"
+msgstr "Základní informace"
+
+#: src/features/competitors/components/competitors-table.tsx:33
+msgid "Birthday"
+msgstr "Datum narození"
+
+#: src/features/competitions/components/create-competition.tsx:270
+#: src/features/competitors/components/participant/assign-participant.tsx:144
+#: src/features/competitors/components/participant/assign-participant.tsx:172
+#: src/features/matches/components/match-preview.tsx:114
+msgid "Cancel"
+msgstr "Zavřít"
+
+#: src/features/competitions/components/competition/overview.tsx:31
+#: src/features/competitions/components/create-competition.tsx:152
+msgid "Category"
+msgstr "Kategorie"
+
+#: src/features/competitors/components/competitors-table.tsx:24
+msgid "Club"
+msgstr "Klub"
+
+#: src/app/routes/app/competitions/competition.tsx:47
+msgid "Competition"
+msgstr "Soutěž"
+
+#: src/features/competitions/components/create-competition.tsx:113
+msgid "Competition name"
+msgstr "Název soutěže"
+
+#: src/features/competitions/api/create-competition.ts:15
+msgid "Competition name is required"
+msgstr "Název souteže je povinný"
+
+#: src/features/competitions/components/create-competition.tsx:132
+msgid "Competition type"
+msgstr "Typ soutěže"
+
+#: src/app/routes/app/competitions/competitions.tsx:26
+#: src/app/routes/app/competitions/competitions.tsx:33
+#: src/components/layouts/app-shell/aside-menu.tsx:18
+msgid "Competitions"
+msgstr "Soutěže"
+
+#: src/features/competitors/components/participant/assign-participant.tsx:97
+msgid "Competitor"
+msgstr "Soutěžící"
+
+#: src/app/routes/app/competitors/competitors.tsx:23
+#: src/app/routes/app/competitors/competitors.tsx:27
+#: src/app/routes/app/competitors/competitors.tsx:32
+#: src/components/layouts/app-shell/aside-menu.tsx:23
+msgid "Competitors"
+msgstr "Soutěžící"
+
+#: src/app/routes/app/competitions/competitions.tsx:38
+msgid "Create competition"
+msgstr "Vytvořit soutěž"
+
+#: src/features/competitions/components/create-competition.tsx:54
+msgid "Create Competition"
+msgstr "Vytvořit soutěž"
+
+#: src/app/routes/app/competitions/group.tsx:94
+#: src/features/competitors/components/participant/participants-list.tsx:37
+msgid "Czech Republic"
+msgstr "Česká republika"
+
+#: src/app/routes/app/dashboard.tsx:16
+msgid "Dashboard"
+msgstr ""
+
+#: src/features/competitions/components/create-competition.tsx:209
+msgid "Date of competition"
+msgstr "Datum konání"
+
+#: src/features/competitions/api/create-competition.ts:12
+msgid "Date of the competition is required"
+msgstr "Datum konání je povinné"
+
+#: src/features/competitions/components/competition/overview.tsx:35
+msgid "Date of the event"
+msgstr "Datum konání"
+
+#: src/app/routes/app/competitions/group.tsx:86
+#: src/features/competitors/components/participant/participants-list.tsx:29
+msgid "Deployment No."
+msgstr "Nasazení"
+
+#: src/app/routes/app/documentation.tsx:8
+#: src/components/layouts/app-shell/aside-menu.tsx:28
+msgid "Documentation"
+msgstr "Dokumentace"
+
+#: src/app/routes/app/competitions/competition.tsx:52
+msgid "Edit"
+msgstr "Upravit"
+
+#: src/app/routes/app/competitions/competition.tsx:66
+msgid "Elimination"
+msgstr "Eliminace"
+
+#: src/features/competitions/helpers.ts:47
+msgid "F"
+msgstr "Ž"
+
+#: src/features/competitions/components/competition/overview.tsx:26
+msgid "Federation"
+msgstr "Federace"
+
+#: src/features/competitions/components/create-competition.tsx:125
+msgid "Federation name"
+msgstr "Jméno federace"
+
+#: src/features/competitions/api/create-competition.ts:13
+msgid "Federation name is required"
+msgstr "Jméno federace je povinné"
+
+#: src/features/competitions/components/competition/overview.tsx:33
+#: src/features/competitions/components/create-competition.tsx:138
+#: src/features/competitors/components/competitors-table.tsx:27
+msgid "Gender"
+msgstr "Pohlaví"
+
+#: src/app/routes/not-found.tsx:16
+msgid "Go to Home"
+msgstr "Jít domů"
+
+#: src/app/routes/app/competitions/group.tsx:77
+msgid "Group"
+msgstr "Skupina"
+
+#: src/app/routes/app/competitions/competition.tsx:63
+msgid "Groups"
+msgstr "Skupiny"
+
+#: src/components/layouts/app-shell/aside-menu.tsx:78
+msgid "Help"
+msgstr "Pomoc"
+
+#: src/features/competitions/helpers.ts:10
+msgid "International"
+msgstr "Mezinárodní"
+
+#: src/app/routes/app/settings.tsx:24
+msgid "Language"
+msgstr "Jazyk"
+
+#: src/features/competitors/components/competitors-table.tsx:30
+msgid "License"
+msgstr "Licence"
+
+#: src/features/competitions/components/competition/overview.tsx:44
+msgid "List of competitors"
+msgstr "Seznam soutěžících"
+
+#: src/features/competitions/helpers.ts:45
+msgid "M"
+msgstr "M"
+
+#: src/features/matches/components/match-preview.tsx:93
+#: src/features/matches/components/match-preview.tsx:108
+msgid "Match detail"
+msgstr "Detail zápasu"
+
+#: src/features/competitions/components/competition-card.tsx:62
+msgid "Matches"
+msgstr "Zápasy"
+
+#: src/features/competitions/helpers.ts:19
+msgid "Men"
+msgstr "Muži"
+
+#: src/features/competitions/helpers.ts:23
+msgid "Mixed"
+msgstr "Smíšené"
+
+#: src/app/routes/app/competitions/group.tsx:85
+#: src/features/competitors/components/competitors-table.tsx:21
+#: src/features/competitors/components/participant/participants-list.tsx:28
+msgid "Name"
+msgstr "Jméno"
+
+#: src/app/routes/app/competitions/group.tsx:84
+#: src/features/competitors/components/participant/participants-list.tsx:27
+msgid "Nation"
+msgstr "Národnost"
+
+#: src/features/competitions/helpers.ts:8
+msgid "National"
+msgstr "Národní"
+
+#: src/features/competitions/components/competition/overview.tsx:25
+msgid "Organizer"
+msgstr "Organizátor"
+
+#: src/features/competitions/components/create-competition.tsx:119
+msgid "Organizer name"
+msgstr "Jméno organizátora"
+
+#: src/features/competitions/api/create-competition.ts:16
+msgid "Organizer name is required"
+msgstr "Jméno organizátora je povinné"
+
+#: src/app/routes/app/competitions/competition.tsx:60
+msgid "Overview"
+msgstr "Přehled"
+
+#: src/features/competitions/components/competition-card.tsx:64
+msgid "Participants"
+msgstr "Účastníci"
+
+#: src/features/competitions/components/create-competition.tsx:225
+msgid "Pick a date"
+msgstr "Vyberte datum"
+
+#: src/features/competitions/components/competition/groups.tsx:32
+msgid "Piste: {0}"
+msgstr "Planš: {0}"
+
+#: src/app/routes/app/competitions/group.tsx:87
+#: src/features/competitors/components/participant/participants-list.tsx:30
+msgid "Points"
+msgstr "Body"
+
+#: src/app/routes/app/dashboard.tsx:20
+msgid "Recent competitions"
+msgstr "Nedávné soutěže"
+
+#: src/app/routes/app/competitions/competition.tsx:69
+msgid "Referees"
+msgstr "Rozhodčí"
+
+#: src/app/routes/app/competitions/group.tsx:109
+msgid "Round 1"
+msgstr "Kolo 1"
+
+#: src/features/competitions/components/competition/overview.tsx:28
+msgid "Scope of competition"
+msgstr "Působnost souteže"
+
+#: src/features/competitors/components/participant/assign-participant.tsx:102
+msgid "Select a competitor"
+msgstr "Vyberte soutěžící"
+
+#: src/app/routes/app/settings.tsx:33
+msgid "Select a language"
+msgstr "Vyberte jazyk"
+
+#: src/features/competitions/api/create-competition.ts:10
+msgid "Select correct category"
+msgstr "Vyberte správnou kategorii"
+
+#: src/features/competitors/api/assign-participant.ts:9
+msgid "Select correct competition"
+msgstr "Vyberte správnou soutěž"
+
+#: src/features/competitors/api/assign-participant.ts:10
+msgid "Select correct competitor"
+msgstr "Vyberte správného soutěžícího"
+
+#: src/features/competitions/api/create-competition.ts:17
+msgid "Select correct weapon"
+msgstr "Vyberte správnou zbraň"
+
+#: src/app/routes/app/settings.tsx:21
+#: src/components/layouts/app-shell/aside-menu.tsx:33
+msgid "Settings"
+msgstr "Nastavení"
+
+#: src/app/routes/not-found.tsx:12
+msgid "Sorry, the page you are looking for does not exist."
+msgstr "Omlouváme se, stránka kterou hledáte neexistuje."
+
+#: src/features/competitions/components/create-competition.tsx:266
+#: src/features/competitions/components/create-competition.tsx:291
+#: src/features/competitors/components/participant/assign-participant.tsx:140
+#: src/features/competitors/components/participant/assign-participant.tsx:168
+msgid "Submit"
+msgstr "Odeslat"
+
+#: src/app/routes/app/competitors/competitors.tsx:44
+msgid "Type here to search"
+msgstr "Vyhledejte zde"
+
+#: src/features/competitions/components/recent-competitions.tsx:28
+msgid "View"
+msgstr "Zobrazit"
+
+#: src/features/matches/components/match-preview.tsx:58
+msgid "vs"
+msgstr ""
+
+#: src/features/competitions/components/competition/overview.tsx:32
+#: src/features/competitions/components/create-competition.tsx:181
+msgid "Weapon"
+msgstr "Zbraň"
+
+#: src/features/competitions/helpers.ts:21
+msgid "Women"
+msgstr "Ženy"

@@ -1,0 +1,346 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2024-06-23 21:19+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
+
+#: src/features/competitions/helpers.ts:49
+msgid "-"
+msgstr ""
+
+#: src/app/routes/not-found.tsx:9
+msgid "404 - Not Found"
+msgstr ""
+
+#: src/components/layouts/app-shell/aside-menu.tsx:79
+msgid "Account"
+msgstr ""
+
+#: src/app/routes/app/competitors/competitors.tsx:37
+msgid "Add competitor"
+msgstr ""
+
+#: src/features/competitions/components/competition/overview.tsx:46
+msgid "Assign competitor"
+msgstr ""
+
+#: src/features/competitors/components/participant/assign-participant.tsx:43
+msgid "Assign Competitor"
+msgstr ""
+
+#: src/features/competitions/components/competition-card.tsx:63
+msgid "Average match time"
+msgstr ""
+
+#: src/features/competitions/components/competition/overview.tsx:20
+msgid "Basic information"
+msgstr ""
+
+#: src/features/competitors/components/competitors-table.tsx:33
+msgid "Birthday"
+msgstr ""
+
+#: src/features/competitions/components/create-competition.tsx:270
+#: src/features/competitors/components/participant/assign-participant.tsx:144
+#: src/features/competitors/components/participant/assign-participant.tsx:172
+#: src/features/matches/components/match-preview.tsx:114
+msgid "Cancel"
+msgstr ""
+
+#: src/features/competitions/components/competition/overview.tsx:31
+#: src/features/competitions/components/create-competition.tsx:152
+msgid "Category"
+msgstr ""
+
+#: src/features/competitors/components/competitors-table.tsx:24
+msgid "Club"
+msgstr ""
+
+#: src/app/routes/app/competitions/competition.tsx:47
+msgid "Competition"
+msgstr ""
+
+#: src/features/competitions/components/create-competition.tsx:113
+msgid "Competition name"
+msgstr ""
+
+#: src/features/competitions/api/create-competition.ts:15
+msgid "Competition name is required"
+msgstr ""
+
+#: src/features/competitions/components/create-competition.tsx:132
+msgid "Competition type"
+msgstr ""
+
+#: src/app/routes/app/competitions/competitions.tsx:26
+#: src/app/routes/app/competitions/competitions.tsx:33
+#: src/components/layouts/app-shell/aside-menu.tsx:18
+msgid "Competitions"
+msgstr ""
+
+#: src/features/competitors/components/participant/assign-participant.tsx:97
+msgid "Competitor"
+msgstr ""
+
+#: src/app/routes/app/competitors/competitors.tsx:23
+#: src/app/routes/app/competitors/competitors.tsx:27
+#: src/app/routes/app/competitors/competitors.tsx:32
+#: src/components/layouts/app-shell/aside-menu.tsx:23
+msgid "Competitors"
+msgstr ""
+
+#: src/app/routes/app/competitions/competitions.tsx:38
+msgid "Create competition"
+msgstr ""
+
+#: src/features/competitions/components/create-competition.tsx:54
+msgid "Create Competition"
+msgstr ""
+
+#: src/app/routes/app/competitions/group.tsx:94
+#: src/features/competitors/components/participant/participants-list.tsx:37
+msgid "Czech Republic"
+msgstr ""
+
+#: src/app/routes/app/dashboard.tsx:16
+msgid "Dashboard"
+msgstr ""
+
+#: src/features/competitions/components/create-competition.tsx:209
+msgid "Date of competition"
+msgstr ""
+
+#: src/features/competitions/api/create-competition.ts:12
+msgid "Date of the competition is required"
+msgstr ""
+
+#: src/features/competitions/components/competition/overview.tsx:35
+msgid "Date of the event"
+msgstr ""
+
+#: src/app/routes/app/competitions/group.tsx:86
+#: src/features/competitors/components/participant/participants-list.tsx:29
+msgid "Deployment No."
+msgstr ""
+
+#: src/app/routes/app/documentation.tsx:8
+#: src/components/layouts/app-shell/aside-menu.tsx:28
+msgid "Documentation"
+msgstr ""
+
+#: src/app/routes/app/competitions/competition.tsx:52
+msgid "Edit"
+msgstr ""
+
+#: src/app/routes/app/competitions/competition.tsx:66
+msgid "Elimination"
+msgstr ""
+
+#: src/features/competitions/helpers.ts:47
+msgid "F"
+msgstr ""
+
+#: src/features/competitions/components/competition/overview.tsx:26
+msgid "Federation"
+msgstr ""
+
+#: src/features/competitions/components/create-competition.tsx:125
+msgid "Federation name"
+msgstr ""
+
+#: src/features/competitions/api/create-competition.ts:13
+msgid "Federation name is required"
+msgstr ""
+
+#: src/features/competitions/components/competition/overview.tsx:33
+#: src/features/competitions/components/create-competition.tsx:138
+#: src/features/competitors/components/competitors-table.tsx:27
+msgid "Gender"
+msgstr ""
+
+#: src/app/routes/not-found.tsx:16
+msgid "Go to Home"
+msgstr ""
+
+#: src/app/routes/app/competitions/group.tsx:77
+msgid "Group"
+msgstr ""
+
+#: src/app/routes/app/competitions/competition.tsx:63
+msgid "Groups"
+msgstr ""
+
+#: src/components/layouts/app-shell/aside-menu.tsx:78
+msgid "Help"
+msgstr ""
+
+#: src/features/competitions/helpers.ts:10
+msgid "International"
+msgstr ""
+
+#: src/app/routes/app/settings.tsx:24
+msgid "Language"
+msgstr ""
+
+#: src/features/competitors/components/competitors-table.tsx:30
+msgid "License"
+msgstr ""
+
+#: src/features/competitions/components/competition/overview.tsx:44
+msgid "List of competitors"
+msgstr ""
+
+#: src/features/competitions/helpers.ts:45
+msgid "M"
+msgstr ""
+
+#: src/features/matches/components/match-preview.tsx:93
+#: src/features/matches/components/match-preview.tsx:108
+msgid "Match detail"
+msgstr ""
+
+#: src/features/competitions/components/competition-card.tsx:62
+msgid "Matches"
+msgstr ""
+
+#: src/features/competitions/helpers.ts:19
+msgid "Men"
+msgstr ""
+
+#: src/features/competitions/helpers.ts:23
+msgid "Mixed"
+msgstr ""
+
+#: src/app/routes/app/competitions/group.tsx:85
+#: src/features/competitors/components/competitors-table.tsx:21
+#: src/features/competitors/components/participant/participants-list.tsx:28
+msgid "Name"
+msgstr ""
+
+#: src/app/routes/app/competitions/group.tsx:84
+#: src/features/competitors/components/participant/participants-list.tsx:27
+msgid "Nation"
+msgstr ""
+
+#: src/features/competitions/helpers.ts:8
+msgid "National"
+msgstr ""
+
+#: src/features/competitions/components/competition/overview.tsx:25
+msgid "Organizer"
+msgstr ""
+
+#: src/features/competitions/components/create-competition.tsx:119
+msgid "Organizer name"
+msgstr ""
+
+#: src/features/competitions/api/create-competition.ts:16
+msgid "Organizer name is required"
+msgstr ""
+
+#: src/app/routes/app/competitions/competition.tsx:60
+msgid "Overview"
+msgstr ""
+
+#: src/features/competitions/components/competition-card.tsx:64
+msgid "Participants"
+msgstr ""
+
+#: src/features/competitions/components/create-competition.tsx:225
+msgid "Pick a date"
+msgstr ""
+
+#: src/features/competitions/components/competition/groups.tsx:32
+msgid "Piste: {0}"
+msgstr ""
+
+#: src/app/routes/app/competitions/group.tsx:87
+#: src/features/competitors/components/participant/participants-list.tsx:30
+msgid "Points"
+msgstr ""
+
+#: src/app/routes/app/dashboard.tsx:20
+msgid "Recent competitions"
+msgstr ""
+
+#: src/app/routes/app/competitions/competition.tsx:69
+msgid "Referees"
+msgstr ""
+
+#: src/app/routes/app/competitions/group.tsx:109
+msgid "Round 1"
+msgstr ""
+
+#: src/features/competitions/components/competition/overview.tsx:28
+msgid "Scope of competition"
+msgstr ""
+
+#: src/features/competitors/components/participant/assign-participant.tsx:102
+msgid "Select a competitor"
+msgstr ""
+
+#: src/app/routes/app/settings.tsx:33
+msgid "Select a language"
+msgstr ""
+
+#: src/features/competitions/api/create-competition.ts:10
+msgid "Select correct category"
+msgstr ""
+
+#: src/features/competitors/api/assign-participant.ts:9
+msgid "Select correct competition"
+msgstr ""
+
+#: src/features/competitors/api/assign-participant.ts:10
+msgid "Select correct competitor"
+msgstr ""
+
+#: src/features/competitions/api/create-competition.ts:17
+msgid "Select correct weapon"
+msgstr ""
+
+#: src/app/routes/app/settings.tsx:21
+#: src/components/layouts/app-shell/aside-menu.tsx:33
+msgid "Settings"
+msgstr ""
+
+#: src/app/routes/not-found.tsx:12
+msgid "Sorry, the page you are looking for does not exist."
+msgstr ""
+
+#: src/features/competitions/components/create-competition.tsx:266
+#: src/features/competitions/components/create-competition.tsx:291
+#: src/features/competitors/components/participant/assign-participant.tsx:140
+#: src/features/competitors/components/participant/assign-participant.tsx:168
+msgid "Submit"
+msgstr ""
+
+#: src/app/routes/app/competitors/competitors.tsx:44
+msgid "Type here to search"
+msgstr ""
+
+#: src/features/competitions/components/recent-competitions.tsx:28
+msgid "View"
+msgstr ""
+
+#: src/features/matches/components/match-preview.tsx:58
+msgid "vs"
+msgstr ""
+
+#: src/features/competitions/components/competition/overview.tsx:32
+#: src/features/competitions/components/create-competition.tsx:181
+msgid "Weapon"
+msgstr ""
+
+#: src/features/competitions/helpers.ts:21
+msgid "Women"
+msgstr ""
