@@ -1,0 +1,9 @@
+{
+  "targetDefaults": {
+    "dev:desktop": {
+      "dependsOn": [
+        "^dev:desktop"
+      ]
+    }
+  }
+}
