@@ -1,5 +1,5 @@
 {
-  "name": "common",
+  "name": "app",
   "version": "0.0.0",
   "description": "> TODO: description",
   "author": "Martin Petr <martin.petr.276@gmail.com>",
@@ -15,5 +15,8 @@
   ],
   "scripts": {
     "test": "node ./__tests__/common.test.js"
+  },
+  "dependencies": {
+    "uuid": "^11.0.5"
   }
 }
