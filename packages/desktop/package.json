@@ -19,7 +19,7 @@
     "transpile": "tsc --project tsconfig.json"
   },
   "dependencies": {
-    "app": "*",
+    "core": "*",
     "ui": "*"
   },
   "devDependencies": {

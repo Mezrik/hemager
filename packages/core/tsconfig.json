@@ -2,9 +2,13 @@
   "compilerOptions": {
     "strict": true,
     "target": "ESNext",
-    "module": "NodeNext",
+    "module": "CommonJS",
     "outDir": "dist",
     "skipLibCheck": true,
+    "strictPropertyInitialization": false,
+    "experimentalDecorators": true,
+    "noImplicitAny": true,
+    "esModuleInterop": true,
 
     "baseUrl": ".",
     "paths": {
