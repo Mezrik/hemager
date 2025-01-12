@@ -3,4 +3,9 @@ export const TYPES = {
   CommandBus: Symbol('CommandBus'),
   QueryBus: Symbol('QueryBus'),
   Logger: Symbol('Logger'),
+
+  CommandHandler: Symbol('CommandHandler'),
+  QueryHandler: Symbol('QueryHandler'),
+
+  CompetitionRepository: Symbol('CompetitionRepository'),
 };

@@ -20,6 +20,7 @@
     "build": "tsc"
   },
   "dependencies": {
+    "class-transformer": "^0.5.1",
     "inversify": "^6.2.1",
     "nanoid": "^5.0.9",
     "sequelize": "^6.37.5",

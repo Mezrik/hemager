@@ -1,11 +1,11 @@
 import { Entity, EntityProperties } from 'common/entity';
 
-enum CompetitionTypeEnum {
+export enum CompetitionTypeEnum {
   national = 'national',
   international = 'international',
 }
 
-enum GenderEnum {
+export enum GenderEnum {
   male = 'male',
   female = 'female',
   mixed = 'mixed',
@@ -23,7 +23,7 @@ type CompetitionProperties = {
 export class Competition extends Entity {
   constructor(
     private _properties: CompetitionProperties,
-    _entityProperties: EntityProperties,
+    _entityProperties?: EntityProperties,
   ) {
     super(_entityProperties);
   }

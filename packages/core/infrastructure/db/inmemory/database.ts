@@ -1,5 +1,5 @@
 import { Sequelize } from 'sequelize-typescript';
-import { Competition } from './models/competition.models';
+import { Competition } from './models/competition.model';
 
 export const database = new Sequelize({
   dialect: 'sqlite',
