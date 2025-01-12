@@ -30,7 +30,7 @@ export class BaseRepository<T extends Model, U> implements Repository<U> {
     await this._dbRepo.update(item, { where: { id } });
   }
 
-  destroy(id: any): Promise<U> {
-    throw new Error('Method not implemented.');
+  async destroy(id: any): Promise<void> {
+    await this._dbRepo.destroy({ where: { id } });
   }
 }

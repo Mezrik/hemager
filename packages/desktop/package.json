@@ -7,13 +7,6 @@
   "license": "ISC",
   "main": "dist/main.js",
   "type": "module",
-  "directories": {
-    "lib": "lib",
-    "test": "__tests__"
-  },
-  "files": [
-    "lib"
-  ],
   "scripts": {
     "dev:desktop": "cross-env NODE_ENV=development electron .",
     "transpile": "tsc --project tsconfig.json"

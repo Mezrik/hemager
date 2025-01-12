@@ -3,7 +3,7 @@ import { Competition } from './models/competition.model';
 
 export const database = new Sequelize({
   dialect: 'sqlite',
-  storage: ':memory:',
+  storage: __dirname + '/database.db', //':memory:',
   models: [__dirname + '/models/**/*.model.ts'],
   repositoryMode: true,
 });

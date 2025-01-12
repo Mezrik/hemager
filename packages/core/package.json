@@ -5,15 +5,9 @@
   "author": "Martin Petr <martin.petr.276@gmail.com>",
   "homepage": "",
   "license": "ISC",
-  "main": "lib/common.js",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "type": "module",
-  "directories": {
-    "lib": "lib",
-    "test": "__tests__"
-  },
-  "files": [
-    "lib"
-  ],
   "scripts": {
     "dev": "node --inspect=5859 -r ts-node/register ./src/server.ts",
     "dev:watch": "nodemon",

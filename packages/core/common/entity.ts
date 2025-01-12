@@ -1,12 +1,7 @@
 import { nanoid } from 'nanoid';
+import { Entity as EntityInterface, EntityProperties } from './interfaces/entity';
 
-type EntityProperties = {
-  id: string;
-  createdAt: Date;
-  updatedAt?: Date;
-};
-
-class Entity {
+class Entity implements EntityInterface {
   constructor(
     private _entityProperties: EntityProperties = {
       id: nanoid(),
