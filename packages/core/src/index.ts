@@ -13,25 +13,20 @@ import {
   QueryHandler,
 } from '@/common/interfaces';
 
-import {
-  CreateCompetitionCommand,
-  CreateCompetitionCommandHandler,
-} from '@/application/command/create-competition';
-import { CompetitionTypeEnum, GenderEnum } from '@/domain/competition/competition';
-import { GetAllCompetitionsQueryHandler } from './application/query/get-all-competitions';
+import { applicationModule } from './application/module';
 
-export const init = async () => {
+export * from '@/api';
+
+export const initialize = async () => {
   const container = new Container();
 
   await container.loadAsync(infrastructureModule);
 
+  await container.loadAsync(applicationModule);
+
   const logger = createLogger('hemager-application');
 
   container.bind<winston.Logger>(TYPES.Logger).toConstantValue(logger);
-
-  container.bind<QueryHandler>(TYPES.QueryHandler).to(GetAllCompetitionsQueryHandler);
-
-  container.bind<CommandHandler>(TYPES.CommandHandler).to(CreateCompetitionCommandHandler);
 
   const commandBus = container.get<CommandBus>(TYPES.CommandBus);
   container
@@ -48,19 +43,4 @@ export const init = async () => {
     });
 
   return container;
-};
-
-export const createCompetitionHandler = async (container: Container) => {
-  const bus = container.get<CommandBus>(TYPES.CommandBus);
-
-  await bus.send(
-    new CreateCompetitionCommand(
-      'test',
-      'test',
-      'test',
-      CompetitionTypeEnum.national,
-      GenderEnum.female,
-      new Date(),
-    ),
-  );
 };

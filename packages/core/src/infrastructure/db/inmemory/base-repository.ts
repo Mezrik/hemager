@@ -1,4 +1,4 @@
-import { plainToInstance } from 'class-transformer';
+import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { Repository } from '@/common/interfaces';
 import { Attributes } from 'sequelize';
 import { Model, Sequelize, Repository as DbRepository } from 'sequelize-typescript';
@@ -23,8 +23,12 @@ export class BaseRepository<T extends Model, U extends Entity> implements Reposi
       .then((items) => items.map((item) => plainToInstance(this._entity, item)));
   }
 
-  async create(id: any, item: Attributes<T>): Promise<U> {
-    return await this._dbRepo.create(item).then((item) => plainToInstance(this._entity, item));
+  async create(id: any, item: U): Promise<U> {
+    const attributes = instanceToPlain(item) as Attributes<T>;
+
+    return await this._dbRepo
+      .create(attributes)
+      .then((item) => plainToInstance(this._entity, item));
   }
 
   async update(id: any, item: U): Promise<void> {

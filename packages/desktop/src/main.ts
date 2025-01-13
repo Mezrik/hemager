@@ -1,9 +1,6 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
-import { init, createCompetitionHandler } from '@hemager/core';
-import path from 'path';
+import { initialize, constructAPI } from '@hemager/core';
 import { getPreloadPath, isDev } from './util.js';
-
-type Test = string;
 
 app.on('ready', async () => {
   const win = new BrowserWindow({
@@ -14,16 +11,18 @@ app.on('ready', async () => {
     },
   });
 
+  const application = await initialize();
+  const { invoke, paths } = constructAPI(application);
+
   win.loadURL('http://localhost:8080');
+
   // if (isDev()) {
   //   win.loadURL('http://localhost:8080');
   // } else {
   //   win.loadFile(path.join(app.getAppPath(), '..', 'ui', 'dist', 'index.html'));
   // }
 
-  const application = await init();
-
-  ipcMain.handle('create-competition', (event) => {
-    return createCompetitionHandler(application);
+  paths.forEach((event) => {
+    ipcMain.on(event, (e, data) => invoke(event, data));
   });
 });

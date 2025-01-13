@@ -8,15 +8,17 @@
   "main": "dist/main.js",
   "type": "module",
   "scripts": {
-    "dev:desktop": "cross-env NODE_ENV=development electron .",
-    "transpile": "tsc --project tsconfig.json"
+    "dev": "cross-env NODE_ENV=development electron .",
+    "transpile": "tsc --project tsconfig.json",
+    "dev:desktop": "npm run transpile && cross-env NODE_ENV=development electron ."
   },
   "dependencies": {
     "@hemager/core": "0.0.0",
-    "@hemager/ui": "0.0.0"
+    "@hemager/ui": "0.0.0",
+    "chokidar": "^4.0.3"
   },
   "devDependencies": {
-    "electron": "^33.3.1",
-    "cross-env": "^7.0.3"
+    "cross-env": "^7.0.3",
+    "electron": "^33.3.1"
   }
 }
