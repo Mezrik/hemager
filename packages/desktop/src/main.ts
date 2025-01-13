@@ -1,7 +1,7 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
-import { init } from 'core';
+import { init, createCompetitionHandler } from '@hemager/core';
 import path from 'path';
-import { isDev } from './util.js';
+import { getPreloadPath, isDev } from './util.js';
 
 type Test = string;
 
@@ -10,8 +10,7 @@ app.on('ready', async () => {
     width: 800,
     height: 600,
     webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false,
+      preload: getPreloadPath(),
     },
   });
 
@@ -24,5 +23,7 @@ app.on('ready', async () => {
 
   const application = await init();
 
-  ipcMain.handle('create-competition', (event) => {});
+  ipcMain.handle('create-competition', (event) => {
+    return createCompetitionHandler(application);
+  });
 });

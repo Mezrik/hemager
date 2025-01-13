@@ -1,4 +1,5 @@
 import { BasicPageLayout } from '@/components/layouts';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { getCompetitionsQueryOptions } from '@/features/competitions/api/get-competitions';
 import { RecentCompetitions } from '@/features/competitions/components/recent-competitions';
@@ -18,11 +19,11 @@ export const dashboardLoader = (queryClient: QueryClient) => async () => {
 export const DashboardRoute = () => {
   const { _ } = useLingui();
 
-  useEffect(() => {
-    window.electron.createCompetition();
-  }, []);
-
-  return <div>test</div>;
+  return (
+    <div>
+      <Button onClick={() => (window as any).electron?.createCompetition()}>Click me</Button>
+    </div>
+  );
   // return (
   //   <BasicPageLayout title={_(msg`Dashboard`)}>
   //     <Card className="col-span-3">

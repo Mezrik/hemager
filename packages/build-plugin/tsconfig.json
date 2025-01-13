@@ -2,13 +2,9 @@
   "compilerOptions": {
     "strict": true,
     "target": "ESNext",
+    "lib": ["ESNext"],
     "module": "ESNext",
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "noEmit": true,
-    "useDefineForClassFields": false,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
+    "moduleResolution": "node",
     "outDir": "dist",
     "skipLibCheck": true,
     "strictPropertyInitialization": false,
@@ -16,11 +12,7 @@
     "noImplicitAny": true,
     "esModuleInterop": true,
     "declaration": true,
-    "declarationMap": true,
-
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["src/*"]
-    }
-  }
+    "declarationMap": true
+  },
+  "include": ["src"]
 }

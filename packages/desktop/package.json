@@ -1,5 +1,5 @@
 {
-  "name": "desktop",
+  "name": "@hemager/desktop",
   "version": "1.0.0",
   "description": "> TODO: description",
   "author": "Martin Petr <martin.petr.276@gmail.com>",
@@ -12,8 +12,8 @@
     "transpile": "tsc --project tsconfig.json"
   },
   "dependencies": {
-    "core": "*",
-    "ui": "*"
+    "@hemager/core": "0.0.0",
+    "@hemager/ui": "0.0.0"
   },
   "devDependencies": {
     "electron": "^33.3.1",

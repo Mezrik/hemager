@@ -2,7 +2,10 @@
   "name": "root",
   "private": true,
   "workspaces": [
-    "packages/*"
+    "packages/core",
+    "packages/desktop",
+    "packages/ui",
+    "packages/build-plugin"
   ],
   "dependencies": {},
   "devDependencies": {
