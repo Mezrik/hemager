@@ -1,4 +1,5 @@
-import { Column, DataType, Model, PrimaryKey, Table } from 'sequelize-typescript';
+import { ContestTypeEnum, GenderEnum } from '@/common/enums';
+import { AllowNull, Column, DataType, Model, PrimaryKey, Table } from 'sequelize-typescript';
 
 @Table({ tableName: 'Contest', modelName: 'Contest' })
 export class Contest extends Model {
@@ -9,17 +10,21 @@ export class Contest extends Model {
   @Column(DataType.TEXT)
   name: string;
 
+  @AllowNull
   @Column(DataType.TEXT)
-  organizerName: string;
+  organizerName?: string;
 
+  @AllowNull
   @Column(DataType.TEXT)
-  federationName: string;
+  federationName?: string;
 
-  @Column(DataType.TEXT)
-  contestType: string;
+  @AllowNull
+  @Column(DataType.ENUM('national', 'international'))
+  contestType?: ContestTypeEnum;
 
-  @Column(DataType.TEXT)
-  gender: string;
+  @AllowNull
+  @Column(DataType.ENUM('male', 'female', 'mixed'))
+  gender?: GenderEnum;
 
   @Column(DataType.DATE)
   date: Date;

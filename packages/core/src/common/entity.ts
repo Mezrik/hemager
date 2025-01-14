@@ -22,4 +22,20 @@ class Entity implements EntityInterface {
   }
 }
 
-export { Entity, type EntityProperties };
+class NoIdEntity implements EntityInterface {
+  constructor(
+    private _entityProperties: Omit<EntityProperties, 'id'> = {
+      createdAt: new Date(),
+    },
+  ) {}
+
+  public get createdAt() {
+    return this._entityProperties.createdAt;
+  }
+
+  public get updatedAt() {
+    return this._entityProperties.updatedAt;
+  }
+}
+
+export { Entity, NoIdEntity, type EntityProperties };

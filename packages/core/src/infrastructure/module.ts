@@ -9,7 +9,7 @@ import { TYPES } from '../di-types.js';
 import { CommandBus } from './command-bus/index.js';
 import { QueryBus } from './query-bus/index.js';
 import { database } from './db/inmemory/database.js';
-import { ContestRepository as ContestRepositoryInterface } from '@/domain/contest/contest-repository';
+import { ContestRepository as ContestRepositoryInterface } from '@/domain/contest/contest-repository.js';
 import { ContestRepository } from '@/infrastructure/db/inmemory/repositories/contest-repository';
 
 export const infrastructureModule = new AsyncContainerModule(async (bind: interfaces.Bind) => {

@@ -5,6 +5,8 @@ import { CommandBus, QueryBus } from '@/common/interfaces';
 
 export * from '@/api/dto/contest';
 
+export * from '@/common/enums';
+
 type FunctionPropertyNames<T> = {
   [K in Extract<keyof T, string>]: T[K] extends Function ? K : never;
 }[Extract<keyof T, string>];

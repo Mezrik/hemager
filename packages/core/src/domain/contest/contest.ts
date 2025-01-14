@@ -1,23 +1,23 @@
 import { Entity, EntityProperties } from '@/common/entity';
-
-export enum ContestTypeEnum {
-  national = 'national',
-  international = 'international',
-}
-
-export enum GenderEnum {
-  male = 'male',
-  female = 'female',
-  mixed = 'mixed',
-}
+import { Weapon } from './weapon';
+import { ContestCategory } from './category';
+import { ContestTypeEnum, DeploymentCriteria, GenderEnum } from '@/common/enums';
 
 type ContestProperties = {
   name: string;
-  organizerName: string;
-  federationName: string;
-  contestType: ContestTypeEnum;
-  gender: GenderEnum;
   date: Date;
+
+  organizerName?: string;
+  federationName?: string;
+  contestType?: ContestTypeEnum;
+  gender?: GenderEnum;
+  weapon?: Weapon;
+  category?: ContestCategory;
+
+  expectedParticipants?: number;
+  deploymentCriteria?: DeploymentCriteria[];
+  groupHits?: number;
+  eliminationHits?: number;
 };
 
 export class Contest extends Entity {

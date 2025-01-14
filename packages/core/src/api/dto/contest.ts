@@ -1,13 +1,4 @@
-export enum ContestTypeEnum {
-  national = 'national',
-  international = 'international',
-}
-
-export enum GenderEnum {
-  male = 'male',
-  female = 'female',
-  mixed = 'mixed',
-}
+import { ContestTypeEnum, GenderEnum } from '@/common/enums';
 
 export type CreateContestInput = {
   name: string;
