@@ -1,5 +1,5 @@
 import { Plugin } from "vite";
-import dts from "vite-plugin-dts";
+import dts, { PluginOptions as DtsPluginOptions } from "vite-plugin-dts";
 
 import { dependencies } from "./dependencies";
 import { config } from "./default-config";
@@ -8,6 +8,7 @@ import { shims } from "./shims";
 export interface BuildOptions {
   entry?: string | string[];
   formats?: ("es" | "cjs")[];
+  dts?: DtsPluginOptions;
 }
 
 export async function node(options?: BuildOptions): Promise<Plugin[]> {
@@ -25,7 +26,7 @@ export async function node(options?: BuildOptions): Promise<Plugin[]> {
       outDir: "dist",
     }),
     shims(),
-    dts({ rollupTypes: true }),
+    dts({ rollupTypes: true, ...(options?.dts ?? {}) }),
   ];
 
   return plugins;

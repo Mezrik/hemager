@@ -2,9 +2,8 @@ import { Container } from 'inversify';
 import { competitionHandlers } from './handlers/competition';
 import { TYPES } from '@/di-types';
 import { CommandBus, QueryBus } from '@/common/interfaces';
-import { CompetitionTypeEnum, GenderEnum } from '@/domain/competition/competition';
 
-export * from './dto/competition';
+export * from '@/api/dto/competition';
 
 type FunctionPropertyNames<T> = {
   [K in Extract<keyof T, string>]: T[K] extends Function ? K : never;
@@ -49,3 +48,4 @@ export const constructAPI = (app: Container) => {
 };
 
 export type APIPathUnion = ReturnType<typeof constructAPI>['paths'][number];
+export type API = ReturnType<typeof constructAPI>['api'];

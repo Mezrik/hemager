@@ -1,9 +1,12 @@
-import { CreateCompetitionInput, APIPathUnion } from '@hemager/core';
+import { APIPathUnion, API } from '@hemager/core';
 import electron from 'electron';
 
 electron.contextBridge.exposeInMainWorld('electron', {
-  createCompetition: (data: CreateCompetitionInput) => ipcInvoke('competition.create', data),
-});
+  competition: {
+    create: (payload) => ipcInvoke('competition.create', payload),
+    get: (id) => ipcInvoke('competition.get', id),
+  },
+} satisfies API);
 
 function ipcInvoke<Key extends APIPathUnion>(key: Key, payload: any): Promise<any> {
   return electron.ipcRenderer.invoke(key, payload);

@@ -1,9 +1,9 @@
-enum CompetitionTypeEnum {
+export enum CompetitionTypeEnum {
   national = 'national',
   international = 'international',
 }
 
-enum GenderEnum {
+export enum GenderEnum {
   male = 'male',
   female = 'female',
   mixed = 'mixed',

@@ -1,10 +1,11 @@
 import { CommandBus, QueryBus } from '@/common/interfaces';
-import { CreateCompetitionInput } from '../dto/competition';
 import { CreateCompetitionCommand } from '@/application/command/create-competition';
+
+import * as CompetititonTypes from '@/api/dto/competition';
 
 export const competitionHandlers = (_queryBus: QueryBus, _commandBus: CommandBus) => {
   return {
-    create: function (payload: CreateCompetitionInput) {
+    create: function (payload: CompetititonTypes.CreateCompetitionInput) {
       return _commandBus.send(
         new CreateCompetitionCommand(
           payload.name,

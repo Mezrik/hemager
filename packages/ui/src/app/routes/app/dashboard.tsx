@@ -7,6 +7,7 @@ import { msg, Trans } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
 import { QueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
+import { CompetitionTypeEnum, GenderEnum } from '@hemager/core';
 
 export const dashboardLoader = (queryClient: QueryClient) => async () => {
   // const query = getCompetitionsQueryOptions();
@@ -21,7 +22,20 @@ export const DashboardRoute = () => {
 
   return (
     <div>
-      <Button onClick={() => (window as any).electron?.createCompetition()}>Click me</Button>
+      <Button
+        onClick={() =>
+          window.electron.competition.create({
+            name: 'string',
+            organizerName: 'string',
+            federationName: 'string',
+            competitionType: CompetitionTypeEnum.national,
+            gender: GenderEnum.male,
+            date: new Date(),
+          })
+        }
+      >
+        Click me
+      </Button>
     </div>
   );
   // return (
