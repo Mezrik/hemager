@@ -1,7 +1,7 @@
 import { Column, DataType, Model, PrimaryKey, Table } from 'sequelize-typescript';
 
-@Table({ tableName: 'Competition', modelName: 'Competition' })
-export class Competition extends Model {
+@Table({ tableName: 'Contest', modelName: 'Contest' })
+export class Contest extends Model {
   @PrimaryKey
   @Column(DataType.UUID)
   declare public id: string;
@@ -16,7 +16,7 @@ export class Competition extends Model {
   federationName: string;
 
   @Column(DataType.TEXT)
-  competitionType: string;
+  contestType: string;
 
   @Column(DataType.TEXT)
   gender: string;

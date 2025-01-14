@@ -9,12 +9,12 @@ import { TYPES } from '../di-types.js';
 import { CommandBus } from './command-bus/index.js';
 import { QueryBus } from './query-bus/index.js';
 import { database } from './db/inmemory/database.js';
-import { CompetitionRepository as CompetitionRepositoryInterface } from '@/domain/competition/competition-repository';
-import { CompetitionRepository } from './db/inmemory/repositories/competition-repository.js';
+import { ContestRepository as ContestRepositoryInterface } from '@/domain/contest/contest-repository';
+import { ContestRepository } from '@/infrastructure/db/inmemory/repositories/contest-repository';
 
 export const infrastructureModule = new AsyncContainerModule(async (bind: interfaces.Bind) => {
-  bind<CompetitionRepositoryInterface>(TYPES.CompetitionRepository)
-    .to(CompetitionRepository)
+  bind<ContestRepositoryInterface>(TYPES.ContestRepository)
+    .to(ContestRepository)
     .inSingletonScope();
 
   bind(TYPES.Db).toConstantValue(database);

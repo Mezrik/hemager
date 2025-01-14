@@ -1,6 +1,6 @@
 import { Entity, EntityProperties } from '@/common/entity';
 
-export enum CompetitionTypeEnum {
+export enum ContestTypeEnum {
   national = 'national',
   international = 'international',
 }
@@ -11,18 +11,18 @@ export enum GenderEnum {
   mixed = 'mixed',
 }
 
-type CompetitionProperties = {
+type ContestProperties = {
   name: string;
   organizerName: string;
   federationName: string;
-  competitionType: CompetitionTypeEnum;
+  contestType: ContestTypeEnum;
   gender: GenderEnum;
   date: Date;
 };
 
-export class Competition extends Entity {
+export class Contest extends Entity {
   constructor(
-    private _properties: CompetitionProperties,
+    private _properties: ContestProperties,
     _entityProperties?: EntityProperties,
   ) {
     super(_entityProperties);
@@ -32,7 +32,7 @@ export class Competition extends Entity {
     return this._properties.name;
   }
 
-  update<K extends keyof CompetitionProperties>(key: K, value: CompetitionProperties[K]) {
+  update<K extends keyof ContestProperties>(key: K, value: ContestProperties[K]) {
     this._properties[key] = value;
   }
 }

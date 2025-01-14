@@ -1,3 +1,3 @@
-import { Competition } from './competition.model';
+import { Contest } from './contest.model.ts';
 
-export const models = [Competition];
+export const models = [Contest];

@@ -1,4 +1,4 @@
-export enum CompetitionTypeEnum {
+export enum ContestTypeEnum {
   national = 'national',
   international = 'international',
 }
@@ -9,11 +9,11 @@ export enum GenderEnum {
   mixed = 'mixed',
 }
 
-export type CreateCompetitionInput = {
+export type CreateContestInput = {
   name: string;
   organizerName: string;
   federationName: string;
-  competitionType: CompetitionTypeEnum;
+  contestType: ContestTypeEnum;
   gender: GenderEnum;
   date: Date;
 };

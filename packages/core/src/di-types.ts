@@ -7,5 +7,5 @@ export const TYPES = {
   CommandHandler: Symbol('CommandHandler'),
   QueryHandler: Symbol('QueryHandler'),
 
-  CompetitionRepository: Symbol('CompetitionRepository'),
+  ContestRepository: Symbol('ContestRepository'),
 };

@@ -1,9 +1,9 @@
 import { Container } from 'inversify';
-import { competitionHandlers } from './handlers/competition';
+import { contestHandlers } from './handlers/contest';
 import { TYPES } from '@/di-types';
 import { CommandBus, QueryBus } from '@/common/interfaces';
 
-export * from '@/api/dto/competition';
+export * from '@/api/dto/contest';
 
 type FunctionPropertyNames<T> = {
   [K in Extract<keyof T, string>]: T[K] extends Function ? K : never;
@@ -17,7 +17,7 @@ export const constructAPI = (app: Container) => {
   const commandBus = app.get<CommandBus>(TYPES.CommandBus);
 
   const api = {
-    competition: competitionHandlers(queryBus, commandBus),
+    contest: contestHandlers(queryBus, commandBus),
   };
 
   const generatePaths = <T extends Record<string, any>>(api: T): APIPaths<T>[] => {
