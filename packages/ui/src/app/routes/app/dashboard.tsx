@@ -1,13 +1,14 @@
+import { ContestTypeEnum, GenderEnum } from '@hemager/core';
+import { msg, Trans } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
+import { QueryClient } from '@tanstack/react-query';
+import { useEffect } from 'react';
+
 import { BasicPageLayout } from '@/components/layouts';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { getCompetitionsQueryOptions } from '@/features/competitions/api/get-competitions';
 import { RecentCompetitions } from '@/features/competitions/components/recent-competitions';
-import { msg, Trans } from '@lingui/macro';
-import { useLingui } from '@lingui/react';
-import { QueryClient } from '@tanstack/react-query';
-import { useEffect } from 'react';
-import { CompetitionTypeEnum, GenderEnum } from '@hemager/core';
 
 export const dashboardLoader = (queryClient: QueryClient) => async () => {
   // const query = getCompetitionsQueryOptions();
@@ -28,7 +29,7 @@ export const DashboardRoute = () => {
             name: 'string',
             organizerName: 'string',
             federationName: 'string',
-            competitionType: CompetitionTypeEnum.national,
+            competitionType: ContestTypeEnum.national,
             gender: GenderEnum.male,
             date: new Date(),
           })

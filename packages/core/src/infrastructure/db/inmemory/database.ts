@@ -2,19 +2,22 @@ import { Sequelize } from 'sequelize-typescript';
 import { Umzug, SequelizeStorage } from 'umzug';
 
 import { models } from './models';
-import * as seedClubs from './seeders/base-seed.ts';
+import { seeds } from './seeders';
 
 export const database = new Sequelize({
   dialect: 'sqlite',
   storage: __dirname + '/database.db', //':memory:',
   models,
   repositoryMode: true,
+  logging: false,
 });
 
 export const seeder = new Umzug({
-  migrations: {
-    glob: ['seeders/*.ts', { cwd: __dirname }],
-  },
+  migrations: Object.entries(seeds).map(([path, seed]) => {
+    const name = path.replace('./', '');
+
+    return { name, ...seed };
+  }),
   context: database,
   storage: new SequelizeStorage({
     sequelize: database,
@@ -23,7 +26,7 @@ export const seeder = new Umzug({
   logger: console,
 });
 
-export type Seeder = typeof seeder._types.migration;
-
 // TEMP: For development purposes
 await database.sync();
+
+await seeder.up();

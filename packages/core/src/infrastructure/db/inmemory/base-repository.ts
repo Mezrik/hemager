@@ -14,7 +14,7 @@ export class BaseRepository<T extends Model, U extends Entity> implements Reposi
     this._entity = entity;
   }
 
-  async findOne(id: any): Promise<U> {
+  async findOne(id: string): Promise<U> {
     return plainToInstance(this._entity, await this._dbRepo.findByPk(id));
   }
 
@@ -24,7 +24,7 @@ export class BaseRepository<T extends Model, U extends Entity> implements Reposi
       .then((items) => items.map((item) => plainToInstance(this._entity, item)));
   }
 
-  async create(id: any, item: U): Promise<U> {
+  async create(item: U): Promise<U> {
     const attributes = instanceToPlain(item) as Attributes<T>;
 
     return await this._dbRepo
@@ -32,11 +32,13 @@ export class BaseRepository<T extends Model, U extends Entity> implements Reposi
       .then((item) => plainToInstance(this._entity, item));
   }
 
-  async update(id: any, item: U): Promise<void> {
+  async update(id: string, item: U): Promise<void> {
+    // @ts-expect-error Property 'id' does not exist on type 'U'.
     await this._dbRepo.update(item, { where: { id } });
   }
 
-  async destroy(id: any): Promise<void> {
+  async destroy(id: string): Promise<void> {
+    // @ts-expect-error Property 'id' does not exist on type 'U'.
     await this._dbRepo.destroy({ where: { id } });
   }
 }
