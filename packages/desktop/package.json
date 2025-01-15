@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@hemager/core": "0.0.0",
+    "@hemager/api": "0.0.0",
     "@hemager/ui": "0.0.0",
     "chokidar": "^4.0.3"
   },

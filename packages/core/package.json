@@ -49,6 +49,7 @@
     "umzug": "^3.8.2",
     "vite": "^4.4.5",
     "vite-node": "^2.1.8",
-    "@hemager/eslint-config": "0.0.0"
+    "@hemager/eslint-config": "0.0.0",
+    "@hemager/api": "0.0.0"
   }
 }

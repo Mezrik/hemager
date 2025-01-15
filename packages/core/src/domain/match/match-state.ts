@@ -1,5 +1,6 @@
+import { MatchStateChange } from '@hemager/api';
+
 import { Entity, EntityProperties } from '@/common/entity';
-import { MatchStateChange } from '@/common/enums';
 
 export class MatchState extends Entity {
   constructor(

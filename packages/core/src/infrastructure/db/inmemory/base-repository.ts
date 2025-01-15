@@ -1,5 +1,5 @@
 import { instanceToPlain, plainToInstance } from 'class-transformer';
-import { Attributes } from 'sequelize';
+import { Attributes, Transaction } from 'sequelize';
 import { Model, Sequelize, Repository as DbRepository } from 'sequelize-typescript';
 
 import { Entity } from '@/common/entity';
@@ -24,21 +24,21 @@ export class BaseRepository<T extends Model, U extends Entity> implements Reposi
       .then((items) => items.map((item) => plainToInstance(this._entity, item)));
   }
 
-  async create(item: U): Promise<U> {
+  async create(item: U, transaction?: Transaction): Promise<U> {
     const attributes = instanceToPlain(item) as Attributes<T>;
 
     return await this._dbRepo
-      .create(attributes)
+      .create(attributes, { transaction })
       .then((item) => plainToInstance(this._entity, item));
   }
 
-  async update(id: string, item: U): Promise<void> {
+  async update(id: string, item: U, transaction?: Transaction): Promise<void> {
     // @ts-expect-error Property 'id' does not exist on type 'U'.
-    await this._dbRepo.update(item, { where: { id } });
+    await this._dbRepo.update(item, { where: { id }, transaction });
   }
 
-  async destroy(id: string): Promise<void> {
+  async destroy(id: string, transaction?: Transaction): Promise<void> {
     // @ts-expect-error Property 'id' does not exist on type 'U'.
-    await this._dbRepo.destroy({ where: { id } });
+    await this._dbRepo.destroy({ where: { id }, transaction });
   }
 }

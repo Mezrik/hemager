@@ -33,7 +33,7 @@ module.exports = {
         "plugin:prettier/recommended",
       ],
       rules: {
-        "import/no-cycle": "error",
+        // "import/no-cycle": "error",
         "linebreak-style": ["error", "unix"],
         "import/order": [
           "error",

@@ -8,6 +8,7 @@ app.on('ready', async () => {
     height: 600,
     webPreferences: {
       preload: getPreloadPath(),
+      nodeIntegration: true,
     },
   });
 
@@ -23,6 +24,8 @@ app.on('ready', async () => {
   // }
 
   paths.forEach((event) => {
-    ipcMain.on(event, (e, data) => invoke(event, data));
+    ipcMain.handle(event, (e, data) => {
+      invoke(event, data);
+    });
   });
 });

@@ -1,14 +1,16 @@
-import { CompetitionTypeEnum, GenderEnum } from '@/generated/server';
-import { MutationConfig } from '@/lib/react-query';
-import { api } from '@/services/api';
+import { ContestTypeEnum, GenderEnum } from '@hemager/api';
+import { t } from '@lingui/macro';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { z } from 'zod';
+
+import { MutationConfig } from '@/lib/react-query';
+import { api } from '@/services/api';
+
 import { getCompetitionsQueryOptions } from './get-competitions';
-import { t } from '@lingui/macro';
 
 export const createCompetitionInputSchema = z.object({
   categoryId: z.string().uuid(t`Select correct category`),
-  competitionType: z.nativeEnum(CompetitionTypeEnum),
+  contestType: z.nativeEnum(ContestTypeEnum),
   date: z.date({ message: t`Date of the competition is required` }),
   federationName: z.string().min(1, t`Federation name is required`),
   gender: z.nativeEnum(GenderEnum),
@@ -20,8 +22,7 @@ export const createCompetitionInputSchema = z.object({
 export type CreateCompetitionInput = z.infer<typeof createCompetitionInputSchema>;
 
 export const createCompetition = ({ data }: { data: CreateCompetitionInput }) => {
-  const date = data.date.toISOString();
-  return api.CreateCompetition({ ...data, date });
+  return api.CreateCompetition(data);
 };
 
 type UseCreateCompetitionOptions = {
@@ -34,10 +35,11 @@ export const useCreateCompetition = ({ mutationConfig }: UseCreateCompetitionOpt
   const { onSuccess, ...rest } = mutationConfig || {};
 
   return useMutation({
-    onSuccess: (...args) => {
-      queryClient.invalidateQueries({
+    onSuccess: async (...args) => {
+      await queryClient.invalidateQueries({
         queryKey: getCompetitionsQueryOptions().queryKey,
       });
+
       onSuccess?.(...args);
     },
     ...rest,

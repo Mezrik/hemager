@@ -1,3 +1,5 @@
+import type { CreateContestInput } from '@hemager/api';
+
 import {
   CompetitionCategoryResult,
   CompetitionResult,
@@ -13,6 +15,7 @@ import {
   CompetitionDetail,
   UpdateCompetitionParametersCommand,
 } from '@/generated/server';
+
 import { DesktopApi } from './desktop-api';
 import { RestApi } from './rest-api';
 
@@ -23,7 +26,7 @@ export interface Api {
 
   GetCompetition(id: UUID): Promise<CompetitionDetail>;
 
-  CreateCompetition(data: CreateCompetitionCommand): Promise<void>;
+  CreateCompetition(data: CreateContestInput): Promise<void>;
 
   GetCompetitionsCategories(): Promise<Array<CompetitionCategoryResult>>;
 

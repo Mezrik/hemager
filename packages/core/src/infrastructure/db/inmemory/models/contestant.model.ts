@@ -1,17 +1,14 @@
+import { GenderEnum } from '@hemager/api';
 import {
   AllowNull,
   BelongsTo,
-  BelongsToMany,
   Column,
   DataType,
   ForeignKey,
-  HasMany,
   Model,
   PrimaryKey,
   Table,
 } from 'sequelize-typescript';
-
-import { GenderEnum } from '@/common/enums';
 
 import { Club } from './club.model';
 
@@ -19,7 +16,7 @@ import { Club } from './club.model';
 export class Contestant extends Model {
   @PrimaryKey
   @Column(DataType.UUID)
-  public declare id: string;
+  id: string;
 
   @Column(DataType.TEXT)
   firstname: string;

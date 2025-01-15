@@ -14,7 +14,7 @@ export class QueryBus<BaseQuery extends Query = Query> implements QueryBusInterf
     this.handlers.set(queryName, handler);
   }
 
-  public async execute<T extends BaseQuery = BaseQuery, R = any>(query: T) {
+  public async execute<T extends BaseQuery = BaseQuery>(query: T) {
     if (this.handlers.has(query.constructor.name)) {
       return (this.handlers.get(query.constructor.name) as QueryHandler<BaseQuery>).execute(query);
     }

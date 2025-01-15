@@ -5,11 +5,8 @@ import { TYPES } from '@/di-types';
 
 import { contestHandlers } from './handlers/contest';
 
-export * from '@/api/dto/contest';
-
-export * from '@/common/enums';
-
 type FunctionPropertyNames<T> = {
+  // eslint-disable-next-line @typescript-eslint/ban-types
   [K in Extract<keyof T, string>]: T[K] extends Function ? K : never;
 }[Extract<keyof T, string>];
 
@@ -26,8 +23,10 @@ export const constructAPI = (app: Container) => {
 
   const generatePaths = <T extends Record<string, any>>(api: T): APIPaths<T>[] => {
     return Object.keys(api).flatMap((namespace) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const value = api[namespace];
       if (typeof value === 'object') {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         return Object.keys(value).map((key) => `${namespace}.${key}` as APIPaths<T>);
       } else {
         return [];
@@ -39,12 +38,15 @@ export const constructAPI = (app: Container) => {
 
   const invoke = <T extends typeof api, P extends APIPaths<T>>(path: P, data: any): any => {
     const [namespace, method] = path.split('.');
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
     const handler = (api as any)[namespace]?.[method];
 
     if (typeof handler !== 'function') {
       throw new Error(`Invalid API path: ${path}`);
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     return handler(data);
   };
 

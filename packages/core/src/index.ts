@@ -18,12 +18,12 @@ import { applicationModule } from './application/module';
 
 export * from '@/api';
 
-export const initialize = async () => {
+export const initialize = () => {
   const container = new Container();
 
-  await container.loadAsync(infrastructureModule);
+  container.load(infrastructureModule);
 
-  await container.loadAsync(applicationModule);
+  container.load(applicationModule);
 
   const logger = createLogger('hemager-application');
 

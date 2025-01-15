@@ -15,7 +15,7 @@
     "messages:compile": "lingui compile"
   },
   "dependencies": {
-    "@hemager/core": "0.0.0",
+    "@hemager/api": "0.0.0",
     "@hookform/resolvers": "^3.9.0",
     "@lingui/macro": "^4.11.1",
     "@lingui/react": "^4.11.1",

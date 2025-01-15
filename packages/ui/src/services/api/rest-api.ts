@@ -13,6 +13,7 @@ import {
   CompetitionParticipant,
   UpdateCompetitionParametersCommand,
 } from '@/generated/server';
+
 import { Api } from './api';
 
 export class RestApi implements Api {

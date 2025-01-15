@@ -16,11 +16,9 @@ export class CommandBus<BaseCommand extends Command = Command>
     this.handlers.set(targetCommand, handler);
   }
 
-  public async send<T extends BaseCommand>(command: T) {
+  public send<T extends BaseCommand>(command: T) {
     if (this.handlers.has(command.constructor.name)) {
-      return (this.handlers.get(command.constructor.name) as CommandHandler<BaseCommand>).handle(
-        command,
-      );
+      (this.handlers.get(command.constructor.name) as CommandHandler<BaseCommand>).handle(command);
     }
   }
 }

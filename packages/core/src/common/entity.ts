@@ -8,7 +8,9 @@ class Entity implements EntityInterface {
       id: nanoid(),
       createdAt: new Date(),
     },
-  ) {}
+  ) {
+    this._entityProperties.updatedAt = new Date();
+  }
 
   public get id() {
     return this._entityProperties.id;

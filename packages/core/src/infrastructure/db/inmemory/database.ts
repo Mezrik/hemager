@@ -9,7 +9,7 @@ export const database = new Sequelize({
   storage: __dirname + '/database.db', //':memory:',
   models,
   repositoryMode: true,
-  logging: false,
+  logging: true,
 });
 
 export const seeder = new Umzug({

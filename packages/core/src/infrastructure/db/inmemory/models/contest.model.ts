@@ -1,3 +1,4 @@
+import { ContestTypeEnum, GenderEnum } from '@hemager/api';
 import {
   AllowNull,
   BelongsTo,
@@ -10,17 +11,16 @@ import {
   Table,
 } from 'sequelize-typescript';
 
-import { ContestTypeEnum, GenderEnum } from '@/common/enums';
-
 import { ContestCategory } from './contest-category.model';
 import { Referee } from './referee.model';
+import { Round } from './round.model.ts';
 import { Weapon } from './weapon.model.ts';
 
 @Table({ tableName: 'Contest', modelName: 'Contest' })
 export class Contest extends Model {
   @PrimaryKey
   @Column(DataType.UUID)
-  public declare id: string;
+  public id: string;
 
   @Column(DataType.TEXT)
   name: string;
@@ -78,4 +78,7 @@ export class Contest extends Model {
 
   @HasMany(() => Referee)
   referees: Referee[];
+
+  @HasMany(() => Round)
+  rounds: Round[];
 }

@@ -56,6 +56,17 @@ module.exports = {
         'jsx-a11y/anchor-is-valid': 'off',
       },
     },
+    {
+      files: ['**/*.ts', '**/*.tsx'],
+      parser: '@typescript-eslint/parser',
+      settings: {
+        'import/resolver': {
+          typescript: {
+            project: path.join(__dirname, 'tsconfig.json'),
+          },
+        },
+      },
+    },
   ],
   rules: {
     'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],

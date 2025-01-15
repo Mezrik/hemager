@@ -1,4 +1,4 @@
-import { ContestTypeEnum, GenderEnum } from '@hemager/core';
+import { ContestTypeEnum, GenderEnum } from '@hemager/api';
 import { msg, Trans } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
 import { QueryClient } from '@tanstack/react-query';
@@ -21,15 +21,17 @@ export const dashboardLoader = (queryClient: QueryClient) => async () => {
 export const DashboardRoute = () => {
   const { _ } = useLingui();
 
+  console.log(window.electron);
+
   return (
     <div>
       <Button
         onClick={() =>
-          window.electron.competition.create({
+          window.electron.contest.create({
             name: 'string',
             organizerName: 'string',
             federationName: 'string',
-            competitionType: ContestTypeEnum.national,
+            contestType: ContestTypeEnum.national,
             gender: GenderEnum.male,
             date: new Date(),
           })

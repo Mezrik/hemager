@@ -1,5 +1,7 @@
+import type { CreateContestInput } from '@hemager/api';
+
+import { UpdateCompetitionParametersCommand } from '@/generated/server';
 import {
-  CreateCompetition,
   GetCompetitions,
   GetCompetition,
   GetCompetitionsCategories,
@@ -17,8 +19,8 @@ import {
   GetCompetitor,
 } from '@/generated/wailsjs/go/desktop/Admin';
 import { command, query } from '@/generated/wailsjs/go/models';
+
 import { Api } from './api';
-import { UpdateCompetitionParametersCommand } from '@/generated/server';
 
 export class DesktopApi implements Api {
   GetCompetitions(): Promise<Array<query.Competition>> {
@@ -29,8 +31,8 @@ export class DesktopApi implements Api {
     return GetCompetition(id);
   }
 
-  CreateCompetition(command: command.CreateCompetition): Promise<void> {
-    return CreateCompetition(command);
+  CreateCompetition(command: CreateContestInput): Promise<void> {
+    return window.electron.contest.create(command);
   }
 
   GetCompetitionsCategories(): Promise<Array<query.CompetitionCategory>> {

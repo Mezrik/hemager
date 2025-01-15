@@ -1,6 +1,6 @@
 export type EntityProperties = {
   id: string;
-  createdAt: Date;
+  createdAt?: Date;
   updatedAt?: Date;
 };
 

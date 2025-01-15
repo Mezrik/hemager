@@ -1,4 +1,4 @@
-import { API } from '@hemager/core';
+import { API } from '@hemager/api';
 
 declare global {
   interface Window {
