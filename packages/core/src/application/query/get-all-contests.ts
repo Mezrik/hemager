@@ -1,7 +1,8 @@
-import { Query, QueryHandler } from '@/common/interfaces';
-import { ContestRepository } from '@/domain/contest/contest-repository';
-import { TYPES } from '@/di-types';
 import { inject } from 'inversify';
+
+import { Query, QueryHandler } from '@/common/interfaces';
+import { TYPES } from '@/di-types';
+import { ContestRepository } from '@/domain/contest/contest-repository';
 
 export class GetAllContestsQuery implements Query {}
 

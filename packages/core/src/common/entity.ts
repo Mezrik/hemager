@@ -1,4 +1,5 @@
 import { nanoid } from 'nanoid';
+
 import { Entity as EntityInterface, EntityProperties } from './interfaces/entity.js';
 
 class Entity implements EntityInterface {

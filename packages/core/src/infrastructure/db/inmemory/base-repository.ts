@@ -1,8 +1,9 @@
 import { instanceToPlain, plainToInstance } from 'class-transformer';
-import { Repository } from '@/common/interfaces';
 import { Attributes } from 'sequelize';
 import { Model, Sequelize, Repository as DbRepository } from 'sequelize-typescript';
+
 import { Entity } from '@/common/entity';
+import { Repository } from '@/common/interfaces';
 
 export class BaseRepository<T extends Model, U extends Entity> implements Repository<U> {
   private _dbRepo: DbRepository<T>;

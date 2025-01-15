@@ -1,6 +1,8 @@
 import { Entity, EntityProperties } from '@/common/entity';
-import { MatchState } from './match-state';
+
 import { RoundParticipant } from '../round/round-participant';
+
+import { MatchState } from './match-state';
 
 export class Match extends Entity {
   constructor(

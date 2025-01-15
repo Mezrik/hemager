@@ -1,5 +1,6 @@
-import { Query, QueryBus as QueryBusInterface, QueryHandler } from '@/common/interfaces';
 import { injectable } from 'inversify';
+
+import { Query, QueryBus as QueryBusInterface, QueryHandler } from '@/common/interfaces';
 
 @injectable()
 export class QueryBus<BaseQuery extends Query = Query> implements QueryBusInterface<BaseQuery> {

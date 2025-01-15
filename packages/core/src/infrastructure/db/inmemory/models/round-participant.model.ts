@@ -8,6 +8,7 @@ import {
   PrimaryKey,
   Table,
 } from 'sequelize-typescript';
+
 import { Contestant } from './contestant.model';
 import { Round } from './round.model';
 

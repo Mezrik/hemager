@@ -1,4 +1,3 @@
-import { ContestTypeEnum, GenderEnum } from '@/common/enums';
 import {
   AllowNull,
   BelongsTo,
@@ -10,15 +9,18 @@ import {
   PrimaryKey,
   Table,
 } from 'sequelize-typescript';
+
+import { ContestTypeEnum, GenderEnum } from '@/common/enums';
+
 import { ContestCategory } from './contest-category.model';
-import { Weapon } from './weapon.model.ts';
 import { Referee } from './referee.model';
+import { Weapon } from './weapon.model.ts';
 
 @Table({ tableName: 'Contest', modelName: 'Contest' })
 export class Contest extends Model {
   @PrimaryKey
   @Column(DataType.UUID)
-  declare public id: string;
+  public declare id: string;
 
   @Column(DataType.TEXT)
   name: string;

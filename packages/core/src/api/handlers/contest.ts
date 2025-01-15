@@ -1,7 +1,6 @@
-import { CommandBus, QueryBus } from '@/common/interfaces';
-import { CreateContestCommand } from '@/application/command/create-contest';
-
 import * as CompetititonTypes from '@/api/dto/contest';
+import { CreateContestCommand } from '@/application/command/create-contest';
+import { CommandBus, QueryBus } from '@/common/interfaces';
 
 export const contestHandlers = (_queryBus: QueryBus, _commandBus: CommandBus) => {
   return {

@@ -1,5 +1,5 @@
-import { Query } from './query.js';
 import { QueryHandler } from './query-handler.js';
+import { Query } from './query.js';
 
 export interface QueryBus<BaseQuery extends Query = Query> {
   registerHandler(queryHandler: QueryHandler<BaseQuery>): void;

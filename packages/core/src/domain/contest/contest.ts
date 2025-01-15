@@ -1,7 +1,8 @@
 import { Entity, EntityProperties } from '@/common/entity';
-import { Weapon } from './weapon';
-import { ContestCategory } from './category';
 import { ContestTypeEnum, DeploymentCriteria, GenderEnum } from '@/common/enums';
+
+import { ContestCategory } from './category';
+import { Weapon } from './weapon';
 
 type ContestProperties = {
   name: string;

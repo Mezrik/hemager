@@ -8,9 +8,11 @@ import {
   PrimaryKey,
   Table,
 } from 'sequelize-typescript';
+
+import { MatchStateChange } from '@/api';
+
 import { Contestant } from './contestant.model';
 import { Match } from './match.model';
-import { MatchStateChange } from '@/api';
 
 @Table({ tableName: 'MatchState', modelName: 'MatchState' })
 export class MatchState extends Model {

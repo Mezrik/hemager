@@ -1,7 +1,9 @@
 import { Container } from 'inversify';
-import { contestHandlers } from './handlers/contest';
-import { TYPES } from '@/di-types';
+
 import { CommandBus, QueryBus } from '@/common/interfaces';
+import { TYPES } from '@/di-types';
+
+import { contestHandlers } from './handlers/contest';
 
 export * from '@/api/dto/contest';
 

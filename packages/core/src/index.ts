@@ -1,9 +1,7 @@
 import 'reflect-metadata';
 import { Container } from 'inversify';
-import { infrastructureModule } from '@/infrastructure/module';
 import winston from 'winston';
-import { TYPES } from '@/di-types';
-import { createLogger } from '@/common/logger';
+
 import {
   Command,
   CommandBus,
@@ -12,6 +10,9 @@ import {
   QueryBus,
   QueryHandler,
 } from '@/common/interfaces';
+import { createLogger } from '@/common/logger';
+import { TYPES } from '@/di-types';
+import { infrastructureModule } from '@/infrastructure/module';
 
 import { applicationModule } from './application/module';
 

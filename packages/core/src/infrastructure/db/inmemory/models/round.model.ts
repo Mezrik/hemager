@@ -9,6 +9,7 @@ import {
   PrimaryKey,
   Table,
 } from 'sequelize-typescript';
+
 import { Contest } from './contest.model';
 import { Group } from './group.model';
 import { RoundParticipant } from './round-participant.model';
@@ -17,7 +18,7 @@ import { RoundParticipant } from './round-participant.model';
 export class Round extends Model {
   @PrimaryKey
   @Column(DataType.UUID)
-  declare public id: string;
+  public declare id: string;
 
   @ForeignKey(() => Contest)
   @Column(DataType.UUID)

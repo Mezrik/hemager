@@ -1,6 +1,7 @@
 import { Entity, EntityProperties } from '@/common/entity';
-import { Club } from './club';
 import { GenderEnum } from '@/common/enums';
+
+import { Club } from './club';
 
 type ContestantProperties = {
   firstname: string;

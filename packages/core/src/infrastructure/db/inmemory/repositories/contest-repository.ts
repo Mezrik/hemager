@@ -1,12 +1,13 @@
+import { plainToInstance } from 'class-transformer';
 import { inject, injectable } from 'inversify';
 import { Repository, Sequelize } from 'sequelize-typescript';
+
+import { TYPES } from '@/di-types.js';
 import { ContestRepository as ContestRepositoryInterface } from '@/domain/contest/contest-repository.js';
 import { Contest } from '@/domain/contest/contest.js';
 
-import { Contest as ContestModel } from '../models/contest.model.js';
-import { plainToInstance } from 'class-transformer';
 import { BaseRepository } from '../base-repository.js';
-import { TYPES } from '@/di-types.js';
+import { Contest as ContestModel } from '../models/contest.model.js';
 
 @injectable()
 export class ContestRepository

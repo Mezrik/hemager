@@ -1,5 +1,6 @@
-import { Command, CommandBus as CommandBusInterface, CommandHandler } from '@/common/interfaces';
 import { injectable } from 'inversify';
+
+import { Command, CommandBus as CommandBusInterface, CommandHandler } from '@/common/interfaces';
 
 @injectable()
 export class CommandBus<BaseCommand extends Command = Command>

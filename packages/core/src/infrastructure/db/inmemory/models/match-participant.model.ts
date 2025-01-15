@@ -7,6 +7,7 @@ import {
   PrimaryKey,
   Table,
 } from 'sequelize-typescript';
+
 import { Contestant } from './contestant.model';
 import { Match } from './match.model';
 

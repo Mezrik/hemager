@@ -1,9 +1,10 @@
+import { inject, injectable } from 'inversify';
+
 import { Command } from '@/common/command';
 import { CommandHandler } from '@/common/interfaces';
+import { TYPES } from '@/di-types';
 import { Contest, ContestTypeEnum, GenderEnum } from '@/domain/contest/contest';
 import { ContestRepository } from '@/domain/contest/contest-repository';
-import { TYPES } from '@/di-types';
-import { inject, injectable } from 'inversify';
 
 export class CreateContestCommand extends Command {
   constructor(

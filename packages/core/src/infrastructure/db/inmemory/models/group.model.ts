@@ -9,15 +9,16 @@ import {
   PrimaryKey,
   Table,
 } from 'sequelize-typescript';
-import { Round } from './round.model';
-import { Referee } from './referee.model';
+
 import { GroupParticipant } from './group-participant.model';
+import { Referee } from './referee.model';
+import { Round } from './round.model';
 
 @Table({ tableName: 'Group', modelName: 'Group' })
 export class Group extends Model {
   @PrimaryKey
   @Column(DataType.UUID)
-  declare public id: string;
+  public declare id: string;
 
   @ForeignKey(() => Round)
   @Column(DataType.UUID)

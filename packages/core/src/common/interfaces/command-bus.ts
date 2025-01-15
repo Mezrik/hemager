@@ -1,5 +1,5 @@
-import { Command } from './command.js';
 import { CommandHandler } from './command-handler.js';
+import { Command } from './command.js';
 
 export interface CommandBus<BaseCommand extends Command = Command> {
   registerHandler(handler: CommandHandler<BaseCommand>): any;

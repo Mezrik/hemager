@@ -5,7 +5,8 @@
     "packages/core",
     "packages/desktop",
     "packages/ui",
-    "packages/build-plugin"
+    "packages/build-plugin",
+    "packages/eslint-config"
   ],
   "dependencies": {},
   "devDependencies": {

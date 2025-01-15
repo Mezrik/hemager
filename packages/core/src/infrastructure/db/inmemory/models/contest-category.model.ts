@@ -4,7 +4,7 @@ import { Column, DataType, Model, PrimaryKey, Table } from 'sequelize-typescript
 export class ContestCategory extends Model {
   @PrimaryKey
   @Column(DataType.UUID)
-  declare public id: string;
+  public declare id: string;
 
   @Column(DataType.TEXT)
   name: string;

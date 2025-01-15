@@ -7,6 +7,7 @@ import {
   PrimaryKey,
   Table,
 } from 'sequelize-typescript';
+
 import { Group } from './group.model';
 import { MatchParticipant } from './match-participant.model';
 import { MatchState } from './match-state.model';
@@ -15,11 +16,11 @@ import { MatchState } from './match-state.model';
 export class Match extends Model {
   @PrimaryKey
   @Column(DataType.UUID)
-  declare public id: string;
+  public declare id: string;
 
   @ForeignKey(() => Group)
   @Column(DataType.UUID)
-  declare public groupId: string;
+  public declare groupId: string;
 
   @HasMany(() => MatchParticipant)
   participants: [MatchParticipant, MatchParticipant];

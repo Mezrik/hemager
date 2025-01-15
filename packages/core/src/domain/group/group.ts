@@ -1,4 +1,5 @@
 import { Entity, EntityProperties } from '@/common/entity';
+
 import { Referee } from '../contest/referee';
 import { RoundParticipant } from '../round/round-participant';
 
