@@ -1,3 +1,8 @@
+import { msg, Trans } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
+import { FC } from 'react';
+import { useMediaQuery } from 'usehooks-ts';
+
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -15,11 +20,8 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from '@/components/ui/drawer';
-import { msg, Trans } from '@lingui/macro';
-import { useLingui } from '@lingui/react';
-import { FC } from 'react';
+
 import { useCreateCompetitor } from '../../api/create-competitor';
-import { useMediaQuery } from 'usehooks-ts';
 import { CompetitorEditForm } from '../forms/competitor-edit-form';
 
 const FORM_ID = 'create-competitor-form';

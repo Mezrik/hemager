@@ -1,3 +1,10 @@
+import { msg } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
+import { QueryClient } from '@tanstack/react-query';
+import { CZ } from 'country-flag-icons/react/3x2';
+import { ComponentProps, useState } from 'react';
+import { LoaderFunctionArgs, useNavigate, useParams } from 'react-router-dom';
+
 import { pathnames } from '@/app/pathnames';
 import { BasicPageLayout } from '@/components/layouts';
 import { Card, CardContent } from '@/components/ui/card';
@@ -24,12 +31,6 @@ import {
 import { getMatchesQueryOptions, useMatches } from '@/features/matches/api/get-matches';
 import { MatchCard } from '@/features/matches/components/match-card';
 import { MatchPreview } from '@/features/matches/components/match-preview';
-import { msg } from '@lingui/macro';
-import { useLingui } from '@lingui/react';
-import { QueryClient } from '@tanstack/react-query';
-import { CZ } from 'country-flag-icons/react/3x2';
-import { ComponentProps, useState } from 'react';
-import { LoaderFunctionArgs, useNavigate, useParams } from 'react-router-dom';
 
 export const groupLoader =
   (queryClient: QueryClient) =>
@@ -81,7 +82,7 @@ export const GroupRoute = () => {
   return (
     <BasicPageLayout title={group.name} subtitle={_(msg`Group`)}>
       <div className="grid grid-cols-9 gap-4">
-        <Card className="pt-6 col-span-9 lg:col-span-4">
+        <Card className="col-span-9 pt-6 lg:col-span-4">
           <CardContent>
             <Table>
               <TableHeader>
@@ -109,9 +110,9 @@ export const GroupRoute = () => {
             </Table>
           </CardContent>
         </Card>
-        <Card className="col-span-9 lg:col-span-5 pt-6">
+        <Card className="col-span-9 pt-6 lg:col-span-5">
           <CardContent>
-            <h3 className="text-lg font-semibold mb-2 text-primary-foreground">
+            <h3 className="mb-2 text-lg font-semibold text-primary-foreground">
               {_(msg`Round 1`)}
             </h3>
             <div className="grid grid-cols-3 gap-4">

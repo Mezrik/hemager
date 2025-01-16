@@ -1,7 +1,12 @@
+import { I18n } from '@lingui/core';
+import { msg, t, Trans } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
+import { CalendarIcon } from 'lucide-react';
 import { FC } from 'react';
-import { useCompetitionCategories } from '../../api/get-competition-categories';
-import { useWeapons } from '../../api/get-weapons';
+import { z } from 'zod';
+
+import { Button } from '@/components/ui/button';
+import { Calendar } from '@/components/ui/calendar';
 import {
   Form,
   FormControl,
@@ -18,17 +23,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/form';
-import { CompetitionTypeEnum, GenderEnum } from '@/generated/server';
-import { msg, t, Trans } from '@lingui/macro';
-import { z } from 'zod';
-import { I18n } from '@lingui/core';
-import { getCompetionTypeCaption, getGenderCaption } from '../../helpers';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Button } from '@/components/ui/button';
+import { CompetitionTypeEnum, GenderEnum } from '@/generated/server';
+
 import { formatUIDate } from '@/utils/date';
+import { useCompetitionCategories } from '../../api/get-competition-categories';
+import { useWeapons } from '../../api/get-weapons';
+
+import { getCompetionTypeCaption, getGenderCaption } from '../../helpers';
+
 import { cn } from '@/utils/class-names';
-import { CalendarIcon } from 'lucide-react';
-import { Calendar } from '@/components/ui/calendar';
 
 const getCompetitionTypeOptions = (_: I18n['_']): RadioOption[] => [
   {
@@ -206,7 +210,7 @@ export const EditCompetitionForm: FC<FormProps> = ({ onSubmit, formID, defaultVa
                             <Trans>Pick a date</Trans>
                           </span>
                         )}
-                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                        <CalendarIcon className="ml-auto size-4 opacity-50" />
                       </Button>
                     </FormControl>
                   </PopoverTrigger>

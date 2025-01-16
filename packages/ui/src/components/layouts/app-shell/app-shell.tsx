@@ -1,4 +1,5 @@
 import { FC } from 'react';
+
 import { AsideMenu } from './aside-menu';
 
 export const AppShell: FC<{ children?: React.ReactNode }> = ({ children }) => {

@@ -1,3 +1,10 @@
+import { Trans } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
+import { CircleAlert, Pencil, Trash } from 'lucide-react';
+import { FC, useState } from 'react';
+
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
   Table,
   TableBody,
@@ -10,13 +17,8 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip
 import { getGenderAbbrv } from '@/features/competitions/helpers';
 import { CompetitorResult } from '@/generated/server';
 import { formatUIDate } from '@/utils/date';
-import { Trans } from '@lingui/macro';
-import { useLingui } from '@lingui/react';
-import { CircleAlert, Pencil, Trash } from 'lucide-react';
-import { FC, useState } from 'react';
+
 import { UpdateCompetitor } from './dialog/update-competitor';
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
 
 export const CompetitorsTable: FC<{
   data: CompetitorResult[];
@@ -69,7 +71,7 @@ export const CompetitorsTable: FC<{
                   {comp.hasMissingInfo && (
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <span className="p-0.5 rounded-full bg-destructive">
+                        <span className="rounded-full bg-destructive p-0.5">
                           <CircleAlert className="size-4 text-white" />
                         </span>
                       </TooltipTrigger>
@@ -83,7 +85,7 @@ export const CompetitorsTable: FC<{
                 <TableCell>{getGenderAbbrv(comp.gender, _)}</TableCell>
                 <TableCell>{comp.license}</TableCell>
                 <TableCell>{comp.birthdate ? formatUIDate(comp.birthdate) : '-'}</TableCell>
-                <TableCell className="opacity-0 group-hover:opacity-100 flex justify-end">
+                <TableCell className="flex justify-end opacity-0 group-hover:opacity-100">
                   <Button size="xs" variant="ghost" onClick={() => setEditCompetitorId(comp.id)}>
                     <Pencil className="size-4" />
                   </Button>

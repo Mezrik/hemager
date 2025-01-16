@@ -1,8 +1,9 @@
-import { getPostCompetitorsImportUrl } from '@/generated/server';
-import { MutationConfig } from '@/lib/react-query';
 import { t } from '@lingui/macro';
 import { useMutation } from '@tanstack/react-query';
 import { z } from 'zod';
+
+import { getPostCompetitorsImportUrl } from '@/generated/server';
+import { MutationConfig } from '@/lib/react-query';
 
 export const importCompetitorInputSchema = z.object({
   file: z.instanceof(File, { message: t`File is required` }),

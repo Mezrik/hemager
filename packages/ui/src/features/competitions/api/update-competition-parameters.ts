@@ -1,11 +1,13 @@
+import { t } from '@lingui/macro';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { z } from 'zod';
+
 import { DeploymentTypeEnum } from '@/generated/server';
 import { MutationConfig } from '@/lib/react-query';
 import { api } from '@/services/api';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { z } from 'zod';
-import { getCompetitionsQueryOptions } from './get-competitions';
-import { t } from '@lingui/macro';
+
 import { getCompetitionQueryOptions } from './get-competition';
+import { getCompetitionsQueryOptions } from './get-competitions';
 
 export const updateCompetitionParametersInputSchema = z.object({
   deploymentType: z.nativeEnum(DeploymentTypeEnum),

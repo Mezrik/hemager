@@ -1,25 +1,25 @@
+import { msg, Trans } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
+import { QueryClient } from '@tanstack/react-query';
+import { PencilIcon } from 'lucide-react';
+import { useState } from 'react';
+import { LoaderFunctionArgs, useParams } from 'react-router-dom';
+
 import { BasicPageLayout } from '@/components/layouts';
+import { Button } from '@/components/ui/button';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
   getCompetitionQueryOptions,
   useCompetition,
 } from '@/features/competitions/api/get-competition';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
   Overview,
   Groups,
   Elimination,
   Referees,
 } from '@/features/competitions/components/competition';
-
-import { msg, Trans } from '@lingui/macro';
-import { QueryClient } from '@tanstack/react-query';
-import { LoaderFunctionArgs, useParams } from 'react-router-dom';
-import { PencilIcon } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { useLingui } from '@lingui/react';
-import { UpdateCompetitionParameters } from '@/features/competitions/components/dialog/update-competition-parameters';
-import { useState } from 'react';
 import { UpdateCompetition } from '@/features/competitions/components/dialog/update-competition';
+import { UpdateCompetitionParameters } from '@/features/competitions/components/dialog/update-competition-parameters';
 
 export const competitionLoader =
   (queryClient: QueryClient) =>

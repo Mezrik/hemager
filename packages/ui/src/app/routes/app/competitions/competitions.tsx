@@ -1,3 +1,9 @@
+import { msg, Trans } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
+import { QueryClient } from '@tanstack/react-query';
+import { PlusIcon } from 'lucide-react';
+import { useState } from 'react';
+
 import { BasicPageLayout } from '@/components/layouts';
 import { Button } from '@/components/ui/button';
 import {
@@ -6,11 +12,6 @@ import {
 } from '@/features/competitions/api/get-competitions';
 import { CompetitionCard } from '@/features/competitions/components/competition-card';
 import { CreateCompetition } from '@/features/competitions/components/dialog/create-competition';
-import { msg, Trans } from '@lingui/macro';
-import { useLingui } from '@lingui/react';
-import { QueryClient } from '@tanstack/react-query';
-import { PlusIcon } from 'lucide-react';
-import { useState } from 'react';
 
 export const competitionsLoader = (queryClient: QueryClient) => async () => {
   const query = getCompetitionsQueryOptions();

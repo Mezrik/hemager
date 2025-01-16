@@ -1,3 +1,10 @@
+import { msg } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
+import { ClockIcon, UsersRound, ZapIcon } from 'lucide-react';
+import { FC } from 'react';
+import { Link } from 'react-router-dom';
+
+import { pathnames } from '@/app/pathnames';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -7,18 +14,14 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { GenderEnum } from '@/generated/server';
-import { FC } from 'react';
-import { getGenderCaption, getGenderIcon } from '../helpers';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
-import { formatUIDate } from '@/utils/date';
-import { Separator } from '@/components/ui/separator';
-import { ClockIcon, UsersRound, ZapIcon } from 'lucide-react';
-import { msg } from '@lingui/macro';
 import { Chip } from '@/components/ui/chip';
-import { Link } from 'react-router-dom';
-import { pathnames } from '@/app/pathnames';
-import { useLingui } from '@lingui/react';
+import { Separator } from '@/components/ui/separator';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
+import { GenderEnum } from '@/generated/server';
+
+import { formatUIDate } from '@/utils/date';
+import { getGenderCaption, getGenderIcon } from '../helpers';
+
 
 type CompetitionCard = {
   competitionId: UUID;
@@ -61,7 +64,7 @@ export const CompetitionCard: FC<CompetitionCard> = ({
         </CardHeader>
         <CardContent>
           {/* TODO: Show dynamic competition statistics */}
-          <div className="flex gap-2 flex-wrap">
+          <div className="flex flex-wrap gap-2">
             <Chip Icon={ZapIcon} label={_(msg`Matches`)} text="1/40" />
             <Chip Icon={ClockIcon} label={_(msg`Average match time`)} text="1:32" />
             <Chip Icon={UsersRound} label={_(msg`Participants`)} text="3" />

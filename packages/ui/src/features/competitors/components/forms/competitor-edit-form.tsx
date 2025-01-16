@@ -1,3 +1,12 @@
+import { I18n } from '@lingui/core';
+import { msg, t, Trans } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
+import { CalendarIcon } from 'lucide-react';
+import { FC } from 'react';
+import { z } from 'zod';
+
+import { Button } from '@/components/ui/button';
+import { Calendar } from '@/components/ui/calendar';
 import {
   Form,
   FormControl,
@@ -9,19 +18,11 @@ import {
   RadioGroupFormField,
   RadioOption,
 } from '@/components/ui/form';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { getGenderCaption } from '@/features/competitions/helpers';
 import { GenderEnum } from '@/generated/server';
-import { msg, t, Trans } from '@lingui/macro';
-import { I18n } from '@lingui/core';
-import { useLingui } from '@lingui/react';
-import { FC } from 'react';
-import { z } from 'zod';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Button } from '@/components/ui/button';
 import { cn } from '@/utils/class-names';
 import { formatUIDate } from '@/utils/date';
-import { CalendarIcon } from 'lucide-react';
-import { Calendar } from '@/components/ui/calendar';
 
 export const editCompetitorInputSchema = z.object({
   firstname: z.string().min(1, t`Firstname is required`),
@@ -75,13 +76,13 @@ export const CompetitorEditForm: FC<CompetitorEditFormProps> = ({
           <fieldset className="flex gap-4">
             <Input
               label={_(msg`Firstname`)}
-              className="flex-grow"
+              className="grow"
               error={formState.errors['firstname']}
               registration={register('firstname')}
             />
             <Input
               label={_(msg`Surname`)}
-              className="flex-grow"
+              className="grow"
               error={formState.errors['surname']}
               registration={register('surname')}
             />
@@ -128,7 +129,7 @@ export const CompetitorEditForm: FC<CompetitorEditFormProps> = ({
                             <Trans>Pick a date</Trans>
                           </span>
                         )}
-                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                        <CalendarIcon className="ml-auto size-4 opacity-50" />
                       </Button>
                     </FormControl>
                   </PopoverTrigger>

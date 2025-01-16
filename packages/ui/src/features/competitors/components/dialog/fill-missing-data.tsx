@@ -1,3 +1,9 @@
+import { msg, Trans } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
+import { useQueryClient } from '@tanstack/react-query';
+import { FC, useEffect, useState } from 'react';
+import { useMediaQuery } from 'usehooks-ts';
+
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -15,15 +21,11 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from '@/components/ui/drawer';
-import { msg, Trans } from '@lingui/macro';
-import { useLingui } from '@lingui/react';
-import { FC, useEffect, useState } from 'react';
-import { useMediaQuery } from 'usehooks-ts';
-import { CompetitorEditForm } from '../forms/competitor-edit-form';
 import { CompetitorResult } from '@/generated/server';
-import { useUpdateCompetitor } from '../../api/update-competitor';
-import { useQueryClient } from '@tanstack/react-query';
+
 import { getCompetitorsQueryOptions } from '../../api/get-competitors';
+import { useUpdateCompetitor } from '../../api/update-competitor';
+import { CompetitorEditForm } from '../forms/competitor-edit-form';
 
 const FORM_ID = 'create-competitor-form';
 
@@ -69,8 +71,8 @@ const FillMissingDataForm: FC<FillMissingDataProps> = ({
 
   return (
     <>
-      <div className="flex justify-between items-center gap-4">
-        <Button variant="secondary" onClick={handleNext} className="flex-grow">
+      <div className="flex items-center justify-between gap-4">
+        <Button variant="secondary" onClick={handleNext} className="grow">
           <Trans>Skip</Trans>
         </Button>
         <span className="text-sm">

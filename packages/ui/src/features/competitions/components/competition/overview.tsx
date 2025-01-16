@@ -1,21 +1,23 @@
+import { msg, Trans } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
+import { FC, useState } from 'react';
+
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { InfoList, InfoListItem } from '@/components/ui/info-list';
 import { CompetitionResult } from '@/generated/server';
 import { formatUIDate } from '@/utils/date';
-import { msg, Trans } from '@lingui/macro';
-import { FC, useState } from 'react';
-import { getCompetionTypeCaption, getGenderCaption } from '../../helpers';
-import { InfoList, InfoListItem } from '@/components/ui/info-list';
-import { ParticipantsList } from '../../../competitors/components/participant/participants-list';
+
 import { AssignParticipant } from '../../../competitors/components/participant/assign-participant';
-import { Button } from '@/components/ui/button';
-import { useLingui } from '@lingui/react';
+import { ParticipantsList } from '../../../competitors/components/participant/participants-list';
+import { getCompetionTypeCaption, getGenderCaption } from '../../helpers';
 
 export const Overview: FC<{ competition: CompetitionResult }> = ({ competition }) => {
   const { _ } = useLingui();
   const [showAssignParticipant, setShowAssignParticipant] = useState(false);
 
   return (
-    <div className="grid grid-cols-4 gap-4 w-full">
+    <div className="grid w-full grid-cols-4 gap-4">
       <Card className="col-span-4 md:col-span-1">
         <CardHeader>
           <CardTitle>
@@ -45,7 +47,7 @@ export const Overview: FC<{ competition: CompetitionResult }> = ({ competition }
       </Card>
       <Card className="col-span-4 md:col-span-3">
         <CardHeader>
-          <CardTitle className="flex gap-4 items-center">
+          <CardTitle className="flex items-center gap-4">
             <Trans>List of competitors</Trans>
             <Button onClick={() => setShowAssignParticipant(true)} variant="secondary" size="sm">
               <Trans>Assign competitor</Trans>

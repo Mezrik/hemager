@@ -1,9 +1,11 @@
-import { FC } from 'react';
-import { useCompetitions } from '../api/get-competitions';
-import { Button } from '@/components/ui/button';
 import { Trans } from '@lingui/macro';
+import { FC } from 'react';
 import { Link } from 'react-router-dom';
+
 import { pathnames } from '@/app/pathnames';
+import { Button } from '@/components/ui/button';
+
+import { useCompetitions } from '../api/get-competitions';
 
 export const RecentCompetitions: FC<{}> = () => {
   const competitionsQuery = useCompetitions({});

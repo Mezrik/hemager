@@ -1,6 +1,9 @@
+import { Trans } from '@lingui/macro';
 import { FC } from 'react';
-import { useCompetitionsGroups } from '../../api/get-groups';
-import { useParticipants } from '@/features/competitors/api/get-participants';
+import { Link } from 'react-router-dom';
+
+import { pathnames } from '@/app/pathnames';
+import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
@@ -9,13 +12,12 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { Link } from 'react-router-dom';
-import { pathnames } from '@/app/pathnames';
-import { mapParticipantsByGroup } from '../../helpers';
-import { Trans } from '@lingui/macro';
-import { Button } from '@/components/ui/button';
-import { useInitializeGroups } from '../../api/initialize-groups';
+import { useParticipants } from '@/features/competitors/api/get-participants';
+
 import { useCompetition } from '../../api/get-competition';
+import { useCompetitionsGroups } from '../../api/get-groups';
+import { useInitializeGroups } from '../../api/initialize-groups';
+import { mapParticipantsByGroup } from '../../helpers';
 
 type GroupsProps = {
   competitionId: UUID;
@@ -83,7 +85,7 @@ export const Groups: FC<GroupsProps> = ({ competitionId }) => {
     <div className="grid grid-cols-4 gap-4">
       {groupsQuery.data?.map((group) => (
         <Link to={pathnames.buildCompetitionGroupPath(group.id, competitionId)} key={group.id}>
-          <Card className="col-span-4 sm:col-span-2 md:col-span-1 hover:bg-gray-50 transition-colors">
+          <Card className="col-span-4 transition-colors hover:bg-gray-50 sm:col-span-2 md:col-span-1">
             <CardHeader className="flex flex-row items-center justify-between space-y-0">
               <CardTitle>{group.name}</CardTitle>
               <CardDescription>

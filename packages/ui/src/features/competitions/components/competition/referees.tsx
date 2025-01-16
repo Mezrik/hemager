@@ -1,3 +1,7 @@
+import { msg } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
+import { FC } from 'react';
+
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   Table,
@@ -7,9 +11,6 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { msg } from '@lingui/macro';
-import { useLingui } from '@lingui/react';
-import { FC } from 'react';
 
 const referees = [
   { id: 1, firstname: 'Petr', surname: 'Petr', piste: 'Piste 1' },

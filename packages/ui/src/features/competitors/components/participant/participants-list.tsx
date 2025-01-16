@@ -1,5 +1,8 @@
-import { useParticipants } from '@/features/competitors/api/get-participants';
+import { msg } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
+import { CZ } from 'country-flag-icons/react/3x2';
 import { FC } from 'react';
+
 import {
   Table,
   TableBody,
@@ -8,9 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { CZ } from 'country-flag-icons/react/3x2';
-import { useLingui } from '@lingui/react';
-import { msg } from '@lingui/macro';
+import { useParticipants } from '@/features/competitors/api/get-participants';
 
 export const ParticipantsList: FC<{ competitionId: UUID }> = ({ competitionId }) => {
   const { _ } = useLingui();

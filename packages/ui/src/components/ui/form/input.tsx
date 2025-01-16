@@ -2,6 +2,7 @@ import * as React from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
 
 import { cn } from '@/utils/class-names';
+
 import { FieldWrapper, FieldWrapperPassThroughProps } from './field-wrapper';
 
 export type BaseInputProps = React.InputHTMLAttributes<HTMLInputElement> &

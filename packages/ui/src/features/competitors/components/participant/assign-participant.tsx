@@ -1,3 +1,8 @@
+import { msg, Trans } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
+import { FC } from 'react';
+import { useMediaQuery } from 'usehooks-ts';
+
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -22,12 +27,10 @@ import {
 } from '@/features/competitors/api/assign-participant';
 import { useCompetitors } from '@/features/competitors/api/get-competitors';
 import { useToast } from '@/hooks/ui/use-toast';
-import { msg, Trans } from '@lingui/macro';
-import { useLingui } from '@lingui/react';
-import { FC } from 'react';
-import { useMediaQuery } from 'usehooks-ts';
-import { ParticipantDualList } from './participant-dual-list';
+
 import { useParticipants } from '../../api/get-participants';
+
+import { ParticipantDualList } from './participant-dual-list';
 
 const FORM_ID = 'assign-competitors-form';
 
@@ -74,7 +77,7 @@ export const AssignParticipantsForm: FC<{
       options={{
         defaultValues: {
           competitionId: competitionId,
-          competitorIds: selectedParticipantIds as UUID[],
+          competitorIds: selectedParticipantIds,
         },
       }}
     >

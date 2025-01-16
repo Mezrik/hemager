@@ -1,6 +1,8 @@
 import { FC } from 'react';
-import { Head } from '../meta';
+
 import { cn } from '@/utils/class-names';
+
+import { Head } from '../meta';
 
 export const BasicPageLayout: FC<{
   children: React.ReactNode;
@@ -12,7 +14,7 @@ export const BasicPageLayout: FC<{
   return (
     <>
       <Head title={title} />
-      <div className="py-6 flex flex-col w-full h-full max-h-screen min-h-0">
+      <div className="flex size-full max-h-screen min-h-0 flex-col py-6">
         <div
           className={cn(
             'flex mx-auto max-w-7xl px-4 sm:px-6 md:px-8 w-full',
@@ -21,7 +23,7 @@ export const BasicPageLayout: FC<{
         >
           <div>
             {subtitle && (
-              <h3 className="text-md text-primary uppercase tracking-wider">{subtitle}</h3>
+              <h3 className="text-md uppercase tracking-wider text-primary">{subtitle}</h3>
             )}
             <h1 className="text-2xl font-semibold text-gray-900">{title}</h1>
           </div>

@@ -1,6 +1,7 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Trans } from '@lingui/macro';
 import { FC } from 'react';
+
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export const Elimination: FC = ({}) => {
   return (

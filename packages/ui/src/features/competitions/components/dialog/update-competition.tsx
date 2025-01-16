@@ -1,13 +1,8 @@
+import { msg, Trans } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
 import { FC } from 'react';
 import { useMediaQuery } from 'usehooks-ts';
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-} from '@/components/ui/drawer';
+
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -17,14 +12,20 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { msg, Trans } from '@lingui/macro';
-import { useToast } from '@/hooks/ui/use-toast';
-import { useUpdateCompetition } from '@/features/competitions/api/update-competition';
-
-import { useLingui } from '@lingui/react';
-import { EditCompetitionForm } from '../forms/edit-competition-form';
-import { useCompetition } from '../../api/get-competition';
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+} from '@/components/ui/drawer';
 import { Spinner } from '@/components/ui/spinner';
+import { useUpdateCompetition } from '@/features/competitions/api/update-competition';
+import { useToast } from '@/hooks/ui/use-toast';
+
+import { useCompetition } from '../../api/get-competition';
+import { EditCompetitionForm } from '../forms/edit-competition-form';
 
 type UpdateCompetitionProps = {
   open: boolean;

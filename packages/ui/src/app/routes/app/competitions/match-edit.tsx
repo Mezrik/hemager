@@ -1,3 +1,10 @@
+import { msg, Trans } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
+import { QueryClient } from '@tanstack/react-query';
+import { ChevronLeft } from 'lucide-react';
+import { ComponentProps } from 'react';
+import { LoaderFunctionArgs, useNavigate, useParams } from 'react-router-dom';
+
 import { BasicPageLayout } from '@/components/layouts';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -8,12 +15,6 @@ import {
 } from '@/features/competitors/api/get-participants';
 import { getMatchQueryOptions, useMatch } from '@/features/matches/api/get-match';
 import { MatchEdit } from '@/features/matches/components/match-edit';
-import { msg, Trans } from '@lingui/macro';
-import { useLingui } from '@lingui/react';
-import { QueryClient } from '@tanstack/react-query';
-import { ChevronLeft } from 'lucide-react';
-import { ComponentProps } from 'react';
-import { LoaderFunctionArgs, useNavigate, useParams } from 'react-router-dom';
 
 export const matchEditLoader =
   (queryClient: QueryClient) =>
@@ -59,7 +60,7 @@ export const MatchEditRoute = () => {
       title={_(msg`Match edit`)}
       actions={
         <Button onClick={() => navigate(-1)}>
-          <ChevronLeft className="size-4 mr-2" />
+          <ChevronLeft className="mr-2 size-4" />
           <Trans>Go back</Trans>
         </Button>
       }

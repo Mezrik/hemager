@@ -1,9 +1,11 @@
+import { t } from '@lingui/macro';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { z } from 'zod';
+
 import { MutationConfig } from '@/lib/react-query';
 import { api } from '@/services/api';
-import { z } from 'zod';
+
 import { getParticipantsQueryOptions } from './get-participants';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { t } from '@lingui/macro';
 
 export const assignParticipantsInputSchema = z.object({
   competitionId: z.string().uuid(t`Select correct competition`),

@@ -1,13 +1,14 @@
-import { Book, LifeBuoy, Settings2, SquareUser, Swords, Circle, Users } from 'lucide-react';
 import { I18n } from '@lingui/core';
+import { msg, t } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
+import { Book, LifeBuoy, Settings2, SquareUser, Swords, Circle, Users } from 'lucide-react';
 import { ComponentProps, ComponentType, FC } from 'react';
+import { NavLink } from 'react-router-dom';
+
+import { pathnames } from '@/app/pathnames';
 import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
-import { msg, t } from '@lingui/macro';
-import { pathnames } from '@/app/pathnames';
 import { cn } from '@/utils/class-names';
-import { NavLink } from 'react-router-dom';
-import { useLingui } from '@lingui/react';
 
 type AsideMenuItemProps = {
   name: string;

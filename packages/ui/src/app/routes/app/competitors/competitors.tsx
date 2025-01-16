@@ -1,3 +1,11 @@
+import { msg, Trans } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
+import { CaretDownIcon, CaretSortIcon } from '@radix-ui/react-icons';
+import { SelectContent } from '@radix-ui/react-select';
+import { QueryClient } from '@tanstack/react-query';
+import { ArrowDown, ImportIcon, PlusIcon } from 'lucide-react';
+import { useState } from 'react';
+
 import { BasicPageLayout } from '@/components/layouts';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -10,13 +18,6 @@ import { CompetitorsTable } from '@/features/competitors/components/competitors-
 import { CreateCompetitor } from '@/features/competitors/components/dialog/create-competitor';
 import { FillMissingData } from '@/features/competitors/components/dialog/fill-missing-data';
 import { ImportCompetitorsDialog } from '@/features/competitors/components/dialog/import-competitors';
-import { msg, Trans } from '@lingui/macro';
-import { useLingui } from '@lingui/react';
-import { CaretDownIcon, CaretSortIcon } from '@radix-ui/react-icons';
-import { SelectContent } from '@radix-ui/react-select';
-import { QueryClient } from '@tanstack/react-query';
-import { ArrowDown, ImportIcon, PlusIcon } from 'lucide-react';
-import { useState } from 'react';
 
 export const competitorsLoader = (queryClient: QueryClient) => async () => {
   const query = getCompetitorsQueryOptions();
@@ -80,13 +81,13 @@ export const CompetitorsRoute = () => {
           </Button>
         </div>
       }
-      className="flex flex-col min-h-0"
+      className="flex min-h-0 flex-col"
     >
       {!competitorsQuery.data || competitorsQuery.data.length <= 0 ? (
         <Trans>No competitors found</Trans>
       ) : (
         <>
-          <div className="mb-4 flex justify-between items-center">
+          <div className="mb-4 flex items-center justify-between">
             <div className="flex gap-2">
               <InputBase
                 placeholder={_(msg`Type here to search`)}
@@ -112,7 +113,7 @@ export const CompetitorsRoute = () => {
               </Badge>
             )}
           </div>
-          <div className="flex-grow overflow-y-auto">
+          <div className="grow overflow-y-auto">
             <CompetitorsTable
               data={filteredData ?? []}
               onSelect={handleSelect}

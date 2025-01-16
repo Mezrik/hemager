@@ -1,7 +1,8 @@
-import { CompetitorResult } from '@/generated/server';
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
 import { FC, useState } from 'react';
 import DualListBox from 'react-dual-listbox';
+
+import { CompetitorResult } from '@/generated/server';
 import './participant-dual-list.css';
 
 export const ParticipantDualList: FC<{

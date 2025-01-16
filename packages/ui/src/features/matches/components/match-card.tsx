@@ -1,9 +1,11 @@
-import { Match } from '@/generated/server';
-import { MatchParticipant } from '../types';
-import { FC } from 'react';
 import { Trans } from '@lingui/macro';
-import { Button } from '@/components/ui/button';
 import { Eye, Pencil } from 'lucide-react';
+import { FC } from 'react';
+
+import { Button } from '@/components/ui/button';
+import { Match } from '@/generated/server';
+
+import { MatchParticipant } from '../types';
 
 type MatchCardProps = {
   match: Match;
@@ -21,14 +23,14 @@ export const MatchCard: FC<MatchCardProps> = ({
   onEdit,
 }) => {
   return (
-    <div className="w-full bg-gray-100 rounded-lg px-4 py-2 space-y-1.5  transition-colors">
-      <div className="flex justify-between items-start">
+    <div className="w-full space-y-1.5 rounded-lg bg-gray-100 px-4 py-2  transition-colors">
+      <div className="flex items-start justify-between">
         <div>
-          <span className="text-gray-400 uppercase tracking-wider text-xs">
+          <span className="text-xs uppercase tracking-wider text-gray-400">
             <Trans>Match</Trans>
           </span>
         </div>
-        <div className="justify-end flex gap-2">
+        <div className="flex justify-end gap-2">
           <Button className="cursor-pointer" onClick={onPreview} variant="outline" size="xs">
             <Eye className="size-4" />
             <span className="sr-only">

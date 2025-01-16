@@ -1,11 +1,11 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { FC, useState } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 
-import { TooltipProvider } from '@/components/ui/tooltip';
-import { queryConfig } from '@/lib/react-query';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from '@/components/ui/toaster';
+import { TooltipProvider } from '@/components/ui/tooltip';
 import { LocalizationProvider } from '@/i18n';
+import { queryConfig } from '@/lib/react-query';
 
 export const AppProvider: FC<{ children?: React.ReactNode }> = ({ children }) => {
   const [queryClient] = useState(

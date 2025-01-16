@@ -1,13 +1,14 @@
 import { QueryClient, useQueryClient } from '@tanstack/react-query';
+import { useMemo } from 'react';
 import {
   createBrowserRouter,
   createHashRouter,
   LoaderFunctionArgs,
   RouterProvider,
 } from 'react-router-dom';
-import { AppRoot } from './routes/app/root';
-import { useMemo } from 'react';
+
 import { pathnames } from './pathnames';
+import { AppRoot } from './routes/app/root';
 
 const createRouter = import.meta.env.MODE === 'desktop' ? createHashRouter : createBrowserRouter;
 

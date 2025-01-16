@@ -1,3 +1,7 @@
+import { msg, Trans } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
+import { FC } from 'react';
+
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -8,11 +12,9 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Form, FormField, FormItem, FormLabel, FormMessage, InputBase } from '@/components/ui/form';
-import { msg, Trans } from '@lingui/macro';
-import { useLingui } from '@lingui/react';
-import { FC } from 'react';
-import { importCompetitorInputSchema, useImportCompetitor } from '../../api/import-competitor';
 import { toast } from '@/hooks/ui/use-toast';
+
+import { importCompetitorInputSchema, useImportCompetitor } from '../../api/import-competitor';
 
 type ImportCompetitorsProps = {
   open: boolean;

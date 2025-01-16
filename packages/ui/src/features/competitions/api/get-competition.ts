@@ -1,6 +1,7 @@
+import { queryOptions, useQuery } from '@tanstack/react-query';
+
 import { QueryConfig } from '@/lib/react-query';
 import { api } from '@/services/api';
-import { queryOptions, useQuery } from '@tanstack/react-query';
 
 export const getCompetitionQueryOptions = (competitionId: UUID) => {
   return queryOptions({

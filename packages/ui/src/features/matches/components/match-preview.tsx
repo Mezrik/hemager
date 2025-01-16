@@ -1,3 +1,7 @@
+import { Trans } from '@lingui/macro';
+import { FC } from 'react';
+import { useMediaQuery } from 'usehooks-ts';
+
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import {
   Drawer,
@@ -7,13 +11,11 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from '@/components/ui/drawer';
-import { Trans } from '@lingui/macro';
-import { FC } from 'react';
-import { useMediaQuery } from 'usehooks-ts';
-import { useMatch } from '../api/get-match';
-import { MatchParticipant } from '../types';
-import { processMatchState } from '../helpers';
 import { MatchChangeEnum } from '@/generated/server';
+
+import { useMatch } from '../api/get-match';
+import { processMatchState } from '../helpers';
+import { MatchParticipant } from '../types';
 
 type MatchPreviewBaseProps = {
   matchId: UUID;
@@ -44,12 +46,12 @@ const MatchPreviewBase: FC<MatchPreviewBaseProps> = ({ matchId, participantsById
 
   return (
     <div className="flex flex-col gap-8">
-      <div className="flex justify-between gap-4 items-center">
-        <div className="flex gap-4 items-center">
+      <div className="flex items-center justify-between gap-4">
+        <div className="flex items-center gap-4">
           <div>
             {participantOne.firstname} {participantOne.surname}
           </div>
-          <div className="rounded bg-primary text-primary-foreground text-xl size-14 flex items-center justify-center">
+          <div className="flex size-14 items-center justify-center rounded bg-primary text-xl text-primary-foreground">
             {matchState.participantOneScore}
           </div>
         </div>
@@ -58,11 +60,11 @@ const MatchPreviewBase: FC<MatchPreviewBaseProps> = ({ matchId, participantsById
           <Trans>vs</Trans>
         </div>
 
-        <div className="flex flex-row-reverse gap-4 items-center">
+        <div className="flex flex-row-reverse items-center gap-4">
           <div>
             {participantTwo.firstname} {participantTwo.surname}
           </div>
-          <div className="rounded bg-primary text-primary-foreground text-xl size-14 flex items-center justify-center">
+          <div className="flex size-14 items-center justify-center rounded bg-primary text-xl text-primary-foreground">
             {matchState.participantTwoScore}
           </div>
         </div>

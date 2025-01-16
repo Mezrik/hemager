@@ -1,12 +1,13 @@
-import { MenGenderIcon, MixedGenderIcon, WomenGenderIcon } from '@/assets/icons';
 import { I18n } from '@lingui/core';
+import { msg } from '@lingui/macro';
+
+import { MenGenderIcon, MixedGenderIcon, WomenGenderIcon } from '@/assets/icons';
 import {
   CompetitionParticipant,
   CompetitionTypeEnum,
   DeploymentTypeEnum,
   GenderEnum,
 } from '@/generated/server';
-import { msg } from '@lingui/macro';
 
 export const getCompetionTypeCaption = (competitionType: CompetitionTypeEnum, _: I18n['_']) => {
   switch (competitionType) {

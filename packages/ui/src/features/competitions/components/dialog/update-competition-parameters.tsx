@@ -1,13 +1,9 @@
+import { I18n } from '@lingui/core';
+import { msg, Trans } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
 import { FC } from 'react';
 import { useMediaQuery } from 'usehooks-ts';
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-} from '@/components/ui/drawer';
+
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -17,17 +13,22 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { msg, Trans } from '@lingui/macro';
-import { I18n } from '@lingui/core';
-import { useToast } from '@/hooks/ui/use-toast';
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+} from '@/components/ui/drawer';
 import { Form, Input, RadioGroupFormField, RadioOption } from '@/components/ui/form';
-import { CompetitionParameters, DeploymentTypeEnum, GenderEnum } from '@/generated/server';
-import { useLingui } from '@lingui/react';
 import {
   updateCompetitionParametersInputSchema,
   useUpdateCompetitionParameters,
 } from '@/features/competitions/api/update-competition-parameters';
 import { getDeploymentTypeCaption } from '@/features/competitions/helpers';
+import { CompetitionParameters, DeploymentTypeEnum, GenderEnum } from '@/generated/server';
+import { useToast } from '@/hooks/ui/use-toast';
 
 type UpdateCompetitionParametersProps = {
   open: boolean;

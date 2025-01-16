@@ -1,9 +1,11 @@
+import { t } from '@lingui/macro';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { z } from 'zod';
+
 import { GenderEnum } from '@/generated/server';
 import { MutationConfig } from '@/lib/react-query';
 import { api } from '@/services/api';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { z } from 'zod';
-import { t } from '@lingui/macro';
+
 import { getCompetitorsQueryOptions } from './get-competitors';
 
 export const updateCompetitorInputSchema = z.object({
