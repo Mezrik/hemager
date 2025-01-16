@@ -1,5 +1,6 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import { initialize, constructAPI } from '@hemager/core';
+
 import { getPreloadPath, isDev } from './util.js';
 
 app.on('ready', async () => {

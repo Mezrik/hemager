@@ -9,7 +9,7 @@ import {
   Table,
 } from 'sequelize-typescript';
 
-import { MatchStateChange } from '@/api';
+import { MatchStateChange } from '@hemager/api-types';
 
 import { Contestant } from './contestant.model';
 import { Match } from './match.model';

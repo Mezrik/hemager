@@ -1,4 +1,4 @@
-import { ContestTypeEnum, DeploymentCriteria, GenderEnum } from "@hemager/api";
+import { ContestTypeEnum, DeploymentCriteria, GenderEnum } from './enums';
 
 export type CreateContestInput = {
   name: string;

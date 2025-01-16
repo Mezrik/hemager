@@ -1,4 +1,4 @@
-import { ContestTypeEnum, DeploymentCriteria, GenderEnum } from '@hemager/api';
+import { ContestTypeEnum, DeploymentCriteria, GenderEnum } from '@hemager/api-types';
 import { plainToClass } from 'class-transformer';
 import {
   AllowNull,

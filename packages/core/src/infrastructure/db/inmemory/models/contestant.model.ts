@@ -1,4 +1,3 @@
-import { GenderEnum } from '@hemager/api';
 import {
   AllowNull,
   BelongsTo,
@@ -9,6 +8,8 @@ import {
   PrimaryKey,
   Table,
 } from 'sequelize-typescript';
+
+import { GenderEnum } from '@hemager/api-types';
 
 import { Club } from './club.model';
 

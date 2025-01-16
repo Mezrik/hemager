@@ -1,4 +1,4 @@
-import type { CreateContestInput } from '@hemager/api';
+import type { CreateContestInput } from '@hemager/api-types';
 
 import {
   CompetitionCategoryResult,

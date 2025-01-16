@@ -1,7 +1,7 @@
-import { ContestTypeEnum, DeploymentCriteria, GenderEnum } from '@hemager/api';
 import { Expose, Transform } from 'class-transformer';
 
 import { Entity, EntityProperties } from '@/common/entity';
+import { ContestTypeEnum, DeploymentCriteria, GenderEnum } from '@hemager/api-types';
 
 import { Round } from '../round/round';
 

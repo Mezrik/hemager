@@ -5,10 +5,15 @@ import { dependencies } from "./dependencies";
 import { config } from "./default-config";
 import { shims } from "./shims";
 
+export * from "./dependencies";
+export * from "./default-config";
+export * from "./shims";
+
 export interface BuildOptions {
   entry?: string | string[];
   formats?: ("es" | "cjs")[];
   dts?: DtsPluginOptions;
+  omitShims?: string[]; // omit shims in files
 }
 
 export async function node(options?: BuildOptions): Promise<Plugin[]> {
@@ -25,7 +30,7 @@ export async function node(options?: BuildOptions): Promise<Plugin[]> {
       formats: options?.formats ?? ["es"],
       outDir: "dist",
     }),
-    shims(),
+    shims(options?.omitShims),
     dts({ rollupTypes: true, ...(options?.dts ?? {}) }),
   ];
 

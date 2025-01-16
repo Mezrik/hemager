@@ -5,7 +5,8 @@ import * as path from 'path';
 export default defineConfig({
   plugins: [
     node({
-      entry: path.resolve(__dirname, './src/index.ts'),
+      entry: [path.resolve(__dirname, './src/index.ts')],
+      formats: ['es', 'cjs'],
       dts: {
         entryRoot: path.resolve(__dirname, 'src'),
         outDir: path.resolve(__dirname, 'dist'),

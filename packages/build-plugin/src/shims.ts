@@ -1,11 +1,14 @@
 import { Plugin } from "vite";
 import MagicString from "magic-string";
 
-export function shims(): Plugin {
+export function shims(omitShims?: string[]): Plugin {
   return {
     name: "node-shims",
     renderChunk(code, chunk) {
-      if (!chunk.fileName.endsWith(".js")) {
+      if (
+        !chunk.fileName.endsWith(".js") ||
+        omitShims?.includes(chunk.fileName)
+      ) {
         return;
       }
 

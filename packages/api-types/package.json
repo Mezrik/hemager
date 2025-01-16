@@ -1,44 +1,42 @@
 {
-  "name": "@hemager/build-plugin",
+  "name": "@hemager/api-types",
   "version": "0.0.0",
   "description": "> TODO: description",
   "author": "Martin Petr <martin.petr.276@gmail.com>",
   "homepage": "https://github.com/Mezrik/hemager#readme",
   "license": "ISC",
-  "type": "module",
   "exports": {
     ".": {
       "import": "./dist/index.js",
-      "require": "./dist/index.cjs",
       "types": "./dist/index.d.ts"
-    },
-    "./*": "./*"
+    }
   },
   "files": [
     "dist"
   ],
+  "type": "module",
   "types": "./dist/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Mezrik/hemager.git"
   },
   "scripts": {
-    "build": "vite build",
-    "dev": "vite build --watch"
+    "lint": "eslint .",
+    "dev": "vite build --watch",
+    "build": "vite build"
   },
   "bugs": {
     "url": "https://github.com/Mezrik/hemager/issues"
   },
-  "sideEffects": false,
   "devDependencies": {
-    "vite": "^4.5.5"
-  },
-  "dependencies": {
-    "magic-string": "^0.30.17",
-    "rollup-plugin-node-externals": "^7.1.3",
+    "vite": "^4.4.5",
+    "vite-node": "^2.1.8",
+    "eslint": "^8.57.1",
+    "@hemager/eslint-config": "0.0.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-codegen": "^0.29.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "prettier": "^3.3.2",
     "vite-plugin-dts": "^4.5.0"
-  },
-  "peerDependencies": {
-    "vite": "^4.x || ^5.x"
   }
 }

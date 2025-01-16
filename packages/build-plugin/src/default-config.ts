@@ -55,6 +55,11 @@ export function config(options: {
                 format: _format as any,
                 pkgType: packageJson.type,
               });
+
+              console.log(
+                pathe.extname(entryName),
+                pathe.basename(entryName, pathe.extname(entryName))
+              );
               return `${pathe.basename(entryName, pathe.extname(entryName))}${ext.js}`;
             },
           },

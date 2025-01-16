@@ -1,4 +1,4 @@
-import { ContestTypeEnum, GenderEnum } from '@hemager/api';
+import { ContestTypeEnum, GenderEnum } from '@hemager/api-types';
 import { t } from '@lingui/macro';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { z } from 'zod';

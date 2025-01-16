@@ -8,10 +8,10 @@
   "type": "module",
   "exports": {
     ".": {
-      "default": "./dist/index.js",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
       "types": "./dist/index.d.ts"
-    },
-    "./*": "./*"
+    }
   },
   "files": [
     "dist"
@@ -50,6 +50,6 @@
     "vite": "^4.4.5",
     "vite-node": "^2.1.8",
     "@hemager/eslint-config": "0.0.0",
-    "@hemager/api": "0.0.0"
+    "@hemager/api-types": "0.0.0"
   }
 }

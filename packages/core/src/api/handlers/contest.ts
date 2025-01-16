@@ -4,7 +4,7 @@ import {
   ContestDto,
   CategoryDto,
   WeaponDto,
-} from '@hemager/api';
+} from '@hemager/api-types';
 
 import { CreateContestCommand } from '@/application/command/contest/create-contest';
 import { UpdateContestCommand } from '@/application/command/contest/update-contest';
@@ -30,10 +30,10 @@ export const contestHandlers = (_queryBus: QueryBus, _commandBus: CommandBus) =>
         ),
       );
     },
-    update: async function (id: string, payload: UpdateContestInput): Promise<void> {
+    update: async function (payload: UpdateContestInput): Promise<void> {
       await _commandBus.send(
         new UpdateContestCommand(
-          id,
+          payload.id,
           payload.name,
           payload.organizerName,
           payload.federationName,

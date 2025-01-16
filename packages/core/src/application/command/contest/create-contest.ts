@@ -1,4 +1,4 @@
-import { ContestTypeEnum, GenderEnum } from '@hemager/api';
+import { ContestTypeEnum, GenderEnum } from '@hemager/api-types';
 import { inject, injectable } from 'inversify';
 
 import { Command } from '@/common/command';

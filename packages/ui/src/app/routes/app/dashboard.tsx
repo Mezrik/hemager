@@ -1,4 +1,4 @@
-import { ContestTypeEnum, GenderEnum } from '@hemager/api';
+import { ContestTypeEnum, GenderEnum } from '@hemager/api-types';
 import { msg, Trans } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
 import { QueryClient } from '@tanstack/react-query';

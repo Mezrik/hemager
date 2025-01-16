@@ -1,6 +1,5 @@
-import { GenderEnum } from '@hemager/api';
-
 import { Entity, EntityProperties } from '@/common/entity';
+import { GenderEnum } from '@hemager/api-types';
 
 import { Club } from './club';
 

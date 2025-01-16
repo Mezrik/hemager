@@ -5,8 +5,7 @@
   "author": "Martin Petr <martin.petr.276@gmail.com>",
   "homepage": "",
   "license": "ISC",
-  "main": "dist/main.js",
-  "type": "module",
+  "main": "dist/main.mjs",
   "scripts": {
     "dev": "cross-env NODE_ENV=development electron .",
     "transpile": "tsc --project tsconfig.json",
@@ -14,7 +13,7 @@
   },
   "dependencies": {
     "@hemager/core": "0.0.0",
-    "@hemager/api": "0.0.0",
+    "@hemager/api-types": "0.0.0",
     "@hemager/ui": "0.0.0",
     "chokidar": "^4.0.3"
   },

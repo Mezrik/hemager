@@ -16,7 +16,7 @@ import { infrastructureModule } from '@/infrastructure/module';
 
 import { applicationModule } from './application/module';
 
-export * from '@/api';
+export * from '@/api/construct-api';
 
 export const initialize = () => {
   const container = new Container();
