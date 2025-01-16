@@ -18,10 +18,9 @@ import { Chip } from '@/components/ui/chip';
 import { Separator } from '@/components/ui/separator';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { GenderEnum } from '@/generated/server';
-
 import { formatUIDate } from '@/utils/date';
-import { getGenderCaption, getGenderIcon } from '../helpers';
 
+import { getGenderCaption, getGenderIcon } from '../helpers';
 
 type CompetitionCard = {
   competitionId: UUID;
@@ -50,7 +49,7 @@ export const CompetitionCard: FC<CompetitionCard> = ({
             {GenderIcon && gender && (
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <GenderIcon className="size-5 text-primary" />
+                  <GenderIcon className="text-primary size-5" />
                 </TooltipTrigger>
                 <TooltipContent>{getGenderCaption(gender, _)}</TooltipContent>
               </Tooltip>

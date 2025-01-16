@@ -14,6 +14,7 @@ export class GetAllContestsQueryHandler implements QueryHandler<GetAllContestsQu
 
   async execute() {
     const contests = await this._repository.findAll();
+    console.log(contests);
     return contests;
   }
 }

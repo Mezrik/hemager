@@ -1,3 +1,4 @@
+import { ContestDto } from '@hemager/api-types';
 import { msg, Trans } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
 import { FC, useState } from 'react';
@@ -5,14 +6,13 @@ import { FC, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { InfoList, InfoListItem } from '@/components/ui/info-list';
-import { CompetitionResult } from '@/generated/server';
 import { formatUIDate } from '@/utils/date';
 
 import { AssignParticipant } from '../../../competitors/components/participant/assign-participant';
 import { ParticipantsList } from '../../../competitors/components/participant/participants-list';
 import { getCompetionTypeCaption, getGenderCaption } from '../../helpers';
 
-export const Overview: FC<{ competition: CompetitionResult }> = ({ competition }) => {
+export const Overview: FC<{ competition: ContestDto }> = ({ competition }) => {
   const { _ } = useLingui();
   const [showAssignParticipant, setShowAssignParticipant] = useState(false);
 

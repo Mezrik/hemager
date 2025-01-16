@@ -1,8 +1,7 @@
-import type { CreateContestInput } from '@hemager/api-types';
+import type { CreateContestInput, ContestDto } from '@hemager/api-types';
 
 import {
   CompetitionCategoryResult,
-  CompetitionResult,
   CompetitorResult,
   CreateCompetitionCommand,
   CreateCompetitorCommand,
@@ -22,7 +21,7 @@ import { RestApi } from './rest-api';
 // TODO: Generate this automatically from generated/server generated/wailsjs
 // Could use Hygen for this
 export interface Api {
-  GetCompetitions(): Promise<Array<CompetitionResult>>;
+  GetCompetitions(): Promise<Array<ContestDto>>;
 
   GetCompetition(id: UUID): Promise<CompetitionDetail>;
 

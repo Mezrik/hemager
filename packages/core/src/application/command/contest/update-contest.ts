@@ -1,7 +1,7 @@
+import { ContestTypeEnum, DeploymentCriteria, GenderEnum } from '@hemager/api-types';
 import { inject, injectable } from 'inversify';
 
 import { Command } from '@/common/command';
-import { ContestTypeEnum, DeploymentCriteria, GenderEnum } from '@hemager/api-types';
 import { CommandHandler } from '@/common/interfaces';
 import { TYPES } from '@/di-types';
 import { Contest } from '@/domain/contest/contest';

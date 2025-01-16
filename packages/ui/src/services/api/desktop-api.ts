@@ -1,8 +1,7 @@
-import type { CreateContestInput } from '@hemager/api-types';
+import type { ContestDto, CreateContestInput } from '@hemager/api-types';
 
 import { UpdateCompetitionParametersCommand } from '@/generated/server';
 import {
-  GetCompetitions,
   GetCompetition,
   GetCompetitionsCategories,
   GetCompetitionsWeapons,
@@ -23,8 +22,8 @@ import { command, query } from '@/generated/wailsjs/go/models';
 import { Api } from './api';
 
 export class DesktopApi implements Api {
-  GetCompetitions(): Promise<Array<query.Competition>> {
-    return GetCompetitions();
+  GetCompetitions(): Promise<Array<ContestDto>> {
+    return window.electron.contest.getAll();
   }
 
   GetCompetition(id: UUID): Promise<query.Competition> {

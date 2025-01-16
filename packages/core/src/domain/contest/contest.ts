@@ -1,7 +1,7 @@
+import { ContestTypeEnum, DeploymentCriteria, GenderEnum } from '@hemager/api-types';
 import { Expose, Transform } from 'class-transformer';
 
 import { Entity, EntityProperties } from '@/common/entity';
-import { ContestTypeEnum, DeploymentCriteria, GenderEnum } from '@hemager/api-types';
 
 import { Round } from '../round/round';
 
@@ -24,9 +24,9 @@ type ContestProperties = {
 };
 
 export class Contest extends Entity {
-  _weapon?: Weapon;
-  _category?: ContestCategory;
-  _rounds: Round[];
+  private _weapon?: Weapon;
+  private _category?: ContestCategory;
+  private _rounds: Round[];
 
   constructor(
     private _properties: ContestProperties & {
@@ -47,6 +47,7 @@ export class Contest extends Entity {
     }
   }
 
+  @Expose()
   get name() {
     return this._properties.name;
   }
@@ -55,6 +56,7 @@ export class Contest extends Entity {
     this._properties.name = name;
   }
 
+  @Expose()
   get date() {
     return this._properties.date;
   }
@@ -63,6 +65,7 @@ export class Contest extends Entity {
     this._properties.date = date;
   }
 
+  @Expose()
   get organizerName() {
     return this._properties.organizerName;
   }
@@ -71,6 +74,7 @@ export class Contest extends Entity {
     this._properties.organizerName = organizerName;
   }
 
+  @Expose()
   get federationName() {
     return this._properties.federationName;
   }
@@ -79,6 +83,7 @@ export class Contest extends Entity {
     this._properties.federationName = federationName;
   }
 
+  @Expose()
   get contestType() {
     return this._properties.contestType;
   }
@@ -87,6 +92,7 @@ export class Contest extends Entity {
     this._properties.contestType = contestType;
   }
 
+  @Expose()
   get gender() {
     return this._properties.gender;
   }
@@ -121,22 +127,27 @@ export class Contest extends Entity {
     return this._category;
   }
 
+  @Expose()
   get expectedParticipants() {
     return this._properties.expectedParticipants;
   }
 
+  @Expose()
   get deploymentCriteria() {
     return this._properties.deploymentCriteria;
   }
 
+  @Expose()
   get groupHits() {
     return this._properties.groupHits;
   }
 
+  @Expose()
   get eliminationHits() {
     return this._properties.eliminationHits;
   }
 
+  @Expose()
   get rounds() {
     return this._rounds;
   }

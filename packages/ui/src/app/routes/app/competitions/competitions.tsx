@@ -50,7 +50,7 @@ export const CompetitionsRoute = () => {
             name={comp.name}
             gender={comp.gender}
             date={comp.date}
-            weapon={comp.weapon.name}
+            // weapon={comp.weapon.name} // TEMP
             competitionId={comp.id}
           />
         ))}

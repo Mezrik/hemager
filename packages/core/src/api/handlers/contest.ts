@@ -13,6 +13,7 @@ import { GetAllContestsQuery } from '@/application/query/constest/get-all-contes
 import { GetAllWeaponsQuery } from '@/application/query/constest/get-all-weapons';
 import { GetContestQuery } from '@/application/query/constest/get-contest';
 import { CommandBus, QueryBus } from '@/common/interfaces';
+import { instanceToPlain } from '@/common/utils/transformer';
 
 export const contestHandlers = (_queryBus: QueryBus, _commandBus: CommandBus) => {
   return {
@@ -50,8 +51,12 @@ export const contestHandlers = (_queryBus: QueryBus, _commandBus: CommandBus) =>
         ),
       );
     },
-    getAll: function () {
-      return _queryBus.execute<GetAllContestsQuery, ContestDto[]>(new GetAllContestsQuery());
+    getAll: async function () {
+      const contests = await _queryBus.execute<GetAllContestsQuery, ContestDto[]>(
+        new GetAllContestsQuery(),
+      );
+
+      return contests.map((contest) => instanceToPlain(contest) as ContestDto);
     },
 
     getAllCategories: function () {
