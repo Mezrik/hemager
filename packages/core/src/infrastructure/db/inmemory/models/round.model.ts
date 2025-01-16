@@ -10,6 +10,8 @@ import {
   Table,
 } from 'sequelize-typescript';
 
+import { Round as RoundEntity } from '@/domain/round/round';
+
 import { Contest } from './contest.model';
 import { Group } from './group.model';
 import { RoundParticipant } from './round-participant.model';
@@ -18,7 +20,7 @@ import { RoundParticipant } from './round-participant.model';
 export class Round extends Model {
   @PrimaryKey
   @Column(DataType.UUID)
-  public declare id: string;
+  public id: string;
 
   @ForeignKey(() => Contest)
   @Column(DataType.UUID)
@@ -40,3 +42,18 @@ export class Round extends Model {
   @HasMany(() => RoundParticipant)
   participants: RoundParticipant[];
 }
+
+export const roundModelToEntity = (model: Round): RoundEntity => {
+  return new RoundEntity(model.contestId, undefined, undefined, { id: model.id });
+};
+
+export const entityToRoundAttributes = (entity: RoundEntity) => {
+  const model = {
+    id: entity.id,
+    contestId: entity.contestId,
+    createdAt: entity.createdAt,
+    updatedAt: entity.updatedAt,
+  };
+
+  return model;
+};

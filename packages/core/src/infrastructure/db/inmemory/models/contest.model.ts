@@ -1,4 +1,5 @@
-import { ContestTypeEnum, GenderEnum } from '@hemager/api';
+import { ContestTypeEnum, DeploymentCriteria, GenderEnum } from '@hemager/api';
+import { plainToClass } from 'class-transformer';
 import {
   AllowNull,
   BelongsTo,
@@ -10,6 +11,11 @@ import {
   PrimaryKey,
   Table,
 } from 'sequelize-typescript';
+
+import { ContestCategory as ContestCategoryEntity } from '@/domain/contest/category';
+import { Contest as ContestEntity } from '@/domain/contest/contest';
+import { Weapon as WeaponEntity } from '@/domain/contest/weapon';
+import { Round as RoundEntity } from '@/domain/round/round';
 
 import { ContestCategory } from './contest-category.model';
 import { Referee } from './referee.model';
@@ -82,3 +88,44 @@ export class Contest extends Model {
   @HasMany(() => Round)
   rounds: Round[];
 }
+
+export const contestModelToEntity = (model: Contest): ContestEntity => {
+  const properties = {
+    name: model.name,
+    date: model.date,
+    organizerName: model.organizerName,
+    federationName: model.federationName,
+    contestType: model.contestType,
+    gender: model.gender,
+    expectedParticipants: model.expectedParticipants,
+    deploymentCriteria: model.deploymentCriteria as DeploymentCriteria[],
+    groupHits: model.groupHits,
+    eliminationHits: model.eliminationHits,
+    weapon: model.weapon ? plainToClass(WeaponEntity, model.weapon) : undefined,
+    category: model.category ? plainToClass(ContestCategoryEntity, model.category) : undefined,
+    rounds: model.rounds ? model.rounds.map((round) => plainToClass(RoundEntity, round)) : [],
+  };
+
+  return new ContestEntity(properties, { id: model.id });
+};
+
+export const entityToAttributes = (entity: ContestEntity) => {
+  const model = {
+    id: entity.id,
+    name: entity.name,
+    date: entity.date,
+    organizerName: entity.organizerName,
+    federationName: entity.federationName,
+    contestType: entity.contestType,
+    gender: entity.gender,
+    expectedParticipants: entity.expectedParticipants,
+    deploymentCriteria: entity.deploymentCriteria,
+    groupHits: entity.groupHits,
+    eliminationHits: entity.eliminationHits,
+    weapon: entity.weapon ? entity.weapon : undefined,
+    category: entity.category ? entity.category : undefined,
+    rounds: entity.rounds ? entity.rounds : [],
+  };
+
+  return model;
+};

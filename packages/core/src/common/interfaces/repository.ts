@@ -1,7 +1,7 @@
 import { Transaction } from './transaction';
 
 export interface Repository<T> {
-  findOne(id: any): Promise<T>;
+  findOne(id: any): Promise<T | null>;
   findAll(): Promise<T[]>;
   create(item: T, transaction?: Transaction): Promise<T>;
   update(id: any, item: T, transaction?: Transaction): Promise<void>;

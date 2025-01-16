@@ -44,7 +44,11 @@ export class UpdateContestCommandHandler implements CommandHandler<UpdateContest
       ? await this._repository.getCategory(command.categoryId)
       : undefined;
 
-    const existingContest: Contest = await this._repository.findOne(command.id);
+    const existingContest: Contest | null = await this._repository.findOne(command.id);
+
+    if (!existingContest) {
+      throw new Error('Contest not found');
+    }
 
     const contest: Contest = new Contest(
       {

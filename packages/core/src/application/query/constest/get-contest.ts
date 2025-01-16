@@ -14,8 +14,13 @@ export class GetContestQueryHandler implements QueryHandler<GetContestQuery, Con
 
   constructor(@inject(TYPES.ContestRepository) private readonly _repository: ContestRepository) {}
 
-  async execute(query: GetContestQuery) {
+  async execute(query: GetContestQuery): Promise<Contest> {
     const contest = await this._repository.findOne(query);
+
+    if (!contest) {
+      throw new Error('Contest not found');
+    }
+
     return contest;
   }
 }

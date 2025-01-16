@@ -6,7 +6,11 @@ import { Round } from '@/domain/round/round';
 import { RoundRepository as RoundRepositoryInterface } from '@/domain/round/round-repository';
 
 import { BaseRepository } from '../base-repository';
-import { Round as RoundModel } from '../models/round.model';
+import {
+  entityToRoundAttributes,
+  Round as RoundModel,
+  roundModelToEntity,
+} from '../models/round.model';
 
 @injectable()
 export class RoundRepository
@@ -14,6 +18,6 @@ export class RoundRepository
   implements RoundRepositoryInterface
 {
   constructor(@inject(TYPES.Db) _db: Sequelize) {
-    super(_db, RoundModel, Round);
+    super(_db, RoundModel, Round, roundModelToEntity, entityToRoundAttributes);
   }
 }

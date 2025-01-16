@@ -33,9 +33,7 @@ export class CreateContestCommandHandler implements CommandHandler<CreateContest
     @inject(TYPES.ContestRepository) private readonly _repository: ContestRepository,
     @inject(TYPES.RoundRepository) private readonly _roundRepository: RoundRepository,
     @inject(TYPES.TransactionManager) private readonly _transactionManager: TransactionManager,
-  ) {
-    console.log(this.commandToHandle);
-  }
+  ) {}
 
   async handle(command: CreateContestCommand): Promise<{ id: string }> {
     return this._transactionManager.execute(async (transaction) => {

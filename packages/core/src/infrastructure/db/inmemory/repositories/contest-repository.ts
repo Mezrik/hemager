@@ -8,7 +8,11 @@ import { Contest } from '@/domain/contest/contest';
 import { ContestRepository as ContestRepositoryInterface } from '@/domain/contest/contest-repository';
 import { Weapon } from '@/domain/contest/weapon';
 import { ContestCategory as ContestCategoryModel } from '@/infrastructure/db/inmemory/models/contest-category.model';
-import { Contest as ContestModel } from '@/infrastructure/db/inmemory/models/contest.model';
+import {
+  Contest as ContestModel,
+  contestModelToEntity,
+  entityToAttributes,
+} from '@/infrastructure/db/inmemory/models/contest.model';
 import { Weapon as WeaponModel } from '@/infrastructure/db/inmemory/models/weapon.model';
 
 import { BaseRepository } from '../base-repository';
@@ -19,7 +23,7 @@ export class ContestRepository
   implements ContestRepositoryInterface
 {
   constructor(@inject(TYPES.Db) private _db: Sequelize) {
-    super(_db, ContestModel, Contest);
+    super(_db, ContestModel, Contest, contestModelToEntity, entityToAttributes);
   }
 
   async getWeapon(id: string): Promise<Weapon> {
