@@ -1,10 +1,14 @@
+import { resolve } from 'path';
+
 import {
   CreateContestInput,
   UpdateContestInput,
   ContestDto,
   CategoryDto,
   WeaponDto,
+  APIError,
 } from '@hemager/api-types';
+import { Task } from 'true-myth';
 
 import { CreateContestCommand } from '@/application/command/contest/create-contest';
 import { UpdateContestCommand } from '@/application/command/contest/update-contest';
@@ -12,63 +16,99 @@ import { GetAllCategoriesQuery } from '@/application/query/constest/get-all-cate
 import { GetAllContestsQuery } from '@/application/query/constest/get-all-contests';
 import { GetAllWeaponsQuery } from '@/application/query/constest/get-all-weapons';
 import { GetContestQuery } from '@/application/query/constest/get-contest';
+import { commandErrorToAPIError, queryErrorToAPIError } from '@/common/errors';
 import { CommandBus, QueryBus } from '@/common/interfaces';
 import { instanceToPlain } from '@/common/utils/transformer';
 
 export const contestHandlers = (_queryBus: QueryBus, _commandBus: CommandBus) => {
   return {
-    create: async function (payload: CreateContestInput): Promise<void> {
-      await _commandBus.send(
-        new CreateContestCommand(
-          payload.name,
-          payload.date,
-          payload.organizerName,
-          payload.federationName,
-          payload.contestType,
-          payload.gender,
-          payload.weaponId,
-          payload.categoryId,
-        ),
-      );
-    },
-    update: async function (payload: UpdateContestInput): Promise<void> {
-      await _commandBus.send(
-        new UpdateContestCommand(
-          payload.id,
-          payload.name,
-          payload.organizerName,
-          payload.federationName,
-          payload.contestType,
-          payload.gender,
-          payload.date,
-          payload.weaponId,
-          payload.categoryId,
+    create: function (payload: CreateContestInput): Task<void, APIError> {
+      return new Task<void, APIError>((resolve, reject) => {
+        const task = _commandBus.send(
+          new CreateContestCommand(
+            payload.name,
+            payload.date,
+            payload.organizerName,
+            payload.federationName,
+            payload.contestType,
+            payload.gender,
+            payload.weaponId,
+            payload.categoryId,
+          ),
+        );
 
-          payload.expectedParticipants,
-          payload.deploymentCriteria,
-          payload.groupHits,
-          payload.eliminationHits,
-        ),
-      );
+        void task.match({
+          Resolved: () => resolve(),
+          Rejected: (error) => reject(commandErrorToAPIError(error)),
+        });
+      });
     },
-    getAll: async function () {
-      const contests = await _queryBus.execute<GetAllContestsQuery, ContestDto[]>(
-        new GetAllContestsQuery(),
-      );
+    update: function (payload: UpdateContestInput): Task<void, APIError> {
+      return new Task<void, APIError>((resolve, reject) => {
+        const task = _commandBus.send(
+          new UpdateContestCommand(
+            payload.id,
+            payload.name,
+            payload.organizerName,
+            payload.federationName,
+            payload.contestType,
+            payload.gender,
+            payload.date,
+            payload.weaponId,
+            payload.categoryId,
 
-      return contests.map((contest) => instanceToPlain(contest) as ContestDto);
+            payload.expectedParticipants,
+            payload.deploymentCriteria,
+            payload.groupHits,
+            payload.eliminationHits,
+          ),
+        );
+
+        void task.match({
+          Resolved: () => resolve(),
+          Rejected: (error) => reject(commandErrorToAPIError(error)),
+        });
+      });
     },
-
-    getAllCategories: function () {
-      return _queryBus.execute<GetAllCategoriesQuery, CategoryDto[]>(new GetAllCategoriesQuery());
+    getAll: function (): Task<ContestDto[], APIError> {
+      return new Task((resolve, reject) => {
+        void _queryBus.execute<GetAllContestsQuery, ContestDto[]>(new GetAllContestsQuery()).match({
+          Resolved: (contests) =>
+            resolve(contests.map((contest) => instanceToPlain(contest) as ContestDto)),
+          Rejected: (error) => reject(queryErrorToAPIError(error)),
+        });
+      });
     },
-
-    getAllWeapons: function () {
-      return _queryBus.execute<GetAllWeaponsQuery, WeaponDto[]>(new GetAllContestsQuery());
+    getOne: function (id: string): Task<ContestDto, APIError> {
+      return new Task((resolve, reject) => {
+        void _queryBus.execute<GetContestQuery, ContestDto>(new GetContestQuery(id)).match({
+          Resolved: (contest) => {
+            console.log(instanceToPlain(contest) as ContestDto);
+            return resolve(instanceToPlain(contest) as ContestDto);
+          },
+          Rejected: (error) => reject(queryErrorToAPIError(error)),
+        });
+      });
     },
-
-    getOne(id: string) {
-      return _queryBus.execute<GetContestQuery, ContestDto>(new GetContestQuery(id));
+    getAllCategories: function (): Task<CategoryDto[], APIError> {
+      return new Task((resolve, reject) => {
+        void _queryBus
+          .execute<GetAllCategoriesQuery, CategoryDto[]>(new GetAllCategoriesQuery())
+          .match({
+            Resolved: (contests) =>
+              resolve(contests.map((contest) => instanceToPlain(contest) as ContestDto)),
+            Rejected: (error) => reject(queryErrorToAPIError(error)),
+          });
+      });
+    },
+    getAllWeapons: function (): Task<WeaponDto[], APIError> {
+      return new Task((resolve, reject) => {
+        void _queryBus.execute<GetAllWeaponsQuery, WeaponDto[]>(new GetAllWeaponsQuery()).match({
+          Resolved: (contests) =>
+            resolve(contests.map((contest) => instanceToPlain(contest) as ContestDto)),
+          Rejected: (error) => reject(queryErrorToAPIError(error)),
+        });
+      });
     },
   };
 };

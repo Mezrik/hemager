@@ -54,7 +54,15 @@ module.exports = {
         "import/default": "off",
         "import/no-named-as-default-member": "off",
         "import/no-named-as-default": "off",
-        "@typescript-eslint/no-unused-vars": ["error"],
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": [
+          "warn", // or "error"
+          {
+            argsIgnorePattern: "^_",
+            varsIgnorePattern: "^_",
+            caughtErrorsIgnorePattern: "^_",
+          },
+        ],
         "@typescript-eslint/explicit-function-return-type": ["off"],
         "@typescript-eslint/explicit-module-boundary-types": ["off"],
         "@typescript-eslint/no-empty-function": ["off"],

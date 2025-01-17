@@ -8,7 +8,6 @@ export const getCompetitionsQueryOptions = () => {
     queryKey: ['competitions'],
     queryFn: async () => {
       const comps = await api.GetCompetitions();
-      console.log(comps);
       return comps;
     },
   });

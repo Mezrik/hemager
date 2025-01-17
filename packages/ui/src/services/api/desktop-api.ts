@@ -1,4 +1,5 @@
-import type { ContestDto, CreateContestInput } from '@hemager/api-types';
+import type { APIError, ContestDto, CreateContestInput } from '@hemager/api-types';
+import { Result, Task } from 'true-myth';
 
 import { UpdateCompetitionParametersCommand } from '@/generated/server';
 import {
@@ -18,20 +19,21 @@ import {
   GetCompetitor,
 } from '@/generated/wailsjs/go/desktop/Admin';
 import { command, query } from '@/generated/wailsjs/go/models';
+import { unwrapTask } from '@/lib/true-myth';
 
 import { Api } from './api';
 
 export class DesktopApi implements Api {
-  GetCompetitions(): Promise<Array<ContestDto>> {
-    return window.electron.contest.getAll();
+  GetCompetitions(): Promise<Result<Array<ContestDto>, APIError>> {
+    return unwrapTask(window.electron.contest.getAll());
   }
 
-  GetCompetition(id: UUID): Promise<query.Competition> {
-    return GetCompetition(id);
+  GetCompetition(id: UUID): Promise<Result<ContestDto, APIError>> {
+    return unwrapTask(window.electron.contest.getOne(id));
   }
 
-  CreateCompetition(command: CreateContestInput): Promise<void> {
-    return window.electron.contest.create(command);
+  CreateCompetition(command: CreateContestInput): Promise<Result<void, APIError>> {
+    return unwrapTask(window.electron.contest.create(command));
   }
 
   GetCompetitionsCategories(): Promise<Array<query.CompetitionCategory>> {

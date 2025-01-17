@@ -1,5 +1,7 @@
 import { inject } from 'inversify';
+import { Task } from 'true-myth';
 
+import { QueryError, QueryErrorTypes } from '@/common/errors';
 import { Query, QueryHandler } from '@/common/interfaces';
 import { TYPES } from '@/di-types';
 import { Contest } from '@/domain/contest/contest';
@@ -14,13 +16,20 @@ export class GetContestQueryHandler implements QueryHandler<GetContestQuery, Con
 
   constructor(@inject(TYPES.ContestRepository) private readonly _repository: ContestRepository) {}
 
-  async execute(query: GetContestQuery): Promise<Contest> {
-    const contest = await this._repository.findOne(query);
-
-    if (!contest) {
-      throw new Error('Contest not found');
-    }
-
-    return contest;
+  execute(query: GetContestQuery): Task<Contest, QueryError> {
+    return new Task((resolve, reject) => {
+      this._repository
+        .findOne(query.id)
+        .then((contest) => {
+          if (!contest) {
+            reject({ cause: 'Contest not found', type: QueryErrorTypes.NOT_FOUND });
+            return;
+          }
+          resolve(contest);
+        })
+        .catch(() =>
+          reject({ cause: 'Failed to get contest', type: QueryErrorTypes.CAUGHT_EXCEPTION }),
+        );
+    });
   }
 }

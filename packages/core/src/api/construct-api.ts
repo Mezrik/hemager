@@ -1,5 +1,6 @@
-import { API, APIPaths } from '@hemager/api-types';
+import { API, APIPaths, APIError } from '@hemager/api-types';
 import { Container } from 'inversify';
+import Task from 'true-myth/task';
 
 import { CommandBus, QueryBus } from '@/common/interfaces';
 import { TYPES } from '@/di-types';
@@ -29,7 +30,10 @@ export const constructAPI = (app: Container) => {
 
   const paths = generatePaths(api);
 
-  const invoke = <T extends API, P extends APIPaths<T>>(path: P, data: any): any => {
+  const invoke = <T extends API, P extends APIPaths<T>>(
+    path: P,
+    data: any,
+  ): Task<any, APIError> => {
     const [namespace, method] = path.split('.') as [keyof API, keyof API[keyof API]];
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access

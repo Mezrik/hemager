@@ -27,6 +27,10 @@ export const seeder = new Umzug({
 });
 
 // TEMP: For development purposes
-void database.sync();
+const setup = async () => {
+  await database.sync();
 
-void seeder.up();
+  await seeder.up();
+};
+
+void setup();

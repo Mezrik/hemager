@@ -1,7 +1,9 @@
 import { ContestTypeEnum, GenderEnum } from '@hemager/api-types';
 import { inject, injectable } from 'inversify';
+import Task from 'true-myth/task';
 
 import { Command } from '@/common/command';
+import { CommandError, CommandErrorTypes, ensureThrownError } from '@/common/errors';
 import { CommandHandler } from '@/common/interfaces';
 import { TransactionManager } from '@/common/interfaces/transaction-manager';
 import { TYPES } from '@/di-types';
@@ -35,35 +37,52 @@ export class CreateContestCommandHandler implements CommandHandler<CreateContest
     @inject(TYPES.TransactionManager) private readonly _transactionManager: TransactionManager,
   ) {}
 
-  async handle(command: CreateContestCommand): Promise<{ id: string }> {
-    return this._transactionManager.execute(async (transaction) => {
-      const weapon = command.weaponId
-        ? await this._repository.getWeapon(command.weaponId)
-        : undefined;
+  handle(command: CreateContestCommand): Task<void, CommandError> {
+    return new Task((resolve, reject) => {
+      void this._transactionManager.execute(async (transaction) => {
+        const weapon = command.weaponId
+          ? await this._repository.getWeapon(command.weaponId)
+          : undefined;
 
-      const category = command.categoryId
-        ? await this._repository.getCategory(command.categoryId)
-        : undefined;
+        const category = command.categoryId
+          ? await this._repository.getCategory(command.categoryId)
+          : undefined;
 
-      const contest: Contest = new Contest({
-        name: command.name,
-        organizerName: command.organizerName,
-        federationName: command.federationName,
-        contestType: command.contestType,
-        gender: command.gender,
-        date: command.date,
+        if (command.weaponId && !weapon) {
+          reject({ cause: 'Weapon not found', type: CommandErrorTypes.NOT_FOUND });
+          return;
+        }
 
-        weapon,
-        category,
+        if (command.categoryId && !category) {
+          reject({ cause: 'Category not found', type: CommandErrorTypes.NOT_FOUND });
+          return;
+        }
+
+        const contest: Contest = new Contest({
+          name: command.name,
+          organizerName: command.organizerName,
+          federationName: command.federationName,
+          contestType: command.contestType,
+          gender: command.gender,
+          date: command.date,
+
+          weapon,
+          category,
+        });
+
+        try {
+          await this._repository.create(contest, transaction);
+
+          const firstRound = contest.rounds[0];
+
+          await this._roundRepository.create(firstRound, transaction);
+        } catch (err) {
+          const error = ensureThrownError(err);
+          reject({ cause: error.message, type: CommandErrorTypes.CAUGHT_EXCEPTION });
+        }
+
+        resolve();
       });
-
-      await this._repository.create(contest, transaction);
-
-      const firstRound = contest.rounds[0];
-
-      await this._roundRepository.create(firstRound, transaction);
-
-      return { id: contest.id };
     });
   }
 }

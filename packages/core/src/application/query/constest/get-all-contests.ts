@@ -1,5 +1,7 @@
 import { inject } from 'inversify';
+import { Task } from 'true-myth';
 
+import { QueryError, QueryErrorTypes } from '@/common/errors';
 import { Query, QueryHandler } from '@/common/interfaces';
 import { TYPES } from '@/di-types';
 import { Contest } from '@/domain/contest/contest';
@@ -12,9 +14,14 @@ export class GetAllContestsQueryHandler implements QueryHandler<GetAllContestsQu
 
   constructor(@inject(TYPES.ContestRepository) private readonly _repository: ContestRepository) {}
 
-  async execute() {
-    const contests = await this._repository.findAll();
-    console.log(contests);
-    return contests;
+  execute(): Task<Contest[], QueryError> {
+    return new Task((resolve, reject) => {
+      this._repository
+        .findAll()
+        .then(resolve)
+        .catch(() =>
+          reject({ cause: 'Failed to get contests', type: QueryErrorTypes.CAUGHT_EXCEPTION }),
+        );
+    });
   }
 }

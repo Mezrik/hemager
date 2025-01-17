@@ -30,16 +30,16 @@ export class Contest extends Entity {
 
   constructor(
     private _properties: ContestProperties & {
-      weapon?: Weapon;
-      category?: ContestCategory;
+      weapon?: Weapon | null;
+      category?: ContestCategory | null;
       rounds?: Round[];
     },
     _entityProperties?: EntityProperties,
   ) {
     super(_entityProperties);
 
-    this._weapon = _properties.weapon;
-    this._category = _properties.category;
+    this._weapon = _properties.weapon ?? undefined;
+    this._category = _properties.category ?? undefined;
     this._rounds = _properties.rounds || [];
 
     if (this._rounds.length <= 0) {

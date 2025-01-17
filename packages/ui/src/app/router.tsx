@@ -24,6 +24,10 @@ export const createAppRouter = (queryClient: QueryClient) => {
             const { CompetitionsRoute } = await import('./routes/app/competitions/competitions');
             return { Component: CompetitionsRoute };
           },
+          loader: async (args: LoaderFunctionArgs) => {
+            const { competitionsLoader } = await import('./routes/app/competitions/loaders');
+            return competitionsLoader(queryClient)(args);
+          },
         },
         {
           path: pathnames.competitionPath,
@@ -32,7 +36,7 @@ export const createAppRouter = (queryClient: QueryClient) => {
             return { Component: CompetitionRoute };
           },
           loader: async (args: LoaderFunctionArgs) => {
-            const { competitionLoader } = await import('./routes/app/competitions/competition');
+            const { competitionLoader } = await import('./routes/app/competitions/loaders');
             return competitionLoader(queryClient)(args);
           },
         },
@@ -43,7 +47,7 @@ export const createAppRouter = (queryClient: QueryClient) => {
             return { Component: GroupRoute };
           },
           loader: async (args: LoaderFunctionArgs) => {
-            const { groupLoader } = await import('./routes/app/competitions/group');
+            const { groupLoader } = await import('./routes/app/competitions/loaders');
             return groupLoader(queryClient)(args);
           },
         },
@@ -54,7 +58,7 @@ export const createAppRouter = (queryClient: QueryClient) => {
             return { Component: MatchEditRoute };
           },
           loader: async (args: LoaderFunctionArgs) => {
-            const { matchEditLoader } = await import('./routes/app/competitions/match-edit');
+            const { matchEditLoader } = await import('./routes/app/competitions/loaders');
             return matchEditLoader(queryClient)(args);
           },
         },

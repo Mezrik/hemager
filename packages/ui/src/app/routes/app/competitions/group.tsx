@@ -1,9 +1,8 @@
 import { msg } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
-import { QueryClient } from '@tanstack/react-query';
 import { CZ } from 'country-flag-icons/react/3x2';
 import { ComponentProps, useState } from 'react';
-import { LoaderFunctionArgs, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { pathnames } from '@/app/pathnames';
 import { BasicPageLayout } from '@/components/layouts';
@@ -16,40 +15,15 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import {
-  getCompetitionGroupQueryOptions,
-  useCompetitionGroup,
-} from '@/features/competitions/api/get-group';
+import { useCompetitionGroup } from '@/features/competitions/api/get-group';
 import {
   mapParticipantsByCompetitorId,
   mapParticipantsByGroup,
 } from '@/features/competitions/helpers';
-import {
-  getParticipantsQueryOptions,
-  useParticipants,
-} from '@/features/competitors/api/get-participants';
-import { getMatchesQueryOptions, useMatches } from '@/features/matches/api/get-matches';
+import { useParticipants } from '@/features/competitors/api/get-participants';
+import { useMatches } from '@/features/matches/api/get-matches';
 import { MatchCard } from '@/features/matches/components/match-card';
 import { MatchPreview } from '@/features/matches/components/match-preview';
-
-export const groupLoader =
-  (queryClient: QueryClient) =>
-  async ({ params }: LoaderFunctionArgs) => {
-    const groupId = params.groupId as string;
-    const competitionId = params.competitionId as string;
-
-    const query = getCompetitionGroupQueryOptions(competitionId, groupId);
-    const participantQuery = getParticipantsQueryOptions(competitionId);
-    const matchesQuery = getMatchesQueryOptions(groupId);
-
-    return (
-      (queryClient.getQueryData(query.queryKey) ?? (await queryClient.fetchQuery(query))) &&
-      (queryClient.getQueryData(participantQuery.queryKey) ??
-        (await queryClient.fetchQuery(participantQuery))) &&
-      (queryClient.getQueryData(matchesQuery.queryKey) ??
-        (await queryClient.fetchQuery(matchesQuery)))
-    );
-  };
 
 export const GroupRoute = () => {
   const { _ } = useLingui();
@@ -112,7 +86,7 @@ export const GroupRoute = () => {
         </Card>
         <Card className="col-span-9 pt-6 lg:col-span-5">
           <CardContent>
-            <h3 className="mb-2 text-lg font-semibold text-primary-foreground">
+            <h3 className="text-primary-foreground mb-2 text-lg font-semibold">
               {_(msg`Round 1`)}
             </h3>
             <div className="grid grid-cols-3 gap-4">

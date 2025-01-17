@@ -1,7 +1,9 @@
 import { ContestTypeEnum, DeploymentCriteria, GenderEnum } from '@hemager/api-types';
 import { inject, injectable } from 'inversify';
+import { Task } from 'true-myth';
 
 import { Command } from '@/common/command';
+import { CommandError, CommandErrorTypes } from '@/common/errors';
 import { CommandHandler } from '@/common/interfaces';
 import { TYPES } from '@/di-types';
 import { Contest } from '@/domain/contest/contest';
@@ -35,43 +37,57 @@ export class UpdateContestCommandHandler implements CommandHandler<UpdateContest
 
   constructor(@inject(TYPES.ContestRepository) private readonly _repository: ContestRepository) {}
 
-  async handle(command: UpdateContestCommand): Promise<{ id: string }> {
-    const weapon = command.weaponId
-      ? await this._repository.getWeapon(command.weaponId)
-      : undefined;
+  handle(command: UpdateContestCommand): Task<void, CommandError> {
+    return new Task((resolve, reject) => {
+      const asyncFn = async () => {
+        const weapon = command.weaponId
+          ? await this._repository.getWeapon(command.weaponId)
+          : undefined;
 
-    const category = command.categoryId
-      ? await this._repository.getCategory(command.categoryId)
-      : undefined;
+        const category = command.categoryId
+          ? await this._repository.getCategory(command.categoryId)
+          : undefined;
 
-    const existingContest: Contest | null = await this._repository.findOne(command.id);
+        if (command.weaponId && !weapon) {
+          reject({ cause: 'Weapon not found', type: CommandErrorTypes.NOT_FOUND });
+        }
 
-    if (!existingContest) {
-      throw new Error('Contest not found');
-    }
+        if (command.categoryId && !category) {
+          reject({ cause: 'Category not found', type: CommandErrorTypes.NOT_FOUND });
+        }
 
-    const contest: Contest = new Contest(
-      {
-        name: command.name ?? existingContest.name,
-        organizerName: command.organizerName ?? existingContest.organizerName,
-        federationName: command.federationName ?? existingContest.federationName,
-        contestType: command.contestType ?? existingContest.contestType,
-        gender: command.gender ?? existingContest.gender,
-        date: command.date ?? existingContest.date,
+        const existingContest: Contest | null = await this._repository.findOne(command.id);
 
-        weapon: weapon ?? existingContest.weapon,
-        category: category ?? existingContest.category,
+        if (!existingContest) {
+          reject({ cause: 'Contest not found', type: CommandErrorTypes.NOT_FOUND });
+          return;
+        }
 
-        expectedParticipants: command.expectedParticipants ?? existingContest.expectedParticipants,
-        deploymentCriteria: command.deploymentCriteria ?? existingContest.deploymentCriteria,
-        groupHits: command.groupHits ?? existingContest.groupHits,
-        eliminationHits: command.eliminationHits ?? existingContest.eliminationHits,
-      },
-      { id: command.id },
-    );
+        const contest: Contest = new Contest(
+          {
+            name: command.name ?? existingContest.name,
+            organizerName: command.organizerName ?? existingContest.organizerName,
+            federationName: command.federationName ?? existingContest.federationName,
+            contestType: command.contestType ?? existingContest.contestType,
+            gender: command.gender ?? existingContest.gender,
+            date: command.date ?? existingContest.date,
 
-    await this._repository.update(contest.id, contest);
+            weapon: weapon ?? existingContest.weapon,
+            category: category ?? existingContest.category,
 
-    return { id: contest.id };
+            expectedParticipants:
+              command.expectedParticipants ?? existingContest.expectedParticipants,
+            deploymentCriteria: command.deploymentCriteria ?? existingContest.deploymentCriteria,
+            groupHits: command.groupHits ?? existingContest.groupHits,
+            eliminationHits: command.eliminationHits ?? existingContest.eliminationHits,
+          },
+          { id: command.id },
+        );
+
+        await this._repository.update(contest.id, contest);
+      };
+
+      void asyncFn().then(resolve);
+    });
   }
 }

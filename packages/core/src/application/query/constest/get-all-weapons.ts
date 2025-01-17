@@ -1,5 +1,7 @@
 import { inject } from 'inversify';
+import { Task } from 'true-myth';
 
+import { QueryError, QueryErrorTypes } from '@/common/errors';
 import { Query, QueryHandler } from '@/common/interfaces';
 import { TYPES } from '@/di-types';
 import { ContestRepository } from '@/domain/contest/contest-repository';
@@ -12,8 +14,14 @@ export class GetAllWeaponsQueryHandler implements QueryHandler<GetAllWeaponsQuer
 
   constructor(@inject(TYPES.ContestRepository) private readonly _repository: ContestRepository) {}
 
-  async execute() {
-    const weapons = await this._repository.getAllWeapons();
-    return weapons;
+  execute(): Task<Weapon[], QueryError> {
+    return new Task((resolve, reject) => {
+      this._repository
+        .getAllWeapons()
+        .then(resolve)
+        .catch(() =>
+          reject({ cause: 'Failed to get weapons', type: QueryErrorTypes.CAUGHT_EXCEPTION }),
+        );
+    });
   }
 }

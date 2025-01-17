@@ -1,3 +1,5 @@
+import { Task } from "true-myth";
+
 import {
   CategoryDto,
   ContestDto,
@@ -5,15 +7,16 @@ import {
   UpdateContestInput,
   WeaponDto,
 } from "./contest";
+import { APIError } from "./errors";
 
 export type API = {
   contest: {
-    create: (payload: CreateContestInput) => Promise<void>;
-    update: (payload: UpdateContestInput) => Promise<void>;
-    getAll: () => Promise<ContestDto[]>;
-    getAllCategories: () => Promise<CategoryDto[]>;
-    getAllWeapons: () => Promise<WeaponDto[]>;
-    getOne(id: string): Promise<ContestDto>;
+    create: (payload: CreateContestInput) => Task<void, APIError>;
+    update: (payload: UpdateContestInput) => Task<void, APIError>;
+    getAll: () => Task<ContestDto[], APIError>;
+    getAllCategories: () => Task<CategoryDto[], APIError>;
+    getAllWeapons: () => Task<WeaponDto[], APIError>;
+    getOne(id: string): Task<ContestDto, APIError>;
   };
 };
 

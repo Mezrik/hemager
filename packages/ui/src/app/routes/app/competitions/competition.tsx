@@ -1,17 +1,14 @@
+import { APIError } from '@hemager/api-types';
 import { msg, Trans } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
-import { QueryClient } from '@tanstack/react-query';
 import { PencilIcon } from 'lucide-react';
 import { useState } from 'react';
-import { LoaderFunctionArgs, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { BasicPageLayout } from '@/components/layouts';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import {
-  getCompetitionQueryOptions,
-  useCompetition,
-} from '@/features/competitions/api/get-competition';
+import { useCompetition } from '@/features/competitions/api/get-competition';
 import {
   Overview,
   Groups,
@@ -20,16 +17,6 @@ import {
 } from '@/features/competitions/components/competition';
 import { UpdateCompetition } from '@/features/competitions/components/dialog/update-competition';
 import { UpdateCompetitionParameters } from '@/features/competitions/components/dialog/update-competition-parameters';
-
-export const competitionLoader =
-  (queryClient: QueryClient) =>
-  async ({ params }: LoaderFunctionArgs) => {
-    const competitionId = params.competitionId as string;
-
-    const query = getCompetitionQueryOptions(competitionId);
-
-    return queryClient.getQueryData(query.queryKey) ?? (await queryClient.fetchQuery(query));
-  };
 
 export const CompetitionRoute = () => {
   const { _ } = useLingui();
@@ -47,10 +34,10 @@ export const CompetitionRoute = () => {
     return <div>Loading...</div>;
   }
 
-  const competition = competitionQuery.data;
+  const competition = competitionQuery.data?.unwrapOrElse<APIError>((err) => err);
 
-  if (!competition) {
-    return <div>Competition not found</div>;
+  if (!competition || 'cause' in competition) {
+    return <div>Competition not found {competition?.cause}</div>;
   }
 
   return (
@@ -89,9 +76,7 @@ export const CompetitionRoute = () => {
             <Trans>Elimination</Trans>
           </TabsTrigger>
         </TabsList>
-        <TabsContent value="overview">
-          <Overview competition={competition} />
-        </TabsContent>
+        <TabsContent value="overview">{/* <Overview competition={competition} /> */}</TabsContent>
         <TabsContent value="groups">
           <Groups competitionId={competition.id} />
         </TabsContent>

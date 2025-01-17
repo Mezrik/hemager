@@ -1,3 +1,4 @@
+import { Expose } from 'class-transformer';
 import { nanoid } from 'nanoid';
 
 import { Entity as EntityInterface, EntityProperties } from './interfaces/entity.js';
@@ -12,6 +13,7 @@ class Entity implements EntityInterface {
     this._entityProperties.updatedAt = new Date();
   }
 
+  @Expose()
   public get id() {
     return this._entityProperties.id;
   }

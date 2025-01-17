@@ -1,23 +1,13 @@
 import { msg, Trans } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
-import { QueryClient } from '@tanstack/react-query';
 import { PlusIcon } from 'lucide-react';
 import { useState } from 'react';
 
 import { BasicPageLayout } from '@/components/layouts';
 import { Button } from '@/components/ui/button';
-import {
-  getCompetitionsQueryOptions,
-  useCompetitions,
-} from '@/features/competitions/api/get-competitions';
+import { useCompetitions } from '@/features/competitions/api/get-competitions';
 import { CompetitionCard } from '@/features/competitions/components/competition-card';
 import { CreateCompetition } from '@/features/competitions/components/dialog/create-competition';
-
-export const competitionsLoader = (queryClient: QueryClient) => async () => {
-  const query = getCompetitionsQueryOptions();
-
-  return queryClient.getQueryData(query.queryKey) ?? (await queryClient.fetchQuery(query));
-};
 
 export const CompetitionsRoute = () => {
   const { _ } = useLingui();
@@ -29,7 +19,9 @@ export const CompetitionsRoute = () => {
     return <BasicPageLayout title={_(msg`Competitions`)}>Loading...</BasicPageLayout>;
   }
 
-  const competitions = competitionsQuery.data ?? [];
+  const competitions = competitionsQuery.data?.unwrapOr([]) || [];
+
+  console.log(competitions);
 
   return (
     <BasicPageLayout

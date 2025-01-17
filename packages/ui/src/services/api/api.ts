@@ -1,4 +1,5 @@
-import type { CreateContestInput, ContestDto } from '@hemager/api-types';
+import type { CreateContestInput, ContestDto, APIError } from '@hemager/api-types';
+import { Result, Task } from 'true-myth';
 
 import {
   CompetitionCategoryResult,
@@ -21,11 +22,11 @@ import { RestApi } from './rest-api';
 // TODO: Generate this automatically from generated/server generated/wailsjs
 // Could use Hygen for this
 export interface Api {
-  GetCompetitions(): Promise<Array<ContestDto>>;
+  GetCompetitions(): Promise<Result<Array<ContestDto>, APIError>>;
 
-  GetCompetition(id: UUID): Promise<CompetitionDetail>;
+  GetCompetition(id: UUID): Promise<Result<ContestDto, APIError>>;
 
-  CreateCompetition(data: CreateContestInput): Promise<void>;
+  CreateCompetition(data: CreateContestInput): Promise<Result<void, APIError>>;
 
   GetCompetitionsCategories(): Promise<Array<CompetitionCategoryResult>>;
 

@@ -1,5 +1,9 @@
-import { inject } from 'inversify';
+import { resolve } from 'path';
 
+import { inject } from 'inversify';
+import { Task } from 'true-myth';
+
+import { QueryError, QueryErrorTypes } from '@/common/errors';
 import { Query, QueryHandler } from '@/common/interfaces';
 import { TYPES } from '@/di-types';
 import { ContestCategory } from '@/domain/contest/category';
@@ -14,8 +18,16 @@ export class GetAllCategoriesQueryHandler
 
   constructor(@inject(TYPES.ContestRepository) private readonly _repository: ContestRepository) {}
 
-  async execute() {
-    const categories = await this._repository.getAllCategories();
-    return categories;
+  execute(): Task<ContestCategory[], QueryError> {
+    return new Task((resolve, reject) => {
+      this._repository
+        .getAllCategories()
+        .then((categories) => {
+          resolve(categories);
+        })
+        .catch(() =>
+          reject({ cause: 'Failed to get categories', type: QueryErrorTypes.CAUGHT_EXCEPTION }),
+        );
+    });
   }
 }
