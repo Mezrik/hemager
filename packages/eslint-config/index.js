@@ -67,6 +67,8 @@ module.exports = {
         "@typescript-eslint/explicit-module-boundary-types": ["off"],
         "@typescript-eslint/no-empty-function": ["off"],
         "@typescript-eslint/no-explicit-any": ["off"],
+        "@typescript-eslint/no-unsafe-assignment": ["off"],
+        "@typescript-eslint/no-unsafe-call": ["off"],
         "prettier/prettier": ["error", {}, { usePrettierrc: true }],
         "check-file/filename-naming-convention": [
           "error",

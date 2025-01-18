@@ -1,18 +1,21 @@
-import type { CreateContestInput, ContestDto, APIError } from '@hemager/api-types';
-import { Result, Task } from 'true-myth';
+import type {
+  CreateContestInput,
+  ContestDto,
+  APIError,
+  CategoryDto,
+  WeaponDto,
+} from '@hemager/api-types';
+import { Result } from 'true-myth';
 
 import {
-  CompetitionCategoryResult,
   CompetitorResult,
   CreateCompetitionCommand,
   CreateCompetitorCommand,
-  WeaponResult,
   CompetitionGroup,
   Match,
   MatchDetail,
   CompetitionParticipant,
   UpdateCompetitorCommand,
-  CompetitionDetail,
   UpdateCompetitionParametersCommand,
 } from '@/generated/server';
 
@@ -28,9 +31,9 @@ export interface Api {
 
   CreateCompetition(data: CreateContestInput): Promise<Result<void, APIError>>;
 
-  GetCompetitionsCategories(): Promise<Array<CompetitionCategoryResult>>;
+  GetCompetitionsCategories(): Promise<Result<Array<CategoryDto>, APIError>>;
 
-  GetCompetitionsWeapons(): Promise<Array<WeaponResult>>;
+  GetCompetitionsWeapons(): Promise<Result<Array<WeaponDto>, APIError>>;
 
   GetCompetitors(): Promise<Array<CompetitorResult>>;
 

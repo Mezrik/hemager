@@ -1,5 +1,7 @@
-import { Entity, EntityProperties } from '@/common/entity';
 import { GenderEnum } from '@hemager/api-types';
+import { Expose } from 'class-transformer';
+
+import { Entity, EntityProperties } from '@/common/entity';
 
 import { Club } from './club';
 
@@ -19,6 +21,36 @@ export class Contestant extends Entity {
     _entityProperties?: EntityProperties,
   ) {
     super(_entityProperties);
+  }
+
+  @Expose()
+  get surname() {
+    return this._properties.surname;
+  }
+
+  @Expose()
+  get firstname() {
+    return this._properties.firstname;
+  }
+
+  @Expose()
+  get club() {
+    return this._properties.club;
+  }
+
+  @Expose()
+  get birthdate() {
+    return this._properties.birthdate;
+  }
+
+  @Expose()
+  get gender() {
+    return this._properties.gender;
+  }
+
+  @Expose()
+  get rating() {
+    return this._properties.rating;
   }
 
   get fullname() {

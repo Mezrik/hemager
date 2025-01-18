@@ -1,3 +1,4 @@
+import { GenderEnum } from '@hemager/api-types';
 import {
   AllowNull,
   BelongsTo,
@@ -9,9 +10,9 @@ import {
   Table,
 } from 'sequelize-typescript';
 
-import { GenderEnum } from '@hemager/api-types';
+import { Contestant as ContestantEntity } from '@/domain/contestant/contestant';
 
-import { Club } from './club.model';
+import { Club, clubModelToEntity } from './club.model';
 
 @Table({ tableName: 'Contestant', modelName: 'Contestant' })
 export class Contestant extends Model {
@@ -45,3 +46,37 @@ export class Contestant extends Model {
   @Column(DataType.INTEGER)
   rating?: number;
 }
+
+export const contestantModelToEntity = (model: Contestant): ContestantEntity => {
+  return new ContestantEntity(
+    {
+      firstname: model.firstname,
+      surname: model.surname,
+      club: model.club ? clubModelToEntity(model.club) : undefined,
+      birthdate: model.birthdate,
+      gender: model.gender,
+      rating: model.rating,
+    },
+    {
+      id: model.id,
+      createdAt: model.createdAt,
+      updatedAt: model.updatedAt,
+    },
+  );
+};
+
+export const entityToContestantAttributes = (entity: ContestantEntity) => {
+  const model = {
+    id: entity.id,
+    firstname: entity.firstname,
+    surname: entity.surname,
+    clubId: entity.club ? entity.club.id : undefined,
+    birthdate: entity.birthdate,
+    gender: entity.gender,
+    rating: entity.rating,
+    createdAt: entity.createdAt,
+    updatedAt: entity.updatedAt,
+  };
+
+  return model;
+};

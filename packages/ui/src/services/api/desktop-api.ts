@@ -1,10 +1,14 @@
-import type { APIError, ContestDto, CreateContestInput } from '@hemager/api-types';
-import { Result, Task } from 'true-myth';
+import type {
+  APIError,
+  ContestDto,
+  CreateContestInput,
+  CategoryDto,
+  WeaponDto,
+} from '@hemager/api-types';
+import { Result } from 'true-myth';
 
 import { UpdateCompetitionParametersCommand } from '@/generated/server';
 import {
-  GetCompetition,
-  GetCompetitionsCategories,
   GetCompetitionsWeapons,
   CreateCompetitor,
   GetCompetitors,
@@ -36,12 +40,12 @@ export class DesktopApi implements Api {
     return unwrapTask(window.electron.contest.create(command));
   }
 
-  GetCompetitionsCategories(): Promise<Array<query.CompetitionCategory>> {
-    return GetCompetitionsCategories();
+  GetCompetitionsCategories(): Promise<Result<Array<CategoryDto>, APIError>> {
+    return unwrapTask(window.electron.contest.getAllCategories());
   }
 
-  GetCompetitionsWeapons(): Promise<Array<query.Weapon>> {
-    return GetCompetitionsWeapons();
+  GetCompetitionsWeapons(): Promise<Result<Array<WeaponDto>, APIError>> {
+    return unwrapTask(window.electron.contest.getAllWeapons());
   }
 
   CreateCompetitor(command: command.CreateCompetitor): Promise<void> {
