@@ -17,7 +17,17 @@ export class RoundRepository
   extends BaseRepository<RoundModel, Round>
   implements RoundRepositoryInterface
 {
-  constructor(@inject(TYPES.Db) _db: Sequelize) {
+  constructor(@inject(TYPES.Db) private _db: Sequelize) {
     super(_db, RoundModel, Round, roundModelToEntity, entityToRoundAttributes);
+  }
+
+  public async findByContestId(contestId: string): Promise<Round[]> {
+    const repo = this._db.getRepository(RoundModel);
+
+    const rounds = await repo.findAll({
+      where: { contestId },
+    });
+
+    return rounds.map((round) => this._modelToEntity(round));
   }
 }

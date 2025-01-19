@@ -6,8 +6,8 @@ import { RoundParticipant } from '../round/round-participant';
 export class Group extends Entity {
   constructor(
     private _roundId: string,
-    private _referee: Referee,
     private _participants: RoundParticipant[],
+    private _referee?: Referee,
     _entityProperties?: EntityProperties,
   ) {
     super(_entityProperties);
@@ -15,6 +15,10 @@ export class Group extends Entity {
 
   get roundId() {
     return this._roundId;
+  }
+
+  get participants() {
+    return this._participants;
   }
 
   get referee() {

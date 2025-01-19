@@ -31,6 +31,11 @@ export interface Api {
 
   CreateCompetition(data: CreateContestInput): Promise<Result<void, APIError>>;
 
+  UpdateCompetition(
+    id: UUID,
+    data: Omit<UpdateContestInput, 'id'>,
+  ): Promise<Result<void, APIError>>;
+
   GetCompetitionsCategories(): Promise<Result<Array<CategoryDto>, APIError>>;
 
   GetCompetitionsWeapons(): Promise<Result<Array<WeaponDto>, APIError>>;
@@ -66,11 +71,6 @@ export interface Api {
     competitionId: UUID,
     data: UpdateCompetitionParametersCommand,
   ): Promise<void>;
-
-  UpdateCompetition(
-    id: UUID,
-    data: Omit<UpdateContestInput, 'id'>,
-  ): Promise<Result<void, APIError>>;
 }
 
 export const api: Api = import.meta.env.MODE === 'desktop' ? new DesktopApi() : new RestApi();

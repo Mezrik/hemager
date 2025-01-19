@@ -13,8 +13,8 @@ import {
 import { Round as RoundEntity } from '@/domain/round/round';
 
 import { Contest } from './contest.model';
-import { Group } from './group.model';
-import { RoundParticipant } from './round-participant.model';
+import { Group, groupModelToEntity } from './group.model';
+import { RoundParticipant, roundParticipantsModelToEntity } from './round-participant.model';
 
 @Table({ tableName: 'Round', modelName: 'Round' })
 export class Round extends Model {
@@ -44,7 +44,13 @@ export class Round extends Model {
 }
 
 export const roundModelToEntity = (model: Round): RoundEntity => {
-  return new RoundEntity(model.contestId, undefined, undefined, { id: model.id });
+  return new RoundEntity(
+    model.contestId,
+    undefined,
+    model.participants.map((p) => roundParticipantsModelToEntity(p)),
+    model.groups.map((g) => groupModelToEntity(g)),
+    { id: model.id },
+  );
 };
 
 export const entityToRoundAttributes = (entity: RoundEntity) => {

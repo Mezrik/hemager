@@ -1,4 +1,4 @@
-import { GenderEnum } from '@hemager/api-types';
+import { Country, GenderEnum } from '@hemager/api-types';
 import { Expose } from 'class-transformer';
 
 import { Entity, EntityProperties } from '@/common/entity';
@@ -13,6 +13,7 @@ type ContestantProperties = {
   birthdate?: Date;
   gender?: GenderEnum;
   rating?: number;
+  nationality?: Country;
 };
 
 export class Contestant extends Entity {
@@ -51,6 +52,11 @@ export class Contestant extends Entity {
   @Expose()
   get rating() {
     return this._properties.rating;
+  }
+
+  @Expose()
+  get nationality() {
+    return this._properties.nationality;
   }
 
   get fullname() {

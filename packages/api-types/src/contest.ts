@@ -55,3 +55,8 @@ export type CategoryDto = {
   id: string;
   name: string;
 };
+
+export type InitializeGroupsInput = {
+  contestId: string;
+  maxParticipantsPerGroup: number;
+};

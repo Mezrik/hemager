@@ -9,7 +9,9 @@ import {
   Table,
 } from 'sequelize-typescript';
 
-import { Contestant } from './contestant.model';
+import { RoundParticipant as RoundParticipantEntity } from '@/domain/round/round-participant';
+
+import { Contestant, contestantModelToEntity } from './contestant.model';
 import { Round } from './round.model';
 
 @Table({ tableName: 'RoundParticipant', modelName: 'RoundParticipant' })
@@ -30,3 +32,18 @@ export class RoundParticipant extends Model {
   @BelongsTo(() => Round)
   round: Round;
 }
+
+export const roundParticipantsModelToEntity = (model: RoundParticipant): RoundParticipantEntity => {
+  return new RoundParticipantEntity(model.roundId, contestantModelToEntity(model.contestant));
+};
+
+export const entityToRoundParticipantsAttributes = (entity: RoundParticipantEntity) => {
+  const model = {
+    roundId: entity.roundId,
+    contestantId: entity.contestant.id,
+    createdAt: entity.createdAt,
+    updatedAt: entity.updatedAt,
+  };
+
+  return model;
+};

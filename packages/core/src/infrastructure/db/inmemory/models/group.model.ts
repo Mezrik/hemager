@@ -1,24 +1,28 @@
 import {
+  AllowNull,
   BelongsTo,
   Column,
   DataType,
   ForeignKey,
   HasMany,
-  HasOne,
   Model,
   PrimaryKey,
   Table,
 } from 'sequelize-typescript';
 
+import { Group as GroupEntity } from '@/domain/group/group';
+import { RoundParticipant } from '@/domain/round/round-participant';
+
+import { contestantModelToEntity } from './contestant.model';
 import { GroupParticipant } from './group-participant.model';
-import { Referee } from './referee.model';
+import { Referee, refereeModelToEntity } from './referee.model';
 import { Round } from './round.model';
 
 @Table({ tableName: 'Group', modelName: 'Group' })
 export class Group extends Model {
   @PrimaryKey
   @Column(DataType.UUID)
-  public declare id: string;
+  public id: string;
 
   @ForeignKey(() => Round)
   @Column(DataType.UUID)
@@ -27,13 +31,40 @@ export class Group extends Model {
   @BelongsTo(() => Round)
   round: Round;
 
+  @AllowNull
   @ForeignKey(() => Referee)
   @Column(DataType.UUID)
-  refereeId: string;
+  refereeId?: string;
 
   @BelongsTo(() => Referee)
-  referee: Referee;
+  referee?: Referee;
 
   @HasMany(() => GroupParticipant)
   participants: GroupParticipant[];
 }
+
+export const groupModelToEntity = (model: Group): GroupEntity => {
+  return new GroupEntity(
+    model.id,
+    model.participants.map(
+      (participant) =>
+        new RoundParticipant(model.roundId, contestantModelToEntity(participant.contestant)),
+    ),
+    model.referee ? refereeModelToEntity(model.referee) : undefined,
+    {
+      id: model.id,
+    },
+  );
+};
+
+export const entityToGroupAttributes = (entity: GroupEntity) => {
+  const model = {
+    id: entity.id,
+    roundId: entity.roundId,
+    refereeId: entity.referee ? entity.referee.id : undefined,
+    createdAt: entity.createdAt,
+    updatedAt: entity.updatedAt,
+  };
+
+  return model;
+};

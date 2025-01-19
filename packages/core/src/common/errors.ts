@@ -8,6 +8,7 @@ export enum CommandErrorTypes {
   NOT_FOUND,
   CAUGHT_EXCEPTION,
   COMMAND_NOT_BOUND,
+  INCORRECT_INPUT,
 }
 
 export interface CommandError extends InternalError {

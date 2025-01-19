@@ -9,8 +9,8 @@ import { instanceToPlain } from '@/common/utils/transformer';
 export class BaseRepository<T extends Model, U extends Entity> implements Repository<U> {
   private _dbRepo: DbRepository<T>;
   private _entity: new (...args: any) => U;
-  private _modelToEntity: (model: T) => U;
-  private _entityToAttributes: (entity: U) => Attributes<T>;
+  protected _modelToEntity: (model: T) => U;
+  protected _entityToAttributes: (entity: U) => Attributes<T>;
 
   constructor(
     db: Sequelize,

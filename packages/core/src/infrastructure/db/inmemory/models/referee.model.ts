@@ -10,6 +10,8 @@ import {
   Table,
 } from 'sequelize-typescript';
 
+import { Referee as RefereeEntity } from '@/domain/contest/referee';
+
 import { Contest } from './contest.model';
 import { Group } from './group.model';
 import { Round } from './round.model';
@@ -18,7 +20,7 @@ import { Round } from './round.model';
 export class Referee extends Model {
   @PrimaryKey
   @Column(DataType.UUID)
-  public declare id: string;
+  public id: string;
 
   @Column(DataType.TEXT)
   name: string;
@@ -33,3 +35,19 @@ export class Referee extends Model {
   @HasMany(() => Group)
   groups: Group[];
 }
+
+export const refereeModelToEntity = (model: Referee): RefereeEntity => {
+  return new RefereeEntity(model.name, model.contestId, { id: model.id });
+};
+
+export const entityToRefereeAttributes = (entity: RefereeEntity) => {
+  const model = {
+    id: entity.id,
+    name: entity.name,
+    contestId: entity.contestId,
+    createdAt: entity.createdAt,
+    updatedAt: entity.updatedAt,
+  };
+
+  return model;
+};

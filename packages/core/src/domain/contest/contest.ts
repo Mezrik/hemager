@@ -19,6 +19,7 @@ type ContestProperties = {
 
   expectedParticipants?: number;
   deploymentCriteria?: DeploymentCriteria[];
+
   groupHits?: number;
   eliminationHits?: number;
 };

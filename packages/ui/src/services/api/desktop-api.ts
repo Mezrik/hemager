@@ -41,7 +41,7 @@ export class DesktopApi implements Api {
 
   UpdateCompetition(
     id: string,
-    command: Omit<UpdateContestantInput, 'id'>,
+    command: Omit<UpdateContestInput, 'id'>,
   ): Promise<Result<void, APIError>> {
     return unwrapTask(window.electron.contest.update({ id, ...command }));
   }

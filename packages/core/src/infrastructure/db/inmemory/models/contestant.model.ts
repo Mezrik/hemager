@@ -1,4 +1,4 @@
-import { GenderEnum } from '@hemager/api-types';
+import { Country, GenderEnum } from '@hemager/api-types';
 import {
   AllowNull,
   BelongsTo,
@@ -45,6 +45,10 @@ export class Contestant extends Model {
   @AllowNull
   @Column(DataType.INTEGER)
   rating?: number;
+
+  @AllowNull
+  @Column(DataType.STRING)
+  nationality?: Country;
 }
 
 export const contestantModelToEntity = (model: Contestant): ContestantEntity => {
@@ -56,6 +60,7 @@ export const contestantModelToEntity = (model: Contestant): ContestantEntity => 
       birthdate: model.birthdate,
       gender: model.gender,
       rating: model.rating,
+      nationality: model.nationality,
     },
     {
       id: model.id,
@@ -74,6 +79,7 @@ export const entityToContestantAttributes = (entity: ContestantEntity) => {
     birthdate: entity.birthdate,
     gender: entity.gender,
     rating: entity.rating,
+    nationality: entity.nationality,
     createdAt: entity.createdAt,
     updatedAt: entity.updatedAt,
   };

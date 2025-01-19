@@ -5,11 +5,13 @@ import {
   CategoryDto,
   WeaponDto,
   APIError,
+  InitializeGroupsInput,
 } from '@hemager/api-types';
 import { Task } from 'true-myth';
 
 import { CreateContestCommand } from '@/application/command/contest/create-contest';
 import { UpdateContestCommand } from '@/application/command/contest/update-contest';
+import { InitializeGroupsCommand } from '@/application/command/groups/initialize-group';
 import { GetAllCategoriesQuery } from '@/application/query/constest/get-all-categories';
 import { GetAllContestsQuery } from '@/application/query/constest/get-all-contests';
 import { GetAllWeaponsQuery } from '@/application/query/constest/get-all-weapons';
@@ -106,6 +108,17 @@ export const contestHandlers = (_queryBus: QueryBus, _commandBus: CommandBus) =>
             resolve(contests.map((contest) => instanceToPlain(contest) as ContestDto)),
           Rejected: (error) => reject(queryErrorToAPIError(error)),
         });
+      });
+    },
+
+    initGroups: function (payload: InitializeGroupsInput): Task<void, APIError> {
+      return new Task((resolve, reject) => {
+        void _commandBus
+          .send(new InitializeGroupsCommand(payload.contestId, payload.maxParticipantsPerGroup))
+          .match({
+            Resolved: () => resolve(),
+            Rejected: (error) => reject(commandErrorToAPIError(error)),
+          });
       });
     },
   };
