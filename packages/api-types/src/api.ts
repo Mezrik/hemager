@@ -7,7 +7,7 @@ import {
   UpdateContestInput,
   WeaponDto,
 } from "./contest";
-import { CreateContestantInput } from "./contestant";
+import { ContestantDto, CreateContestantInput, UpdateContestantInput } from "./contestant";
 import { APIError } from "./errors";
 
 export type API = {
@@ -21,6 +21,9 @@ export type API = {
   };
   contestant: {
     create: (payload: CreateContestantInput) => Task<void, APIError>;
+    update: (payload: UpdateContestantInput) => Task<void, APIError>;
+    getAll: () => Task<ContestantDto[], APIError>;
+    getOne: (id: string) => Task<ContestantDto, APIError>;
   };
 };
 

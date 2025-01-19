@@ -4,18 +4,18 @@ import type {
   APIError,
   CategoryDto,
   WeaponDto,
+  CreateContestantInput,
+  ContestantDto,
+  UpdateContestantInput,
+  UpdateContestInput,
 } from '@hemager/api-types';
 import { Result } from 'true-myth';
 
 import {
-  CompetitorResult,
-  CreateCompetitionCommand,
-  CreateCompetitorCommand,
   CompetitionGroup,
   Match,
   MatchDetail,
   CompetitionParticipant,
-  UpdateCompetitorCommand,
   UpdateCompetitionParametersCommand,
 } from '@/generated/server';
 
@@ -35,13 +35,16 @@ export interface Api {
 
   GetCompetitionsWeapons(): Promise<Result<Array<WeaponDto>, APIError>>;
 
-  GetCompetitors(): Promise<Array<CompetitorResult>>;
+  GetCompetitors(): Promise<Result<ContestantDto[], APIError>>;
 
-  GetCompetitor(id: UUID): Promise<CompetitorResult>;
+  GetCompetitor(id: UUID): Promise<Result<ContestantDto, APIError>>;
 
-  CreateCompetitor(data: CreateCompetitorCommand): Promise<void>;
+  CreateCompetitor(data: CreateContestantInput): Promise<Result<void, APIError>>;
 
-  UpdateCompetitor(id: UUID, data: UpdateCompetitorCommand): Promise<void>;
+  UpdateCompetitor(
+    id: UUID,
+    command: Omit<UpdateContestantInput, 'id'>,
+  ): Promise<Result<void, APIError>>;
 
   GetCompetitionsGroups(competitionId: UUID): Promise<Array<CompetitionGroup>>;
 
@@ -64,7 +67,10 @@ export interface Api {
     data: UpdateCompetitionParametersCommand,
   ): Promise<void>;
 
-  UpdateCompetition(id: UUID, data: CreateCompetitionCommand): Promise<void>;
+  UpdateCompetition(
+    id: UUID,
+    data: Omit<UpdateContestInput, 'id'>,
+  ): Promise<Result<void, APIError>>;
 }
 
 export const api: Api = import.meta.env.MODE === 'desktop' ? new DesktopApi() : new RestApi();

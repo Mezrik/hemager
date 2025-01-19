@@ -4,25 +4,24 @@ import type {
   CreateContestInput,
   CategoryDto,
   WeaponDto,
+  CreateContestantInput,
+  ContestantDto,
+  UpdateContestantInput,
+  UpdateContestInput,
 } from '@hemager/api-types';
 import { Result } from 'true-myth';
 
 import { UpdateCompetitionParametersCommand } from '@/generated/server';
 import {
-  GetCompetitionsWeapons,
-  CreateCompetitor,
-  GetCompetitors,
   GetCompetitionsGroups,
   GetGroup,
   GetMatch,
   GetMatches,
   GetParticipants,
   AssignCompetitors,
-  UpdateCompetitor,
   InitializeGroups,
-  GetCompetitor,
 } from '@/generated/wailsjs/go/desktop/Admin';
-import { command, query } from '@/generated/wailsjs/go/models';
+import { query } from '@/generated/wailsjs/go/models';
 import { unwrapTask } from '@/lib/true-myth';
 
 import { Api } from './api';
@@ -40,6 +39,13 @@ export class DesktopApi implements Api {
     return unwrapTask(window.electron.contest.create(command));
   }
 
+  UpdateCompetition(
+    id: string,
+    command: Omit<UpdateContestantInput, 'id'>,
+  ): Promise<Result<void, APIError>> {
+    return unwrapTask(window.electron.contest.update({ id, ...command }));
+  }
+
   GetCompetitionsCategories(): Promise<Result<Array<CategoryDto>, APIError>> {
     return unwrapTask(window.electron.contest.getAllCategories());
   }
@@ -48,20 +54,23 @@ export class DesktopApi implements Api {
     return unwrapTask(window.electron.contest.getAllWeapons());
   }
 
-  CreateCompetitor(command: command.CreateCompetitor): Promise<void> {
-    return CreateCompetitor(command);
+  CreateCompetitor(command: CreateContestantInput): Promise<Result<void, APIError>> {
+    return unwrapTask(window.electron.contestant.create(command));
   }
 
-  UpdateCompetitor(id: UUID, command: Omit<command.UpdateCompetitor, 'id'>): Promise<void> {
-    return UpdateCompetitor({ id, ...command });
+  UpdateCompetitor(
+    id: UUID,
+    command: Omit<UpdateContestantInput, 'id'>,
+  ): Promise<Result<void, APIError>> {
+    return unwrapTask(window.electron.contestant.update({ id, ...command }));
   }
 
-  GetCompetitors(): Promise<Array<query.Competitor>> {
-    return GetCompetitors();
+  GetCompetitors(): Promise<Result<ContestantDto[], APIError>> {
+    return unwrapTask(window.electron.contestant.getAll());
   }
 
-  GetCompetitor(id: UUID): Promise<query.Competitor> {
-    return GetCompetitor(id);
+  GetCompetitor(id: UUID): Promise<Result<ContestantDto, APIError>> {
+    return unwrapTask(window.electron.contestant.getOne(id));
   }
 
   GetCompetitionsGroups(competitionId: UUID): Promise<Array<query.Group>> {
@@ -100,10 +109,6 @@ export class DesktopApi implements Api {
     competitionId: UUID,
     data: UpdateCompetitionParametersCommand,
   ): Promise<void> {
-    return Promise.resolve();
-  }
-
-  UpdateCompetition(): Promise<void> {
     return Promise.resolve();
   }
 }

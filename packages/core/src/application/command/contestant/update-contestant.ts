@@ -9,8 +9,9 @@ import { TYPES } from '@/di-types';
 import { Contestant } from '@/domain/contestant/contestant';
 import { ContestantRepository } from '@/domain/contestant/contestant-repository';
 
-export class CreateContestantCommand extends Command {
+export class UpdateContestantCommand extends Command {
   constructor(
+    public id: string,
     public firstname: string,
     public surname: string,
 
@@ -25,16 +26,23 @@ export class CreateContestantCommand extends Command {
 }
 
 @injectable()
-export class CreateContestantCommandHandler implements CommandHandler<CreateContestantCommand> {
-  commandToHandle: string = CreateContestantCommand.name;
+export class UpdateContestantCommandHandler implements CommandHandler<UpdateContestantCommand> {
+  commandToHandle: string = UpdateContestantCommand.name;
 
   constructor(
     @inject(TYPES.ContestantRepository) private readonly _repository: ContestantRepository,
   ) {}
 
-  handle(command: CreateContestantCommand): Task<void, CommandError> {
+  handle(command: UpdateContestantCommand): Task<void, CommandError> {
     return new Task((resolve, reject) => {
       const asyncFn = async () => {
+        const existingContestant = await this._repository.findOne(command.id);
+
+        if (!existingContestant) {
+          reject({ cause: 'Contestant not found', type: CommandErrorTypes.NOT_FOUND });
+          return;
+        }
+
         const club = command.clubId
           ? await this._repository.findByClubId(command.clubId)
           : undefined;
@@ -45,13 +53,13 @@ export class CreateContestantCommandHandler implements CommandHandler<CreateCont
         }
 
         const contestant: Contestant = new Contestant({
-          firstname: command.firstname,
-          surname: command.surname,
-          birthdate: command.birthdate,
-          gender: command.gender,
-          rating: command.rating,
+          firstname: command.firstname ?? existingContestant.firstname,
+          surname: command.surname ?? existingContestant.surname,
+          birthdate: command.birthdate ?? existingContestant.birthdate,
+          gender: command.gender ?? existingContestant.gender,
+          rating: command.rating ?? existingContestant.rating,
 
-          club: club ?? undefined,
+          club: club ?? existingContestant.club ?? undefined,
         });
 
         try {
