@@ -7,6 +7,8 @@ import { TYPES } from '@/di-types';
 
 import { contestHandlers } from './handlers/contest';
 import { contestantHandlers } from './handlers/contestant';
+import { groupHandlers } from './handlers/group';
+import { matchHandlers } from './handlers/match';
 
 export const constructAPI = (app: Container) => {
   const queryBus = app.get<QueryBus>(TYPES.QueryBus);
@@ -15,6 +17,8 @@ export const constructAPI = (app: Container) => {
   const api = {
     contest: contestHandlers(queryBus, commandBus),
     contestant: contestantHandlers(queryBus, commandBus),
+    group: groupHandlers(queryBus, commandBus),
+    match: matchHandlers(queryBus, commandBus),
   } satisfies API;
 
   const generatePaths = <T extends Record<string, any>>(api: T): APIPaths<T>[] => {

@@ -6,14 +6,18 @@ import {
   WeaponDto,
   APIError,
   InitializeGroupsInput,
+  RoundParticipantDto,
+  AssignParticipantsInput,
 } from '@hemager/api-types';
 import { Task } from 'true-myth';
 
+import { AssignParticipantsCommand } from '@/application/command/contest/assign-participants';
 import { CreateContestCommand } from '@/application/command/contest/create-contest';
 import { UpdateContestCommand } from '@/application/command/contest/update-contest';
 import { InitializeGroupsCommand } from '@/application/command/groups/initialize-group';
 import { GetAllCategoriesQuery } from '@/application/query/constest/get-all-categories';
 import { GetAllContestsQuery } from '@/application/query/constest/get-all-contests';
+import { GetAllParticipantsQuery } from '@/application/query/constest/get-all-participants';
 import { GetAllWeaponsQuery } from '@/application/query/constest/get-all-weapons';
 import { GetContestQuery } from '@/application/query/constest/get-contest';
 import { commandErrorToAPIError, queryErrorToAPIError } from '@/common/errors';
@@ -115,6 +119,30 @@ export const contestHandlers = (_queryBus: QueryBus, _commandBus: CommandBus) =>
       return new Task((resolve, reject) => {
         void _commandBus
           .send(new InitializeGroupsCommand(payload.contestId, payload.maxParticipantsPerGroup))
+          .match({
+            Resolved: () => resolve(),
+            Rejected: (error) => reject(commandErrorToAPIError(error)),
+          });
+      });
+    },
+
+    getAllParticipants: function (id: string): Task<RoundParticipantDto[], APIError> {
+      return new Task((resolve, reject) => {
+        void _queryBus
+          .execute<GetAllParticipantsQuery, RoundParticipantDto[]>(new GetAllParticipantsQuery(id))
+          .match({
+            Resolved: (participants) => {
+              return resolve(participants.map((p) => instanceToPlain(p) as RoundParticipantDto));
+            },
+            Rejected: (error) => reject(queryErrorToAPIError(error)),
+          });
+      });
+    },
+
+    assignParticipants: function (payload: AssignParticipantsInput): Task<void, APIError> {
+      return new Task((resolve, reject) => {
+        void _commandBus
+          .send(new AssignParticipantsCommand(payload.contestId, payload.participants))
           .match({
             Resolved: () => resolve(),
             Rejected: (error) => reject(commandErrorToAPIError(error)),

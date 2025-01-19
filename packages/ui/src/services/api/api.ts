@@ -8,16 +8,14 @@ import type {
   ContestantDto,
   UpdateContestantInput,
   UpdateContestInput,
+  InitializeGroupsInput,
+  GroupDto,
+  RoundParticipantDto,
+  MatchDto,
 } from '@hemager/api-types';
 import { Result } from 'true-myth';
 
-import {
-  CompetitionGroup,
-  Match,
-  MatchDetail,
-  CompetitionParticipant,
-  UpdateCompetitionParametersCommand,
-} from '@/generated/server';
+import { Match, MatchDetail, UpdateCompetitionParametersCommand } from '@/generated/server';
 
 import { DesktopApi } from './desktop-api';
 import { RestApi } from './rest-api';
@@ -51,21 +49,21 @@ export interface Api {
     command: Omit<UpdateContestantInput, 'id'>,
   ): Promise<Result<void, APIError>>;
 
-  GetCompetitionsGroups(competitionId: UUID): Promise<Array<CompetitionGroup>>;
+  GetCompetitionsGroups(roundId: UUID): Promise<Result<GroupDto[], APIError>>;
 
-  GetGroup(groupId: UUID, competitionId: UUID): Promise<CompetitionGroup>;
+  GetGroup(groupId: UUID): Promise<Result<GroupDto, APIError>>;
 
-  GetMatch(id: UUID): Promise<MatchDetail>;
+  GetMatch(id: UUID): Promise<Result<MatchDto, APIError>;
 
-  GetMatches(groupId: UUID): Promise<Array<Match>>;
+  GetMatches(groupId: UUID): Promise<Result<MatchDto[], APIError>;
 
-  GetParticipants(competitionId: UUID): Promise<Array<CompetitionParticipant>>;
+  GetParticipants(competitionId: UUID): Promise<Result<RoundParticipantDto[], APIError>>;
 
-  AssignParticipants(competitorId: UUID[], competitionId: UUID): Promise<void>;
+  AssignParticipants(competitorId: UUID[], competitionId: UUID): Promise<Result<void, APIError>>;
 
   ImportCompetitor(file: File): Promise<void>;
 
-  InitializeGroups(competitionId: UUID): Promise<void>;
+  InitializeGroups(payload: InitializeGroupsInput): Promise<Result<void, APIError>>;
 
   UpdateCompetitionParameters(
     competitionId: UUID,

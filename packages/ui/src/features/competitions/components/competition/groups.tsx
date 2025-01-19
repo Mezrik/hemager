@@ -73,7 +73,7 @@ export const Groups: FC<GroupsProps> = ({ competitionId }) => {
           </CardDescription>
         </CardHeader>
         <CardFooter>
-          <Button onClick={() => initializeGroups.mutate({ data: { competitionId } })}>
+          <Button onClick={() => initializeGroups.mutate({ data: { contestId: competitionId } })}>
             <Trans>Initialize groups</Trans>
           </Button>
         </CardFooter>

@@ -8,20 +8,14 @@ import type {
   ContestantDto,
   UpdateContestantInput,
   UpdateContestInput,
+  InitializeGroupsInput,
+  GroupDto,
+  RoundParticipantDto,
+  MatchDto,
 } from '@hemager/api-types';
 import { Result } from 'true-myth';
 
 import { UpdateCompetitionParametersCommand } from '@/generated/server';
-import {
-  GetCompetitionsGroups,
-  GetGroup,
-  GetMatch,
-  GetMatches,
-  GetParticipants,
-  AssignCompetitors,
-  InitializeGroups,
-} from '@/generated/wailsjs/go/desktop/Admin';
-import { query } from '@/generated/wailsjs/go/models';
 import { unwrapTask } from '@/lib/true-myth';
 
 import { Api } from './api';
@@ -73,36 +67,41 @@ export class DesktopApi implements Api {
     return unwrapTask(window.electron.contestant.getOne(id));
   }
 
-  GetCompetitionsGroups(competitionId: UUID): Promise<Array<query.Group>> {
-    return GetCompetitionsGroups(competitionId);
+  GetCompetitionsGroups(roundId: UUID): Promise<Result<GroupDto[], APIError>> {
+    return unwrapTask(window.electron.group.getAll(roundId));
   }
 
-  GetGroup(groupId: UUID): Promise<query.Group> {
-    return GetGroup(groupId);
+  GetGroup(groupId: UUID): Promise<Result<GroupDto, APIError>> {
+    return unwrapTask(window.electron.group.getOne(groupId));
   }
 
-  GetMatch(id: UUID): Promise<query.MatchDetail> {
-    return GetMatch(id);
+  GetMatch(id: UUID): Promise<Result<MatchDto, APIError>> {
+    return unwrapTask(window.electron.match.getOne(id));
   }
 
-  GetMatches(groupId: UUID): Promise<Array<query.Match>> {
-    return GetMatches(groupId);
+  GetMatches(groupId: UUID): Promise<Result<MatchDto[], APIError>> {
+    return unwrapTask(window.electron.match.getAll(groupId));
   }
 
-  GetParticipants(competitionId: UUID): Promise<Array<query.Participant>> {
-    return GetParticipants(competitionId);
+  GetParticipants(competitionId: UUID): Promise<Result<RoundParticipantDto[], APIError>> {
+    return unwrapTask(window.electron.contest.getAllParticipants(competitionId));
   }
 
-  AssignParticipants(competitorIds: UUID[], competitionId: UUID): Promise<void> {
-    return AssignCompetitors(competitorIds, competitionId);
+  AssignParticipants(participants: UUID[], contestId: UUID): Promise<Result<void, APIError>> {
+    return unwrapTask(
+      window.electron.contest.assignParticipants({
+        contestId,
+        participants,
+      }),
+    );
   }
 
   ImportCompetitor(): Promise<void> {
     return Promise.resolve();
   }
 
-  InitializeGroups(competitionId: UUID): Promise<void> {
-    return InitializeGroups(competitionId);
+  InitializeGroups(payload: InitializeGroupsInput): Promise<Result<void, APIError>> {
+    return unwrapTask(window.electron.contest.initGroups(payload));
   }
 
   UpdateCompetitionParameters(

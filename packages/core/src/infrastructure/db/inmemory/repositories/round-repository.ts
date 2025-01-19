@@ -30,4 +30,10 @@ export class RoundRepository
 
     return rounds.map((round) => this._modelToEntity(round));
   }
+
+  public async assignParticipants(roundId: string, participants: string[]) {
+    const repo = this._db.getRepository(RoundModel);
+
+    await repo.update({ participants }, { where: { id: roundId } });
+  }
 }

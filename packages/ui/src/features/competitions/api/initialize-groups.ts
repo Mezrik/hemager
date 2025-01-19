@@ -9,13 +9,14 @@ import { api } from '@/services/api';
 import { getCompetitionsGroupsQueryOptions } from './get-groups';
 
 export const initializeGroupsInputSchema = z.object({
-  competitionId: z.string().uuid(t``),
+  contestId: z.string().uuid(t``),
+  maxParticipantsPerGroup: z.number(),
 });
 
 export type InitializeGroupsInput = z.infer<typeof initializeGroupsInputSchema>;
 
 export const initializeGroups = ({ data }: { data: InitializeGroupsInput }) => {
-  return api.InitializeGroups(data.competitionId);
+  return api.InitializeGroups(data);
 };
 
 type UseInitializeGroupsOptions = {
@@ -28,13 +29,14 @@ export const useInitializeGroups = ({ mutationConfig }: UseInitializeGroupsOptio
   const { onSuccess, ...rest } = mutationConfig || {};
 
   return useMutation({
-    onSuccess: (...args) => {
-      queryClient.invalidateQueries({
-        queryKey: getCompetitionsGroupsQueryOptions(args[1].data.competitionId).queryKey,
+    onSuccess: async (...args) => {
+      await queryClient.invalidateQueries({
+        queryKey: getCompetitionsGroupsQueryOptions(args[1].data.contestId).queryKey,
       });
-      queryClient.invalidateQueries({
-        queryKey: getParticipantsQueryOptions(args[1].data.competitionId).queryKey,
+      await queryClient.invalidateQueries({
+        queryKey: getParticipantsQueryOptions(args[1].data.contestId).queryKey,
       });
+
       onSuccess?.(...args);
     },
     ...rest,

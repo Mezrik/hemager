@@ -12,4 +12,5 @@ export const TYPES = {
   RoundRepository: Symbol('RoundRepository'),
   ContestantRepository: Symbol('ContestantRepository'),
   GroupRepository: Symbol('GroupRepository'),
+  MatchRepository: Symbol('MatchRepository'),
 };

@@ -13,4 +13,16 @@ export class Match extends Entity {
   ) {
     super(_entityProperties);
   }
+
+  get groupId() {
+    return this._groupId;
+  }
+
+  get participants() {
+    return this._participants;
+  }
+
+  get matchStates() {
+    return this._matchStates;
+  }
 }

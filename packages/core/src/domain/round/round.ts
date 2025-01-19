@@ -31,6 +31,14 @@ export class Round extends Entity {
     return this._groups;
   }
 
+  get participants() {
+    return this._participants;
+  }
+
+  set participants(participants: RoundParticipant[]) {
+    this._participants = participants;
+  }
+
   public initializeGroups(
     maxPerGroup: number,
     criteria: DeploymentCriteria[],

@@ -1,3 +1,4 @@
+import { MatchStateChange } from '@hemager/api-types';
 import {
   AllowNull,
   BelongsTo,
@@ -9,7 +10,7 @@ import {
   Table,
 } from 'sequelize-typescript';
 
-import { MatchStateChange } from '@hemager/api-types';
+import { MatchState as MatchStateEntity } from '@/domain/match/match-state';
 
 import { Contestant } from './contestant.model';
 import { Match } from './match.model';
@@ -47,3 +48,22 @@ export class MatchState extends Model {
   @BelongsTo(() => Contestant)
   pointToContestant: Contestant;
 }
+
+export const matchStateModelToEntity = (model: MatchState): MatchStateEntity => {
+  return new MatchStateEntity(model.change, model.matchId, model.pointToContestantId, {
+    id: model.id,
+  });
+};
+
+export const entityToMatchStateAttributes = (entity: MatchStateEntity) => {
+  const model = {
+    id: entity.id,
+    matchId: entity.matchId,
+    change: entity.change,
+    pointToContestantId: entity.pointToContestantId,
+    createdAt: entity.createdAt,
+    updatedAt: entity.updatedAt,
+  };
+
+  return model;
+};

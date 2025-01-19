@@ -10,6 +10,9 @@ import {
 } from "./contest";
 import { ContestantDto, CreateContestantInput, UpdateContestantInput } from "./contestant";
 import { APIError } from "./errors";
+import { GroupDto } from "./group";
+import { MatchDto } from "./match";
+import { AssignParticipantsInput, RoundParticipantDto } from "./round";
 
 export type API = {
   contest: {
@@ -21,12 +24,22 @@ export type API = {
     getOne(id: string): Task<ContestDto, APIError>;
 
     initGroups: (payload: InitializeGroupsInput) => Task<void, APIError>;
+    getAllParticipants: (id: string) => Task<RoundParticipantDto[], APIError>;
+    assignParticipants: (payload: AssignParticipantsInput) => Task<void, APIError>;
   };
   contestant: {
     create: (payload: CreateContestantInput) => Task<void, APIError>;
     update: (payload: UpdateContestantInput) => Task<void, APIError>;
     getAll: () => Task<ContestantDto[], APIError>;
     getOne: (id: string) => Task<ContestantDto, APIError>;
+  };
+  group: {
+    getOne: (id: string) => Task<GroupDto, APIError>;
+    getAll: (roundId: string) => Task<GroupDto[], APIError>;
+  };
+  match: {
+    getOne: (id: string) => Task<MatchDto, APIError>;
+    getAll: (groupId: string) => Task<MatchDto[], APIError>;
   };
 };
 

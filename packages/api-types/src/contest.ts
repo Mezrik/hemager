@@ -60,3 +60,8 @@ export type InitializeGroupsInput = {
   contestId: string;
   maxParticipantsPerGroup: number;
 };
+
+export type RefereeDto = {
+  id: string;
+  name: string;
+};

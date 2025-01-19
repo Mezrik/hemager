@@ -17,7 +17,15 @@ export class GroupRepository
   extends BaseRepository<GroupModel, Group>
   implements GroupRepositoryInterface
 {
-  constructor(@inject(TYPES.Db) _db: Sequelize) {
+  constructor(@inject(TYPES.Db) private _db: Sequelize) {
     super(_db, GroupModel, Group, groupModelToEntity, entityToGroupAttributes);
+  }
+
+  async findByRoundId(roundId: string): Promise<Group[]> {
+    const repo = this._db.getRepository(GroupModel);
+
+    const groups = await repo.findAll({ where: { roundId } });
+
+    return groups.map((group) => this._modelToEntity(group));
   }
 }
