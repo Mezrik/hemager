@@ -52,12 +52,11 @@ export class Contestant extends Model {
 }
 
 export const contestantModelToEntity = (model: Contestant): ContestantEntity => {
-  console.log(model.club, model.clubId);
   return new ContestantEntity(
     {
       firstname: model.firstname,
       surname: model.surname,
-      club: model.club ? clubModelToEntity(model.club.dataValues) : undefined,
+      club: model.club ? clubModelToEntity(model.club.dataValues as Club) : undefined,
       birthdate: model.birthdate,
       gender: model.gender,
       rating: model.rating,

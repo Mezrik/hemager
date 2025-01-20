@@ -1,7 +1,8 @@
+import { APIError } from '@hemager/api-types';
 import { msg } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
 import { CZ } from 'country-flag-icons/react/3x2';
-import { ComponentProps, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { pathnames } from '@/app/pathnames';
@@ -16,10 +17,6 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { useCompetitionGroup } from '@/features/competitions/api/get-group';
-import {
-  mapParticipantsByCompetitorId,
-  mapParticipantsByGroup,
-} from '@/features/competitions/helpers';
 import { useParticipants } from '@/features/competitors/api/get-participants';
 import { useMatches } from '@/features/matches/api/get-matches';
 import { MatchCard } from '@/features/matches/components/match-card';
@@ -36,22 +33,23 @@ export const GroupRoute = () => {
   const competitionId = params.competitionId as string;
 
   const groupQuery = useCompetitionGroup({ groupId, competitionId });
-  const participantQuery = useParticipants({ competitionId });
   const matchesQuery = useMatches({ groupId });
 
-  if (groupQuery.isLoading || participantQuery.isLoading || matchesQuery.isLoading) {
+  if (groupQuery.isLoading || matchesQuery.isLoading) {
     return <div>Loading...</div>;
   }
 
-  const group = groupQuery.data;
+  const group = groupQuery.data?.unwrapOrElse<APIError>((err) => err);
+  const matches = matchesQuery.data?.unwrapOrElse<APIError>((err) => err);
+
+  console.log(group, matches);
+  if ((group && 'cause' in group) || (matches && 'cause' in matches)) {
+    return <div>Error: {(group as APIError).cause || (matches as APIError).cause}</div>;
+  }
 
   if (!group) {
     return <div>Group not found</div>;
   }
-
-  const participantsByGroup = mapParticipantsByGroup(participantQuery.data ?? []);
-
-  const participantsByCompetitorId = mapParticipantsByCompetitorId(participantQuery.data ?? []);
 
   return (
     <BasicPageLayout title={group.name} subtitle={_(msg`Group`)}>
@@ -68,16 +66,16 @@ export const GroupRoute = () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {participantsByGroup?.[group.id]?.map((participant) => (
-                  <TableRow>
+                {group?.participants.map((participant) => (
+                  <TableRow key={participant.contestant.id}>
                     <TableCell>
                       <CZ title={_(msg`Czech Republic`)} className="size-6" />
                     </TableCell>
                     <TableCell>
-                      {participant.competitor.firstname} {participant.competitor.surname}
+                      {participant.contestant.firstname} {participant.contestant.surname}
                     </TableCell>
-                    <TableCell>{participant.deploymentNumber}</TableCell>
-                    <TableCell>{participant.points}</TableCell>
+                    <TableCell>-</TableCell>
+                    <TableCell>-</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
@@ -90,9 +88,9 @@ export const GroupRoute = () => {
               {_(msg`Round 1`)}
             </h3>
             <div className="grid grid-cols-3 gap-4">
-              {matchesQuery.data?.map((match) => {
-                const one = participantsByCompetitorId?.[match.participantOneId];
-                const two = participantsByCompetitorId?.[match.participantTwoId];
+              {matches?.map((match) => {
+                const [one, two] = match.participants;
+
                 return (
                   one &&
                   two && (
@@ -100,8 +98,8 @@ export const GroupRoute = () => {
                       <MatchCard
                         key={match.id}
                         match={match}
-                        participantOne={{ ...one.competitor, points: 0 }}
-                        participantTwo={{ ...two.competitor, points: 0 }}
+                        participantOne={{ ...one.contestant, points: 0 }}
+                        participantTwo={{ ...two.contestant, points: 0 }}
                         onPreview={() => setShowMatchPreview(match.id)}
                         onEdit={() => navigate(pathnames.buildMatchPath(match.id, competitionId))}
                       />
@@ -115,14 +113,6 @@ export const GroupRoute = () => {
       </div>
       <MatchPreview
         matchId={showMatchPreview ?? ''}
-        participantsById={Object.values(participantsByCompetitorId).reduce(
-          (acc, participant) => {
-            acc[participant.competitor.id] = participant.competitor;
-
-            return acc;
-          },
-          {} as ComponentProps<typeof MatchPreview>['participantsById'],
-        )}
         onOpenChange={() => setShowMatchPreview(null)}
         open={!!showMatchPreview}
       />

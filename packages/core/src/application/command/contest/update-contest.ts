@@ -40,7 +40,6 @@ export class UpdateContestCommandHandler implements CommandHandler<UpdateContest
   handle(command: UpdateContestCommand): Task<void, CommandError> {
     return new Task((resolve, reject) => {
       const asyncFn = async () => {
-        console.log(command.weaponId, command.categoryId, command.id);
         const weapon = command.weaponId
           ? await this._repository.getWeapon(command.weaponId)
           : undefined;

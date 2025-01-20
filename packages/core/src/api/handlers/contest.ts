@@ -87,7 +87,6 @@ export const contestHandlers = (_queryBus: QueryBus, _commandBus: CommandBus) =>
       return new Task((resolve, reject) => {
         void _queryBus.execute<GetContestQuery, ContestDto>(new GetContestQuery(id)).match({
           Resolved: (contest) => {
-            console.log(instanceToPlain(contest) as ContestDto);
             return resolve(instanceToPlain(contest) as ContestDto);
           },
           Rejected: (error) => reject(queryErrorToAPIError(error)),

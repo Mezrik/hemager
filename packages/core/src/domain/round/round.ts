@@ -1,4 +1,5 @@
 import { DeploymentCriteria } from '@hemager/api-types';
+import { Expose } from 'class-transformer';
 import { Result } from 'true-myth';
 
 import { Entity, EntityProperties } from '@/common/entity';
@@ -7,7 +8,6 @@ import { InternalError } from '@/common/errors';
 import { Group } from '../group/group';
 
 import { RoundParticipant } from './round-participant';
-import { Expose } from 'class-transformer';
 
 export class Round extends Entity {
   constructor(
@@ -45,65 +45,68 @@ export class Round extends Entity {
   }
 
   public initializeGroups(
-    maxPerGroup: number,
+    targetGroupSize: number,
     criteria: DeploymentCriteria[],
   ): Result<Group[], InternalError> {
-    if (this._participants.length < maxPerGroup * 2) {
+    if (this._participants?.length < targetGroupSize * 2) {
       return Result.err({ cause: 'Insufficient participants assigned to this round' });
     }
 
-    const groupCount = Math.ceil(this._participants.length / maxPerGroup);
+    const groupCount = Math.ceil(this._participants?.length / targetGroupSize);
 
     const groupedParticipants: RoundParticipant[][] = Array.from({ length: groupCount }, () => []);
 
-    const sortedParticipants = this._participants.sort((a, b) => {
-      for (const criterion of criteria) {
-        const aValue = a.retrieveDeplymentCriterion(criterion);
-        const bValue = b.retrieveDeplymentCriterion(criterion);
+    const ratedContestants = this._participants.filter((c) => c.contestant.rating !== undefined);
+    const unratedContestants = this._participants.filter((c) => c.contestant.rating === undefined);
 
-        const standardizedA = aValue ?? '';
-        const standardizedB = bValue ?? '';
+    const minRating = Math.min(...ratedContestants.map((c) => c.contestant.rating!));
+    const maxRating = Math.max(...ratedContestants.map((c) => c.contestant.rating!));
+    const ratingBucketSize = (maxRating - minRating) / groupCount;
 
-        if (typeof standardizedA === 'number' && typeof standardizedB === 'number') {
-          if (standardizedA < standardizedB) return -1;
-          if (standardizedA > standardizedB) return 1;
-        } else {
-          const stringA = String(standardizedA);
-          const stringB = String(standardizedB);
-          if (stringA < stringB) return -1;
-          if (stringA > stringB) return 1;
-        }
-      }
-      return 0;
-    });
+    const getRatingBucket = (rating: number | undefined) =>
+      rating !== undefined ? Math.floor((rating - minRating) / ratingBucketSize) : -1;
 
-    for (const participant of sortedParticipants) {
-      let bestGroupIndex = 0;
-      let minConflicts = Infinity;
+    const distribute = (pool: RoundParticipant[], isRated: boolean) => {
+      for (const contestant of pool) {
+        let bestGroupIndex = -1;
+        let minConflict = Infinity;
 
-      for (let i = 0; i < groupedParticipants.length; i++) {
-        const group = groupedParticipants[i];
-        let conflicts = 0;
+        for (let i = 0; i < groupCount; i++) {
+          const group = groupedParticipants[i];
+          if (group.length >= targetGroupSize) continue; // Enforce size limit
 
-        for (const existing of group) {
-          for (const criterion of criteria) {
-            if (
-              existing.retrieveDeplymentCriterion(criterion) ===
-              participant.retrieveDeplymentCriterion(criterion)
-            ) {
-              conflicts++;
+          const conflictCount = criteria.reduce((conflicts, criterion) => {
+            if (criterion === DeploymentCriteria.rating && isRated) {
+              const bucket = getRatingBucket(contestant.contestant.rating);
+              return (
+                conflicts +
+                group.filter((c) => getRatingBucket(c.contestant.rating) === bucket).length
+              );
+            } else {
+              return (
+                conflicts +
+                group.filter(
+                  (c) =>
+                    c.retrieveDeplymentCriterion(criterion) ===
+                    contestant.retrieveDeplymentCriterion(criterion),
+                ).length
+              );
             }
+          }, 0);
+
+          // Choose the group with the least conflicts
+          if (conflictCount < minConflict) {
+            minConflict = conflictCount;
+            bestGroupIndex = i;
           }
         }
 
-        if (conflicts < minConflicts) {
-          minConflicts = conflicts;
-          bestGroupIndex = i;
-        }
+        groupedParticipants[bestGroupIndex].push(contestant);
       }
+    };
 
-      groupedParticipants[bestGroupIndex].push(participant);
-    }
+    distribute(ratedContestants, true); // Distribute rated contestants first
+    distribute(unratedContestants, false); // Then distribute unrated contestants
 
     const groups = groupedParticipants.map((participants) => {
       return new Group(this.id, participants);

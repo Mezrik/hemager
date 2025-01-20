@@ -9,10 +9,10 @@ import { instanceToPlain } from '@/common/utils/transformer';
 
 export const groupHandlers = (_queryBus: QueryBus, _commandBus: CommandBus) => {
   return {
-    getAll: function (roundId: string): Task<GroupDto[], APIError> {
+    getAll: function (contestId: string): Task<GroupDto[], APIError> {
       return new Task((resolve, reject) => {
         void _queryBus
-          .execute<GetAllGroupsQuery, GroupDto[]>(new GetAllGroupsQuery(roundId))
+          .execute<GetAllGroupsQuery, GroupDto[]>(new GetAllGroupsQuery(contestId))
           .match({
             Resolved: (contests) =>
               resolve(contests.map((contest) => instanceToPlain(contest) as GroupDto)),
@@ -24,7 +24,6 @@ export const groupHandlers = (_queryBus: QueryBus, _commandBus: CommandBus) => {
       return new Task((resolve, reject) => {
         void _queryBus.execute<GetGroupQuery, GroupDto>(new GetGroupQuery(id)).match({
           Resolved: (contest) => {
-            console.log(instanceToPlain(contest) as ContestDto);
             return resolve(instanceToPlain(contest) as GroupDto);
           },
           Rejected: (error) => reject(queryErrorToAPIError(error)),

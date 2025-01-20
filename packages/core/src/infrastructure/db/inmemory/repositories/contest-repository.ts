@@ -13,8 +13,8 @@ import {
   contestModelToEntity,
   entityToAttributes,
 } from '@/infrastructure/db/inmemory/models/contest.model';
-import { Weapon as WeaponModel } from '@/infrastructure/db/inmemory/models/weapon.model';
 import { Round as RoundModel } from '@/infrastructure/db/inmemory/models/round.model';
+import { Weapon as WeaponModel } from '@/infrastructure/db/inmemory/models/weapon.model';
 
 import { BaseRepository } from '../base-repository';
 

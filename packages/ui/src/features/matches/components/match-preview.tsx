@@ -19,40 +19,42 @@ import { MatchParticipant } from '../types';
 
 type MatchPreviewBaseProps = {
   matchId: UUID;
-  participantsById: Record<UUID, MatchParticipant>;
 };
 type MatchPreviewProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
 } & MatchPreviewBaseProps;
 
-const MatchPreviewBase: FC<MatchPreviewBaseProps> = ({ matchId, participantsById }) => {
+const MatchPreviewBase: FC<MatchPreviewBaseProps> = ({ matchId }) => {
   const matchQuery = useMatch({ matchId });
 
   if (matchQuery.isLoading) {
     return <div>Loading...</div>;
   }
 
-  const match = matchQuery.data;
+  const match = matchQuery.data?.unwrapOrElse((err) => err);
+
+  if (match && 'cause' in match) {
+    return <div>{match.cause}</div>;
+  }
 
   if (!match) {
     return <div>Match not found</div>;
   }
 
-  const participantOne = participantsById[match.participantOneId];
-  const participantTwo = participantsById[match.participantTwoId];
+  const [participantOne, participantTwo] = match.participants;
 
-  const matchState = processMatchState(match.state, participantOne.id, participantTwo.id);
+  // const matchState = processMatchState(match.state, participantOne.id, participantTwo.id);
 
   return (
     <div className="flex flex-col gap-8">
       <div className="flex items-center justify-between gap-4">
         <div className="flex items-center gap-4">
           <div>
-            {participantOne.firstname} {participantOne.surname}
+            {participantOne.contestant.firstname} {participantOne.contestant.surname}
           </div>
           <div className="flex size-14 items-center justify-center rounded bg-primary text-xl text-primary-foreground">
-            {matchState.participantOneScore}
+            {/* {matchState.participantOneScore} */}
           </div>
         </div>
 
@@ -62,14 +64,14 @@ const MatchPreviewBase: FC<MatchPreviewBaseProps> = ({ matchId, participantsById
 
         <div className="flex flex-row-reverse items-center gap-4">
           <div>
-            {participantTwo.firstname} {participantTwo.surname}
+            {participantTwo.contestant.firstname} {participantTwo.contestant.surname}
           </div>
           <div className="flex size-14 items-center justify-center rounded bg-primary text-xl text-primary-foreground">
-            {matchState.participantTwoScore}
+            {/* {matchState.participantTwoScore} */}
           </div>
         </div>
       </div>
-      <div className="flex flex-col gap-2">
+      {/* <div className="flex flex-col gap-2">
         {match.state.map((item) => (
           <div key={item.id} className="flex  gap-4">
             {item.change}{' '}
@@ -81,7 +83,7 @@ const MatchPreviewBase: FC<MatchPreviewBaseProps> = ({ matchId, participantsById
             </span>
           </div>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 };

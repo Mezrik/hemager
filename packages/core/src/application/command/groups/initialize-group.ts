@@ -8,6 +8,7 @@ import { TransactionManager } from '@/common/interfaces/transaction-manager';
 import { TYPES } from '@/di-types';
 import { ContestRepository } from '@/domain/contest/contest-repository';
 import { GroupRepository } from '@/domain/group/group-repository';
+import { RoundRepository } from '@/domain/round/round-repository';
 
 export class InitializeGroupsCommand extends Command {
   constructor(
@@ -26,6 +27,7 @@ export class InitializeGroupsCommandHandler implements CommandHandler<Initialize
   constructor(
     @inject(TYPES.ContestRepository) private readonly _contestRepository: ContestRepository,
     @inject(TYPES.GroupRepository) private readonly _groupRepository: GroupRepository,
+    @inject(TYPES.RoundRepository) private readonly _roundRepository: RoundRepository,
     @inject(TYPES.TransactionManager) private readonly _transactionManager: TransactionManager,
   ) {}
 
@@ -64,21 +66,39 @@ export class InitializeGroupsCommandHandler implements CommandHandler<Initialize
           return;
         }
 
-        const groups = firstRround
+        const round = await this._roundRepository.findOne(firstRround.id);
+
+        if (!round) {
+          reject({
+            cause: 'Round not found',
+            type: CommandErrorTypes.NOT_FOUND,
+          });
+
+          return;
+        }
+
+        const groups = round
           .initializeGroups(command.maxContestantsPerGroup, contest.deploymentCriteria ?? [])
           .unwrapOrElse((e) =>
             reject({ cause: e.cause, type: CommandErrorTypes.CAUGHT_EXCEPTION }),
           );
 
+        if (!groups) {
+          reject({
+            cause: 'Failed to initialize groups',
+            type: CommandErrorTypes.CAUGHT_EXCEPTION,
+          });
+
+          return;
+        }
+
         try {
-          await Promise.all(
-            // eslint-disable-next-line @typescript-eslint/no-misused-promises
-            groups?.forEach((group) => {
-              return this._groupRepository.create(group, transaction);
-            }) ?? [],
-          );
+          for (const group of groups) {
+            await this._groupRepository.create(group, transaction);
+          }
         } catch (err) {
           const error = ensureThrownError(err);
+          console.error(error);
           reject({ cause: error.message, type: CommandErrorTypes.CAUGHT_EXCEPTION });
         }
 

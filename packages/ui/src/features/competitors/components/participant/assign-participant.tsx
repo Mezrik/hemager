@@ -1,3 +1,4 @@
+import { APIError } from '@hemager/api-types';
 import { msg, Trans } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
 import { FC } from 'react';
@@ -31,7 +32,6 @@ import { useToast } from '@/hooks/ui/use-toast';
 import { useParticipants } from '../../api/get-participants';
 
 import { ParticipantDualList } from './participant-dual-list';
-import { APIError } from '@hemager/api-types';
 
 const FORM_ID = 'assign-competitors-form';
 

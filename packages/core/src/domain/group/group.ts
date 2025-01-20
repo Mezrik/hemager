@@ -1,3 +1,5 @@
+import { Expose } from 'class-transformer';
+
 import { Entity, EntityProperties } from '@/common/entity';
 
 import { Referee } from '../contest/referee';
@@ -13,14 +15,17 @@ export class Group extends Entity {
     super(_entityProperties);
   }
 
+  @Expose()
   get roundId() {
     return this._roundId;
   }
 
+  @Expose()
   get participants() {
     return this._participants;
   }
 
+  @Expose()
   get referee() {
     return this._referee;
   }

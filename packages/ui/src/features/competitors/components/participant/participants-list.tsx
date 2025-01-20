@@ -1,3 +1,4 @@
+import { APIError } from '@hemager/api-types';
 import { msg } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
 import { CZ } from 'country-flag-icons/react/3x2';
@@ -12,7 +13,6 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { useParticipants } from '@/features/competitors/api/get-participants';
-import { APIError } from '@hemager/api-types';
 
 export const ParticipantsList: FC<{ competitionId: UUID }> = ({ competitionId }) => {
   const { _ } = useLingui();

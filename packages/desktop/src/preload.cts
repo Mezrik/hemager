@@ -25,11 +25,11 @@ electron.contextBridge.exposeInMainWorld('electron', {
   },
   group: {
     getOne: (id) => ipcInvoke('group.getOne', id),
-    getAll: (roundId) => ipcInvoke('group.getAll', roundId),
+    getAll: (contestId) => ipcInvoke('group.getAll', contestId),
   },
   match: {
-    getOne: (id) => ipcInvoke('group.getOne', id),
-    getAll: (groupId) => ipcInvoke('group.getAll', groupId),
+    getOne: (id) => ipcInvoke('match.getOne', id),
+    getAll: (groupId) => ipcInvoke('match.getAll', groupId),
   },
 } satisfies API);
 

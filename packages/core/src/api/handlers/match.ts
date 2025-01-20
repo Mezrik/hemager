@@ -1,7 +1,6 @@
-import { ContestDto, APIError, GroupDto, MatchDto } from '@hemager/api-types';
+import { APIError, MatchDto } from '@hemager/api-types';
 import { Task } from 'true-myth';
 
-import { GetAllGroupsQuery } from '@/application/query/groups/get-all-groups';
 import { GetAllMatchesQuery } from '@/application/query/match/get-all-matches';
 import { GetMatchQuery } from '@/application/query/match/get-match';
 import { queryErrorToAPIError } from '@/common/errors';

@@ -39,17 +39,16 @@ export class Group extends Model {
   @BelongsTo(() => Referee)
   referee?: Referee;
 
-  @HasMany(() => GroupParticipant)
+  @HasMany(() => GroupParticipant, /* foreign key */ 'groupId')
   participants: GroupParticipant[];
 }
 
 export const groupModelToEntity = (model: Group): GroupEntity => {
   return new GroupEntity(
-    model.id,
-    model.participants.map(
-      (participant) =>
-        new RoundParticipant(model.roundId, contestantModelToEntity(participant.contestant)),
-    ),
+    model.roundId,
+    model.participants?.map((participant) => {
+      return new RoundParticipant(model.roundId, contestantModelToEntity(participant.contestant));
+    }),
     model.referee ? refereeModelToEntity(model.referee) : undefined,
     {
       id: model.id,
@@ -62,6 +61,7 @@ export const entityToGroupAttributes = (entity: GroupEntity) => {
     id: entity.id,
     roundId: entity.roundId,
     refereeId: entity.referee ? entity.referee.id : undefined,
+    participants: entity.participants,
     createdAt: entity.createdAt,
     updatedAt: entity.updatedAt,
   };

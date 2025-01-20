@@ -49,8 +49,6 @@ export class BaseRepository<T extends Model, U extends Entity> implements Reposi
   async create(item: U, transaction?: Transaction): Promise<U> {
     const attributes = instanceToPlain(this._entityToAttributes(item)) as Attributes<T>;
 
-    console.log(attributes);
-
     return await this._dbRepo
       .create(attributes, { transaction })
       .then((item) => this._modelToEntity(item));

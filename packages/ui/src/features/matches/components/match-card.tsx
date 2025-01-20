@@ -3,12 +3,12 @@ import { Eye, Pencil } from 'lucide-react';
 import { FC } from 'react';
 
 import { Button } from '@/components/ui/button';
-import { Match } from '@/generated/server';
 
 import { MatchParticipant } from '../types';
+import { MatchDto } from '@hemager/api-types';
 
 type MatchCardProps = {
-  match: Match;
+  match: MatchDto;
   participantOne: MatchParticipant;
   participantTwo: MatchParticipant;
   onPreview: VoidFunction;
@@ -16,7 +16,6 @@ type MatchCardProps = {
 };
 
 export const MatchCard: FC<MatchCardProps> = ({
-  match,
   participantOne,
   participantTwo,
   onPreview,

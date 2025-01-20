@@ -1,4 +1,5 @@
 import { inject, injectable } from 'inversify';
+import { Op } from 'sequelize';
 import { Sequelize } from 'sequelize-typescript';
 
 import { TYPES } from '@/di-types';
@@ -6,15 +7,14 @@ import { Round } from '@/domain/round/round';
 import { RoundRepository as RoundRepositoryInterface } from '@/domain/round/round-repository';
 
 import { BaseRepository } from '../base-repository';
+import { Club } from '../models/club.model';
+import { Contestant } from '../models/contestant.model';
+import { RoundParticipant } from '../models/round-participant.model';
 import {
   entityToRoundAttributes,
   Round as RoundModel,
   roundModelToEntity,
 } from '../models/round.model';
-import { RoundParticipant } from '../models/round-participant.model';
-import { Op } from 'sequelize';
-import { Contestant } from '../models/contestant.model';
-import { Club } from '../models/club.model';
 
 @injectable()
 export class RoundRepository

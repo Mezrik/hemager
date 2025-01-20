@@ -1,5 +1,6 @@
-import { Entity, EntityProperties } from '@/common/entity';
 import { Expose } from 'class-transformer';
+
+import { Entity, EntityProperties } from '@/common/entity';
 
 export class Weapon extends Entity {
   constructor(

@@ -1,9 +1,9 @@
 import { DeploymentCriteria } from '@hemager/api-types';
+import { Expose } from 'class-transformer';
 
 import { EntityProperties, NoIdEntity } from '@/common/entity';
 
 import { Contestant } from '../contestant/contestant';
-import { Expose } from 'class-transformer';
 
 export class RoundParticipant extends NoIdEntity {
   constructor(
@@ -17,6 +17,11 @@ export class RoundParticipant extends NoIdEntity {
   @Expose()
   get contestant() {
     return this._contestant;
+  }
+
+  @Expose()
+  get contestantId() {
+    return this._contestant.id;
   }
 
   @Expose()

@@ -43,8 +43,6 @@ export class GetAllParticipantsQueryHandler
 
         const participants = round?.participants ?? [];
 
-        console.log('ss-d-sd-sd-s-ds-d-sd', participants);
-
         return participants;
       };
 

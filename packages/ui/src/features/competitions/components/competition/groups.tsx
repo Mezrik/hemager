@@ -1,3 +1,4 @@
+import { APIError } from '@hemager/api-types';
 import { Trans } from '@lingui/macro';
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
@@ -16,7 +17,6 @@ import {
 import { useCompetition } from '../../api/get-competition';
 import { useCompetitionsGroups } from '../../api/get-groups';
 import { useInitializeGroups } from '../../api/initialize-groups';
-import { APIError } from '@hemager/api-types';
 
 type GroupsProps = {
   competitionId: UUID;
@@ -41,11 +41,11 @@ export const Groups: FC<GroupsProps> = ({ competitionId }) => {
     );
   }
 
+  console.log(groups);
+
   if (groupsQuery.isLoading) {
     return <div>Loading...</div>;
   }
-
-  // const participantsByGroup = mapParticipantsByGroup(participantQuery.data ?? []);
 
   if (!competition?.groupsCanBeCreated) {
     return (
@@ -84,7 +84,7 @@ export const Groups: FC<GroupsProps> = ({ competitionId }) => {
           <Button
             onClick={() =>
               initializeGroups.mutate({
-                data: { contestId: competitionId, maxParticipantsPerGroup: 3 },
+                data: { contestId: competitionId, maxParticipantsPerGroup: 4 },
               })
             }
           >
@@ -110,7 +110,7 @@ export const Groups: FC<GroupsProps> = ({ competitionId }) => {
             <CardContent>
               <ul className="divide-y divide-gray-200">
                 {group.participants?.map((participant) => (
-                  <li className="py-1">
+                  <li className="py-1" key={participant?.contestant?.id}>
                     {participant.contestant.firstname} {participant.contestant.surname}
                   </li>
                 ))}

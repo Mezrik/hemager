@@ -1,4 +1,5 @@
 import { Country } from '@hemager/api-types';
+
 import type { Seeder } from '../types';
 
 const seedContestants = [

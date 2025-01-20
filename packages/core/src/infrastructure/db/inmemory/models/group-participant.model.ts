@@ -16,7 +16,7 @@ export class GroupParticipant extends Model {
   @PrimaryKey
   @ForeignKey(() => Group)
   @Column(DataType.UUID)
-  groupId: string;
+  public groupId: string;
 
   @PrimaryKey
   @ForeignKey(() => Contestant)

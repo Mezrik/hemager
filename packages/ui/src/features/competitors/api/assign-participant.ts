@@ -33,7 +33,7 @@ export const useAssignParticipants = ({ mutationConfig }: UseAssignParticipantOp
   return useMutation({
     onSuccess: (...args) => {
       const [, { data }] = args;
-      queryClient.invalidateQueries({
+      void queryClient.invalidateQueries({
         queryKey: getParticipantsQueryOptions(data.contestId).queryKey,
       });
       onSuccess?.(...args);

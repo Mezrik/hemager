@@ -1,7 +1,7 @@
 import { inject } from 'inversify';
 import { Task } from 'true-myth';
 
-import { QueryError, QueryErrorTypes } from '@/common/errors';
+import { ensureThrownError, QueryError, QueryErrorTypes } from '@/common/errors';
 import { Query, QueryHandler } from '@/common/interfaces';
 import { TYPES } from '@/di-types';
 import { Group } from '@/domain/group/group';
@@ -27,9 +27,14 @@ export class GetGroupQueryHandler implements QueryHandler<GetGroupQuery, Group> 
           }
           resolve(group);
         })
-        .catch(() =>
-          reject({ cause: 'Failed to get group', type: QueryErrorTypes.CAUGHT_EXCEPTION }),
-        );
+        .catch((err) => {
+          const error = ensureThrownError(err);
+          console.error(error);
+          reject({
+            cause: `Failed to get group - ${error.message}`,
+            type: QueryErrorTypes.CAUGHT_EXCEPTION,
+          });
+        });
     });
   }
 }

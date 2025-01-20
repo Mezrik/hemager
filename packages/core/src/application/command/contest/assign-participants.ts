@@ -58,8 +58,6 @@ export class AssignParticipantsCommandHandler implements CommandHandler<AssignPa
           return;
         }
 
-        console.log(contest.rounds);
-
         try {
           await this._roundRepository.assignParticipants(firstRound.id, command.participants);
         } catch (err) {

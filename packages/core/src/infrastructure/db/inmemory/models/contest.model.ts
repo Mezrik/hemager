@@ -90,7 +90,6 @@ export class Contest extends Model {
 }
 
 export const contestModelToEntity = (model: Contest): ContestEntity => {
-  console.log(model.rounds);
   const properties = {
     name: model.name,
     date: model.date,
