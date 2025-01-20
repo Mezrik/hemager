@@ -33,7 +33,10 @@ export class RoundParticipant extends Model {
 }
 
 export const roundParticipantsModelToEntity = (model: RoundParticipant): RoundParticipantEntity => {
-  return new RoundParticipantEntity(model.roundId, contestantModelToEntity(model.contestant));
+  return new RoundParticipantEntity(
+    model.roundId,
+    contestantModelToEntity(model.contestant.dataValues),
+  );
 };
 
 export const entityToRoundParticipantsAttributes = (entity: RoundParticipantEntity) => {

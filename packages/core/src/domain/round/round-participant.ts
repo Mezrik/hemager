@@ -3,6 +3,7 @@ import { DeploymentCriteria } from '@hemager/api-types';
 import { EntityProperties, NoIdEntity } from '@/common/entity';
 
 import { Contestant } from '../contestant/contestant';
+import { Expose } from 'class-transformer';
 
 export class RoundParticipant extends NoIdEntity {
   constructor(
@@ -13,10 +14,12 @@ export class RoundParticipant extends NoIdEntity {
     super(_entityProperties);
   }
 
+  @Expose()
   get contestant() {
     return this._contestant;
   }
 
+  @Expose()
   get roundId() {
     return this._roundId;
   }

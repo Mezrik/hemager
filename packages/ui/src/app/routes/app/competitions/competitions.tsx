@@ -19,7 +19,13 @@ export const CompetitionsRoute = () => {
     return <BasicPageLayout title={_(msg`Competitions`)}>Loading...</BasicPageLayout>;
   }
 
-  const competitions = competitionsQuery.data?.unwrapOr([]) || [];
+  const competitions = competitionsQuery.data?.unwrapOrElse((err) => err);
+
+  if (competitions && 'cause' in competitions) {
+    return (
+      <BasicPageLayout title={_(msg`Competitions`)}>Error: {competitions.cause}</BasicPageLayout>
+    );
+  }
 
   console.log(competitions);
 
@@ -36,7 +42,7 @@ export const CompetitionsRoute = () => {
       }
     >
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {competitions.map((comp) => (
+        {competitions?.map((comp) => (
           <CompetitionCard
             key={comp.id}
             name={comp.name}

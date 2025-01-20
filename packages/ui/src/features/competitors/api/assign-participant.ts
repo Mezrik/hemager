@@ -8,14 +8,17 @@ import { api } from '@/services/api';
 import { getParticipantsQueryOptions } from './get-participants';
 
 export const assignParticipantsInputSchema = z.object({
-  competitionId: z.string().uuid(t`Select correct competition`),
-  competitorIds: z.array(z.string().uuid(t`Select correct competitor`)),
+  contestId: z.string().nanoid(t`Select correct competition`),
+  competitorIds: z.array(z.string()),
 });
 
 export type AssignParticipantInput = z.infer<typeof assignParticipantsInputSchema>;
 
-export const assignParticipants = ({ data }: { data: AssignParticipantInput }) => {
-  return api.AssignParticipants(data.competitorIds, data.competitionId);
+export const assignParticipants = async ({ data }: { data: AssignParticipantInput }) => {
+  console.log(data);
+  const t = await api.AssignParticipants(data.competitorIds, data.contestId);
+  console.log(t);
+  return t;
 };
 
 type UseAssignParticipantOptions = {
@@ -31,7 +34,7 @@ export const useAssignParticipants = ({ mutationConfig }: UseAssignParticipantOp
     onSuccess: (...args) => {
       const [, { data }] = args;
       queryClient.invalidateQueries({
-        queryKey: getParticipantsQueryOptions(data.competitionId).queryKey,
+        queryKey: getParticipantsQueryOptions(data.contestId).queryKey,
       });
       onSuccess?.(...args);
     },

@@ -18,12 +18,24 @@ class Entity implements EntityInterface {
     return this._entityProperties.id;
   }
 
+  set id(id: string) {
+    this._entityProperties.id = id;
+  }
+
   public get createdAt() {
     return this._entityProperties.createdAt;
   }
 
+  set createdAt(createdAt: Date | undefined) {
+    this._entityProperties.createdAt = createdAt;
+  }
+
   public get updatedAt() {
     return this._entityProperties.updatedAt;
+  }
+
+  set updatedAt(updatedAt: Date | undefined) {
+    this._entityProperties.updatedAt = updatedAt;
   }
 }
 

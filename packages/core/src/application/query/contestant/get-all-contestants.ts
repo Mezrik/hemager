@@ -4,8 +4,8 @@ import { Task } from 'true-myth';
 import { QueryError, QueryErrorTypes } from '@/common/errors';
 import { Query, QueryHandler } from '@/common/interfaces';
 import { TYPES } from '@/di-types';
-import { ContestantRepository } from '@/domain/contestant/contestant-repository';
 import { Contestant } from '@/domain/contestant/contestant';
+import { ContestantRepository } from '@/domain/contestant/contestant-repository';
 
 export class GetAllContestantsQuery implements Query {}
 

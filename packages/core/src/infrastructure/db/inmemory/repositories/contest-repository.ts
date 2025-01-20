@@ -14,6 +14,7 @@ import {
   entityToAttributes,
 } from '@/infrastructure/db/inmemory/models/contest.model';
 import { Weapon as WeaponModel } from '@/infrastructure/db/inmemory/models/weapon.model';
+import { Round as RoundModel } from '@/infrastructure/db/inmemory/models/round.model';
 
 import { BaseRepository } from '../base-repository';
 
@@ -23,7 +24,15 @@ export class ContestRepository
   implements ContestRepositoryInterface
 {
   constructor(@inject(TYPES.Db) private _db: Sequelize) {
-    super(_db, ContestModel, Contest, contestModelToEntity, entityToAttributes);
+    const weaponRepository = _db.getRepository(WeaponModel);
+    const categoryRepository = _db.getRepository(ContestCategoryModel);
+    const roundRepository = _db.getRepository(RoundModel);
+
+    super(_db, ContestModel, Contest, contestModelToEntity, entityToAttributes, [
+      weaponRepository,
+      categoryRepository,
+      roundRepository,
+    ]);
   }
 
   async getWeapon(id: string): Promise<Weapon> {

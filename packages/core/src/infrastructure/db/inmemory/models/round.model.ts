@@ -44,11 +44,12 @@ export class Round extends Model {
 }
 
 export const roundModelToEntity = (model: Round): RoundEntity => {
+  console.log(model);
   return new RoundEntity(
     model.contestId,
     undefined,
-    model.participants.map((p) => roundParticipantsModelToEntity(p)),
-    model.groups.map((g) => groupModelToEntity(g)),
+    model.participants?.map((p) => roundParticipantsModelToEntity(p.dataValues)),
+    model.groups?.map((g) => groupModelToEntity(g.dataValues)),
     { id: model.id },
   );
 };

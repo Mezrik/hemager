@@ -1,11 +1,12 @@
 import { inject } from 'inversify';
 import { Task } from 'true-myth';
 
-import { QueryError, QueryErrorTypes } from '@/common/errors';
+import { ensureThrownError, QueryError, QueryErrorTypes } from '@/common/errors';
 import { Query, QueryHandler } from '@/common/interfaces';
 import { TYPES } from '@/di-types';
 import { ContestRepository } from '@/domain/contest/contest-repository';
 import { RoundParticipant } from '@/domain/round/round-participant';
+import { RoundRepository } from '@/domain/round/round-repository';
 
 export class GetAllParticipantsQuery implements Query {
   constructor(public contestId: string) {}
@@ -16,7 +17,10 @@ export class GetAllParticipantsQueryHandler
 {
   queryToHandle = GetAllParticipantsQuery.name;
 
-  constructor(@inject(TYPES.ContestRepository) private readonly _repository: ContestRepository) {}
+  constructor(
+    @inject(TYPES.ContestRepository) private readonly _repository: ContestRepository,
+    @inject(TYPES.RoundRepository) private readonly _roundRepository: RoundRepository,
+  ) {}
 
   execute(query: GetAllParticipantsQuery): Task<RoundParticipant[], QueryError> {
     return new Task((resolve, reject) => {
@@ -35,7 +39,13 @@ export class GetAllParticipantsQueryHandler
           return;
         }
 
-        return firstRound.participants;
+        const round = await this._roundRepository.findOne(firstRound.id);
+
+        const participants = round?.participants ?? [];
+
+        console.log('ss-d-sd-sd-s-ds-d-sd', participants);
+
+        return participants;
       };
 
       asyncFn()
@@ -46,9 +56,14 @@ export class GetAllParticipantsQueryHandler
           }
           resolve(participants);
         })
-        .catch(() =>
-          reject({ cause: 'Failed to get contest', type: QueryErrorTypes.CAUGHT_EXCEPTION }),
-        );
+        .catch((err) => {
+          const error = ensureThrownError(err);
+          console.error(error);
+          reject({
+            cause: `Failed to get participants - ${error.message}`,
+            type: QueryErrorTypes.CAUGHT_EXCEPTION,
+          });
+        });
     });
   }
 }

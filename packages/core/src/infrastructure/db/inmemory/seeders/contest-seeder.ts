@@ -20,6 +20,16 @@ const seedWeapons = [
   },
 ];
 
+const seedRounds = [
+  {
+    id: 'd9xTwbMUiNWkyzEvwmgYT',
+    contestId: 'woHmmGamnI68NHANv6ofK',
+    previousRoundId: undefined,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+];
+
 const seedContest = [
   {
     id: 'woHmmGamnI68NHANv6ofK',
@@ -42,6 +52,7 @@ export const up: Seeder = async ({ context: sequelize }) => {
   await sequelize.getQueryInterface().bulkInsert('ContestCategory', seedCategories);
   await sequelize.getQueryInterface().bulkInsert('Weapon', seedWeapons);
   await sequelize.getQueryInterface().bulkInsert('Contest', seedContest);
+  await sequelize.getQueryInterface().bulkInsert('Round', seedRounds);
 };
 export const down: Seeder = async ({ context: sequelize }) => {
   await sequelize.getQueryInterface().bulkDelete('Contest', { id: seedContest.map((u) => u.id) });
@@ -49,4 +60,5 @@ export const down: Seeder = async ({ context: sequelize }) => {
     .getQueryInterface()
     .bulkDelete('ContestCategory', { id: seedCategories.map((u) => u.id) });
   await sequelize.getQueryInterface().bulkDelete('Weapon', { id: seedWeapons.map((u) => u.id) });
+  await sequelize.getQueryInterface().bulkDelete('Round', { id: seedRounds.map((u) => u.id) });
 };

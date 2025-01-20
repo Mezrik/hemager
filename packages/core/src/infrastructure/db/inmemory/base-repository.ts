@@ -1,5 +1,5 @@
 import { plainToInstance } from 'class-transformer';
-import { Attributes, Transaction } from 'sequelize';
+import { Attributes, Includeable, Transaction } from 'sequelize';
 import { Model, Sequelize, Repository as DbRepository } from 'sequelize-typescript';
 
 import { Entity } from '@/common/entity';
@@ -11,6 +11,7 @@ export class BaseRepository<T extends Model, U extends Entity> implements Reposi
   private _entity: new (...args: any) => U;
   protected _modelToEntity: (model: T) => U;
   protected _entityToAttributes: (entity: U) => Attributes<T>;
+  private _include?: Includeable | Includeable[];
 
   constructor(
     db: Sequelize,
@@ -18,16 +19,19 @@ export class BaseRepository<T extends Model, U extends Entity> implements Reposi
     entity: new (...args: any) => U,
     modelToEntity?: (model: T) => U,
     entityToAttributes?: (entity: U) => Attributes<T>,
+    include: Includeable | Includeable[] = { all: true },
   ) {
     this._dbRepo = db.getRepository(model);
     this._entity = entity;
 
     this._modelToEntity = modelToEntity || ((m) => plainToInstance(this._entity, m));
     this._entityToAttributes = entityToAttributes || ((entity) => instanceToPlain(entity));
+
+    this._include = include;
   }
 
   async findOne(id: string): Promise<U | null> {
-    const item = await this._dbRepo.findByPk(id);
+    const item = await this._dbRepo.findByPk(id, { include: this._include });
 
     if (!item) {
       return null;
@@ -38,7 +42,7 @@ export class BaseRepository<T extends Model, U extends Entity> implements Reposi
 
   async findAll(): Promise<U[]> {
     return await this._dbRepo
-      .findAll()
+      .findAll({ include: this._include })
       .then((items) => items.map((item) => this._modelToEntity(item)));
   }
 

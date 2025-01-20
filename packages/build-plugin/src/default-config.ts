@@ -56,10 +56,6 @@ export function config(options: {
                 pkgType: packageJson.type,
               });
 
-              console.log(
-                pathe.extname(entryName),
-                pathe.basename(entryName, pathe.extname(entryName))
-              );
               return `${pathe.basename(entryName, pathe.extname(entryName))}${ext.js}`;
             },
           },

@@ -2,8 +2,15 @@ import type { Seeder } from '../types';
 
 const seedClubs = [
   {
-    id: 'e2d73ee9-c885-4866-bdad-3faf862a7d1f',
+    id: 'X23m7cPHtxc8JM9r6RxGT',
     name: 'TestClub',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+
+  {
+    id: 'IbassxWXafTl5icqes8eU',
+    name: 'TestClub 2',
     createdAt: new Date(),
     updatedAt: new Date(),
   },

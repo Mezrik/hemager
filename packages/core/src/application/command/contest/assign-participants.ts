@@ -24,7 +24,7 @@ export class AssignParticipantsCommandHandler implements CommandHandler<AssignPa
 
   constructor(
     @inject(TYPES.ContestRepository) private readonly _repository: ContestRepository,
-    private readonly _roundRepository: RoundRepository,
+    @inject(TYPES.RoundRepository) private readonly _roundRepository: RoundRepository,
   ) {}
 
   handle(command: AssignParticipantsCommand): Task<void, CommandError> {
@@ -58,10 +58,13 @@ export class AssignParticipantsCommandHandler implements CommandHandler<AssignPa
           return;
         }
 
+        console.log(contest.rounds);
+
         try {
-          await this._roundRepository.assignParticipants(command.contestId, command.participants);
+          await this._roundRepository.assignParticipants(firstRound.id, command.participants);
         } catch (err) {
           const error = ensureThrownError(err);
+          console.error(error);
           reject({ cause: error.message, type: CommandErrorTypes.CAUGHT_EXCEPTION });
         }
       };

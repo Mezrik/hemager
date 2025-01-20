@@ -83,7 +83,7 @@ export const AssignParticipantsForm: FC<{
       schema={assignParticipantsInputSchema}
       options={{
         defaultValues: {
-          competitionId: competitionId,
+          contestId: competitionId,
           competitorIds: selectedParticipantIds,
         },
       }}
@@ -105,7 +105,7 @@ export const AssignParticipantsForm: FC<{
             )}
           />
 
-          <input type="hidden" {...register('competitionId')} />
+          <input type="hidden" {...register('contestId')} />
         </>
       )}
     </Form>

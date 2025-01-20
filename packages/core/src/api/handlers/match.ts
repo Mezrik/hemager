@@ -3,10 +3,10 @@ import { Task } from 'true-myth';
 
 import { GetAllGroupsQuery } from '@/application/query/groups/get-all-groups';
 import { GetAllMatchesQuery } from '@/application/query/match/get-all-matches';
+import { GetMatchQuery } from '@/application/query/match/get-match';
 import { queryErrorToAPIError } from '@/common/errors';
 import { CommandBus, QueryBus } from '@/common/interfaces';
 import { instanceToPlain } from '@/common/utils/transformer';
-import { GetMatchQuery } from '@/application/query/match/get-match';
 
 export const matchHandlers = (_queryBus: QueryBus, _commandBus: CommandBus) => {
   return {

@@ -1,5 +1,5 @@
 import { ContestTypeEnum, DeploymentCriteria, GenderEnum } from '@hemager/api-types';
-import { plainToClass } from 'class-transformer';
+import { plainToInstance } from 'class-transformer';
 import {
   AllowNull,
   BelongsTo,
@@ -90,6 +90,7 @@ export class Contest extends Model {
 }
 
 export const contestModelToEntity = (model: Contest): ContestEntity => {
+  console.log(model.rounds);
   const properties = {
     name: model.name,
     date: model.date,
@@ -101,9 +102,15 @@ export const contestModelToEntity = (model: Contest): ContestEntity => {
     deploymentCriteria: model.deploymentCriteria as DeploymentCriteria[],
     groupHits: model.groupHits,
     eliminationHits: model.eliminationHits,
-    weapon: model.weapon ? plainToClass(WeaponEntity, model.weapon) : undefined,
-    category: model.category ? plainToClass(ContestCategoryEntity, model.category) : undefined,
-    rounds: model.rounds ? model.rounds.map((round) => plainToClass(RoundEntity, round)) : [],
+    weapon: model.weapon
+      ? plainToInstance(WeaponEntity, model.weapon.dataValues as Model)
+      : undefined,
+    category: model.category
+      ? plainToInstance(ContestCategoryEntity, model.category.dataValues as Model)
+      : undefined,
+    rounds: model.rounds
+      ? model.rounds.map((round) => plainToInstance(RoundEntity, round.dataValues as Model))
+      : [],
   };
 
   return new ContestEntity(properties, { id: model.id });

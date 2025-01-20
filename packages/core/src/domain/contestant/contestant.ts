@@ -61,6 +61,7 @@ export class Contestant extends Entity {
 
   @Expose()
   get hasMissingInfo() {
+    console.log(this._properties);
     return (
       !this._properties.firstname ||
       !this._properties.surname ||

@@ -4,7 +4,7 @@ import { Column, DataType, Model, PrimaryKey, Table } from 'sequelize-typescript
 export class Weapon extends Model {
   @PrimaryKey
   @Column(DataType.UUID)
-  public declare id: string;
+  public id: string;
 
   @Column(DataType.TEXT)
   name: string;

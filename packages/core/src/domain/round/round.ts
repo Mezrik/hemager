@@ -7,6 +7,7 @@ import { InternalError } from '@/common/errors';
 import { Group } from '../group/group';
 
 import { RoundParticipant } from './round-participant';
+import { Expose } from 'class-transformer';
 
 export class Round extends Entity {
   constructor(
@@ -19,18 +20,22 @@ export class Round extends Entity {
     super(_entityProperties);
   }
 
+  @Expose()
   get contestId() {
     return this._contestId;
   }
 
+  @Expose()
   get previousRound() {
     return this._previousRound;
   }
 
+  @Expose()
   get groups() {
     return this._groups;
   }
 
+  @Expose()
   get participants() {
     return this._participants;
   }

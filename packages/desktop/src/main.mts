@@ -1,9 +1,19 @@
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow, ipcMain, session } from 'electron';
 import { initialize, constructAPI } from '@hemager/core';
+import path from 'path';
+import os from 'os';
 
 import { getPreloadPath, isDev } from './util.js';
 
+const reactDevToolsPath = path.join(
+  os.homedir(),
+  '/Library/Application\ Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/6.0.1_0',
+);
+
 app.on('ready', async () => {
+  console.log(reactDevToolsPath);
+  await session.defaultSession.loadExtension(reactDevToolsPath);
+
   const win = new BrowserWindow({
     width: 800,
     height: 600,
