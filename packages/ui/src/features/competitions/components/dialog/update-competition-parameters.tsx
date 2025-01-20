@@ -21,14 +21,46 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from '@/components/ui/drawer';
-import { Form, Input, RadioGroupFormField, RadioOption } from '@/components/ui/form';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  Input,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/form';
 import {
   updateCompetitionParametersInputSchema,
   useUpdateCompetitionParameters,
 } from '@/features/competitions/api/update-competition-parameters';
-import { getDeploymentTypeCaption } from '@/features/competitions/helpers';
-import { CompetitionParameters, DeploymentTypeEnum, GenderEnum } from '@/generated/server';
 import { useToast } from '@/hooks/ui/use-toast';
+import { ContestDto, DeploymentCriteria } from '@hemager/api-types';
+
+export type CompetitionParameters = Pick<
+  ContestDto,
+  'eliminationHits' | 'groupHits' | 'deploymentCriteria' | 'expectedParticipants'
+>;
+
+const getCompetitionParametersOptions = (i18n: I18n) => [
+  {
+    value: DeploymentCriteria.rating,
+    label: i18n._(msg`Rating`),
+  },
+  {
+    value: DeploymentCriteria.club,
+    label: i18n._(msg`Club`),
+  },
+  {
+    value: DeploymentCriteria.nationality,
+    label: i18n._(msg`Nationality`),
+  },
+];
 
 type UpdateCompetitionParametersProps = {
   open: boolean;
@@ -39,20 +71,13 @@ type UpdateCompetitionParametersProps = {
 
 const FORM_ID = 'update-competition-parameters-form';
 
-const getDeploymentOptions = (_: I18n['_']): RadioOption[] => [
-  {
-    label: getDeploymentTypeCaption(GenderEnum.male, _),
-    value: DeploymentTypeEnum.deployment,
-  },
-];
-
 export const UpdateCompetitionParametersForm: FC<{
   onSubmit: () => void;
   id: UUID;
   parameters?: CompetitionParameters;
 }> = ({ onSubmit, id, parameters }) => {
   const { toast } = useToast();
-  const { _ } = useLingui();
+  const { _, i18n } = useLingui();
 
   const updateCompetitionParametersMutation = useUpdateCompetitionParameters({
     mutationConfig: {
@@ -65,6 +90,8 @@ export const UpdateCompetitionParametersForm: FC<{
     },
   });
 
+  const deploymentOptions = getCompetitionParametersOptions(i18n);
+
   return (
     <Form
       id={FORM_ID}
@@ -74,7 +101,7 @@ export const UpdateCompetitionParametersForm: FC<{
       }}
       schema={updateCompetitionParametersInputSchema}
       options={{
-        defaultValues: parameters,
+        defaultValues: { deploymentCriteria: [], ...parameters },
       }}
     >
       {({ register, formState, control }) => (
@@ -100,28 +127,32 @@ export const UpdateCompetitionParametersForm: FC<{
             type="number"
           />
 
-          <Input
-            label={_(msg`Qualification based on rounds`)}
-            error={formState.errors['qualificationBasedOnRounds']}
-            registration={register('qualificationBasedOnRounds')}
-            type="number"
+          <FormField
+            control={control}
+            name="deploymentCriteria.0"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  <Trans>First deployment criteria</Trans>
+                </FormLabel>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select a criterion" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {deploymentOptions.map((d) => (
+                      <SelectItem value={d.value} key={d.value}>
+                        {d.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-
-          <Input
-            label={_(msg`Rounds count`)}
-            error={formState.errors['roundsCount']}
-            registration={register('roundsCount')}
-            type="number"
-          />
-
-          <fieldset className="flex gap-12">
-            <RadioGroupFormField
-              label={_(msg`Deployment type`)}
-              name="deploymentType"
-              control={control}
-              options={getDeploymentOptions(_)}
-            />
-          </fieldset>
         </>
       )}
     </Form>

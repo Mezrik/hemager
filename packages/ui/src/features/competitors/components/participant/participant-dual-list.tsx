@@ -1,12 +1,12 @@
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import DualListBox from 'react-dual-listbox';
 
-import { CompetitorResult } from '@/generated/server';
 import './participant-dual-list.css';
+import { ContestantDto } from '@hemager/api-types';
 
 export const ParticipantDualList: FC<{
-  options: CompetitorResult[];
+  options: ContestantDto[];
   selected: string[];
   onChange: (newValue: string[]) => void;
 }> = ({ options, selected, onChange }) => {

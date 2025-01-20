@@ -8,14 +8,15 @@
   "main": "dist/main.mjs",
   "scripts": {
     "dev": "cross-env NODE_ENV=development electron .",
-    "transpile": "tsc --project tsconfig.json",
+    "transpile": "tsc --project tsconfig.json && tsc --project tsconfig.node.json",
     "dev:desktop": "npm run transpile && cross-env NODE_ENV=development electron ."
   },
   "dependencies": {
-    "@hemager/core": "0.0.0",
     "@hemager/api-types": "0.0.0",
+    "@hemager/core": "0.0.0",
     "@hemager/ui": "0.0.0",
-    "chokidar": "^4.0.3"
+    "chokidar": "^4.0.3",
+    "true-myth": "^8.4.0"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",

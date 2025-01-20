@@ -15,13 +15,13 @@ import {
 } from '@/components/ui/table';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { getGenderAbbrv } from '@/features/competitions/helpers';
-import { CompetitorResult } from '@/generated/server';
 import { formatUIDate } from '@/utils/date';
 
 import { UpdateCompetitor } from './dialog/update-competitor';
+import { ContestantDto } from '@hemager/api-types';
 
 export const CompetitorsTable: FC<{
-  data: CompetitorResult[];
+  data: ContestantDto[];
   selected: Set<UUID>;
   onSelect: (id: UUID) => void;
 }> = ({ data, selected, onSelect }) => {
@@ -45,9 +45,6 @@ export const CompetitorsTable: FC<{
             </TableHead>
             <TableHead>
               <Trans>Gender</Trans>
-            </TableHead>
-            <TableHead>
-              <Trans>License</Trans>
             </TableHead>
             <TableHead>
               <Trans>Birthday</Trans>
@@ -82,8 +79,7 @@ export const CompetitorsTable: FC<{
                   )}
                 </TableCell>
                 <TableCell>{comp.club?.name}</TableCell>
-                <TableCell>{getGenderAbbrv(comp.gender, _)}</TableCell>
-                <TableCell>{comp.license}</TableCell>
+                <TableCell>{comp.gender ? getGenderAbbrv(comp.gender, _) : '-'}</TableCell>
                 <TableCell>{comp.birthdate ? formatUIDate(comp.birthdate) : '-'}</TableCell>
                 <TableCell className="flex justify-end opacity-0 group-hover:opacity-100">
                   <Button size="xs" variant="ghost" onClick={() => setEditCompetitorId(comp.id)}>

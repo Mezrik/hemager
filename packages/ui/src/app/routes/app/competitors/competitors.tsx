@@ -1,15 +1,14 @@
 import { msg, Trans } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
-import { CaretDownIcon, CaretSortIcon } from '@radix-ui/react-icons';
-import { SelectContent } from '@radix-ui/react-select';
+import { CaretDownIcon } from '@radix-ui/react-icons';
 import { QueryClient } from '@tanstack/react-query';
-import { ArrowDown, ImportIcon, PlusIcon } from 'lucide-react';
+import { ImportIcon, PlusIcon } from 'lucide-react';
 import { useState } from 'react';
 
 import { BasicPageLayout } from '@/components/layouts';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { InputBase, Select, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/form';
+import { InputBase } from '@/components/ui/form';
 import {
   getCompetitorsQueryOptions,
   useCompetitors,
@@ -18,6 +17,7 @@ import { CompetitorsTable } from '@/features/competitors/components/competitors-
 import { CreateCompetitor } from '@/features/competitors/components/dialog/create-competitor';
 import { FillMissingData } from '@/features/competitors/components/dialog/fill-missing-data';
 import { ImportCompetitorsDialog } from '@/features/competitors/components/dialog/import-competitors';
+import { APIError } from '@hemager/api-types';
 
 export const competitorsLoader = (queryClient: QueryClient) => async () => {
   const query = getCompetitorsQueryOptions();
@@ -35,6 +35,12 @@ export const CompetitorsRoute = () => {
   const [searchQuery, setSearchQuery] = useState('');
 
   const [selected, setSelected] = useState<Set<UUID>>(new Set());
+
+  const competitors = competitorsQuery.data?.unwrapOrElse<APIError>((err) => err);
+
+  if (!competitors || 'cause' in competitors) {
+    return <Trans>Contestants not found: {competitors?.cause}</Trans>;
+  }
 
   const handleSelect = (id: UUID) => {
     console.log(id);
@@ -56,9 +62,9 @@ export const CompetitorsRoute = () => {
     return <BasicPageLayout title={_(msg`Competitors`)}>Loading...</BasicPageLayout>;
   }
 
-  const competitorsMissingData = competitorsQuery.data?.filter((c) => c.hasMissingInfo);
+  const competitorsMissingData = competitors?.filter((c) => c.hasMissingInfo);
 
-  const filteredData = competitorsQuery.data?.filter((comp) => {
+  const filteredData = competitors?.filter((comp) => {
     return `${comp.firstname} ${comp.surname}`.toLowerCase().includes(searchQuery.toLowerCase());
   });
 
@@ -83,7 +89,7 @@ export const CompetitorsRoute = () => {
       }
       className="flex min-h-0 flex-col"
     >
-      {!competitorsQuery.data || competitorsQuery.data.length <= 0 ? (
+      {!competitors || competitors.length <= 0 ? (
         <Trans>No competitors found</Trans>
       ) : (
         <>

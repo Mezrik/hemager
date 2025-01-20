@@ -1,80 +1,87 @@
+import { UpdateCompetitionParametersCommand } from '@/generated/server';
 import {
-  CompetitionResult,
-  CompetitionDetail,
-  CreateCompetitionCommand,
-  CompetitionCategoryResult,
-  WeaponResult,
-  CompetitorResult,
-  CreateCompetitorCommand,
-  UpdateCompetitorCommand,
-  CompetitionGroup,
-  MatchDetail,
-  Match,
-  CompetitionParticipant,
-  UpdateCompetitionParametersCommand,
-} from '@/generated/server';
-
+  ContestDto,
+  APIError,
+  CreateContestInput,
+  UpdateContestInput,
+  CategoryDto,
+  WeaponDto,
+  ContestantDto,
+  CreateContestantInput,
+  UpdateContestantInput,
+  GroupDto,
+  MatchDto,
+  RoundParticipantDto,
+  InitializeGroupsInput,
+} from '@hemager/api-types';
+import { Result } from 'true-myth';
 import { Api } from './api';
 
 export class RestApi implements Api {
-  GetCompetitions(): Promise<Array<CompetitionResult>> {
+  GetCompetitions(): Promise<Result<Array<ContestDto>, APIError>> {
     throw new Error('Method not implemented.');
   }
-  GetCompetition(id: UUID): Promise<CompetitionDetail> {
+  GetCompetition(id: UUID): Promise<Result<ContestDto, APIError>> {
     throw new Error('Method not implemented.');
   }
-  CreateCompetition(data: CreateCompetitionCommand): Promise<void> {
+  CreateCompetition(data: CreateContestInput): Promise<Result<void, APIError>> {
     throw new Error('Method not implemented.');
   }
-  GetCompetitionsCategories(): Promise<Array<CompetitionCategoryResult>> {
+  UpdateCompetition(
+    id: UUID,
+    data: Omit<UpdateContestInput, 'id'>,
+  ): Promise<Result<void, APIError>> {
     throw new Error('Method not implemented.');
   }
-  GetCompetitionsWeapons(): Promise<Array<WeaponResult>> {
+  GetCompetitionsCategories(): Promise<Result<Array<CategoryDto>, APIError>> {
     throw new Error('Method not implemented.');
   }
-  GetCompetitors(): Promise<Array<CompetitorResult>> {
+  GetCompetitionsWeapons(): Promise<Result<Array<WeaponDto>, APIError>> {
     throw new Error('Method not implemented.');
   }
-  GetCompetitor(id: UUID): Promise<CompetitorResult> {
+  GetCompetitors(): Promise<Result<ContestantDto[], APIError>> {
     throw new Error('Method not implemented.');
   }
-  CreateCompetitor(data: CreateCompetitorCommand): Promise<void> {
+  GetCompetitor(id: UUID): Promise<Result<ContestantDto, APIError>> {
     throw new Error('Method not implemented.');
   }
-  UpdateCompetitor(id: UUID, data: UpdateCompetitorCommand): Promise<void> {
+  CreateCompetitor(data: CreateContestantInput): Promise<Result<void, APIError>> {
     throw new Error('Method not implemented.');
   }
-  GetCompetitionsGroups(competitionId: UUID): Promise<Array<CompetitionGroup>> {
+  UpdateCompetitor(
+    id: UUID,
+    command: Omit<UpdateContestantInput, 'id'>,
+  ): Promise<Result<void, APIError>> {
     throw new Error('Method not implemented.');
   }
-  GetGroup(groupId: UUID, competitionId: UUID): Promise<CompetitionGroup> {
+  GetCompetitionsGroups(roundId: UUID): Promise<Result<GroupDto[], APIError>> {
     throw new Error('Method not implemented.');
   }
-  GetMatch(id: UUID): Promise<MatchDetail> {
+  GetGroup(groupId: UUID): Promise<Result<GroupDto, APIError>> {
     throw new Error('Method not implemented.');
   }
-  GetMatches(groupId: UUID): Promise<Array<Match>> {
+  GetMatch(id: UUID): Promise<Result<MatchDto, APIError>> {
     throw new Error('Method not implemented.');
   }
-  GetParticipants(competitionId: UUID): Promise<Array<CompetitionParticipant>> {
+  GetMatches(groupId: UUID): Promise<Result<MatchDto[], APIError>> {
     throw new Error('Method not implemented.');
   }
-  AssignParticipants(competitorId: UUID[], competitionId: UUID): Promise<void> {
+  GetParticipants(competitionId: UUID): Promise<Result<RoundParticipantDto[], APIError>> {
+    throw new Error('Method not implemented.');
+  }
+  AssignParticipants(competitorId: UUID[], competitionId: UUID): Promise<Result<void, APIError>> {
     throw new Error('Method not implemented.');
   }
   ImportCompetitor(file: File): Promise<void> {
     throw new Error('Method not implemented.');
   }
-  InitializeGroups(competitionId: UUID): Promise<void> {
+  InitializeGroups(payload: InitializeGroupsInput): Promise<Result<void, APIError>> {
     throw new Error('Method not implemented.');
   }
   UpdateCompetitionParameters(
     competitionId: UUID,
     data: UpdateCompetitionParametersCommand,
   ): Promise<void> {
-    throw new Error('Method not implemented.');
-  }
-  UpdateCompetition(id: UUID, data: CreateCompetitionCommand): Promise<void> {
     throw new Error('Method not implemented.');
   }
 }

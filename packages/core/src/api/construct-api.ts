@@ -49,6 +49,8 @@ export const constructAPI = (app: Container) => {
       throw new Error(`Invalid API path: ${path}`);
     }
 
+    console.log('invoking', path, data);
+
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-argument
     return handler(data);
   };

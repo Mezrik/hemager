@@ -1,19 +1,40 @@
-import { API, APIPathUnion } from '@hemager/api-types';
+import { API, APIError, APIPathUnion } from '@hemager/api-types';
 import electron from 'electron';
+import { Task } from 'true-myth';
 
 electron.contextBridge.exposeInMainWorld('electron', {
   contest: {
     create: (payload) => ipcInvoke('contest.create', payload),
     getOne: (id) => ipcInvoke('contest.getOne', id),
     getAll: () => ipcInvoke('contest.getAll'),
-    update: (payload) => ipcInvoke('contest.update', payload),
+    update: (payload) => {
+      return ipcInvoke('contest.update', payload);
+    },
     getAllCategories: () => ipcInvoke('contest.getAllCategories'),
     getAllWeapons: () => ipcInvoke('contest.getAllWeapons'),
+
+    initGroups: (payload) => ipcInvoke('contest.initGroups', payload),
+    getAllParticipants: (id) => ipcInvoke('contest.getAllParticipants', id),
+    assignParticipants: (payload) => ipcInvoke('contest.assignParticipants', payload),
+  },
+  contestant: {
+    create: (payload) => ipcInvoke('contestant.create', payload),
+    getOne: (id) => ipcInvoke('contestant.getOne', id),
+    getAll: () => ipcInvoke('contestant.getAll'),
+    update: (payload) => ipcInvoke('contestant.update', payload),
+  },
+  group: {
+    getOne: (id) => ipcInvoke('group.getOne', id),
+    getAll: (roundId) => ipcInvoke('group.getAll', roundId),
+  },
+  match: {
+    getOne: (id) => ipcInvoke('group.getOne', id),
+    getAll: (groupId) => ipcInvoke('group.getAll', groupId),
   },
 } satisfies API);
 
-function ipcInvoke<Key extends APIPathUnion>(key: Key, payload?: any): Promise<any> {
-  return electron.ipcRenderer.invoke(key, payload);
+function ipcInvoke<Key extends APIPathUnion>(key: Key, payload?: any): Task<any, APIError> {
+  return electron.ipcRenderer.invoke(key, payload) as unknown as Task<any, APIError>;
 }
 
 function ipcOn<Key extends APIPathUnion>(key: Key, callback: (payload: any) => void) {

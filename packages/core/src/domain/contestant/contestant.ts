@@ -59,6 +59,19 @@ export class Contestant extends Entity {
     return this._properties.nationality;
   }
 
+  @Expose()
+  get hasMissingInfo() {
+    return (
+      !this._properties.firstname ||
+      !this._properties.surname ||
+      !this._properties.club ||
+      !this._properties.birthdate ||
+      !this._properties.gender ||
+      !this._properties.rating ||
+      !this._properties.nationality
+    );
+  }
+
   get fullname() {
     return `${this._properties.firstname} ${this._properties.surname}`;
   }

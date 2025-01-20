@@ -23,8 +23,7 @@ export const updateCompetitionInputSchema = z.object({
 export type UpdateCompetitionInput = z.infer<typeof updateCompetitionInputSchema>;
 
 export const updateCompetition = ({ data, id }: { data: UpdateCompetitionInput; id: UUID }) => {
-  const date = data.date.toISOString();
-  return api.UpdateCompetition(id, { ...data, date });
+  return api.UpdateCompetition(id, { ...data });
 };
 
 type UseUpdateCompetitionOptions = {

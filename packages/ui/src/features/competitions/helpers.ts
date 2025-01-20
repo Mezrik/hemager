@@ -2,18 +2,13 @@ import { I18n } from '@lingui/core';
 import { msg } from '@lingui/macro';
 
 import { MenGenderIcon, MixedGenderIcon, WomenGenderIcon } from '@/assets/icons';
-import {
-  CompetitionParticipant,
-  CompetitionTypeEnum,
-  DeploymentTypeEnum,
-  GenderEnum,
-} from '@/generated/server';
+import { ContestTypeEnum, GenderEnum, RoundParticipantDto } from '@hemager/api-types';
 
-export const getCompetionTypeCaption = (competitionType: CompetitionTypeEnum, _: I18n['_']) => {
+export const getCompetionTypeCaption = (competitionType: ContestTypeEnum, _: I18n['_']) => {
   switch (competitionType) {
-    case CompetitionTypeEnum.national:
+    case ContestTypeEnum.national:
       return _(msg`National`);
-    case CompetitionTypeEnum.international:
+    case ContestTypeEnum.international:
       return _(msg`International`);
     default:
       return '???';
@@ -28,15 +23,6 @@ export const getGenderCaption = (gender: GenderEnum, _: I18n['_'], plural = true
       return plural ? _(msg`Women`) : _(msg`Woman`);
     case GenderEnum.mixed:
       return plural ? _(msg`Mixed`) : _(msg`Other`);
-    default:
-      return '???';
-  }
-};
-
-export const getDeploymentTypeCaption = (deploymentType: string, _: I18n['_']) => {
-  switch (deploymentType) {
-    case DeploymentTypeEnum.deployment:
-      return _(msg`Deployment`);
     default:
       return '???';
   }
@@ -68,8 +54,8 @@ export const getGenderAbbrv = (gender: GenderEnum, _: I18n['_']) => {
   }
 };
 
-export const mapParticipantsByGroup = (participants: CompetitionParticipant[]) => {
-  const participantsByGroup = participants.reduce<Record<UUID, CompetitionParticipant[]>>(
+export const mapParticipantsByGroup = (participants: RoundParticipantDto[]) => {
+  const participantsByGroup = participants?.reduce<Record<UUID, RoundParticipantDto[]>>(
     (acc, participant) => {
       if (!participant.groupId) return acc;
 
@@ -87,9 +73,9 @@ export const mapParticipantsByGroup = (participants: CompetitionParticipant[]) =
   return participantsByGroup;
 };
 
-export const mapParticipantsByCompetitorId = (participants: CompetitionParticipant[]) => {
-  return participants.reduce<Record<UUID, CompetitionParticipant>>((acc, participant) => {
-    acc[participant.competitor.id] = participant;
+export const mapParticipantsByCompetitorId = (participants: RoundParticipantDto[]) => {
+  return participants.reduce<Record<UUID, RoundParticipantDto>>((acc, participant) => {
+    acc[participant.contestant.id] = participant;
 
     return acc;
   }, {});

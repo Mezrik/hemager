@@ -35,4 +35,6 @@ export type ContestantDto = {
   birthdate?: Date;
   gender?: GenderEnum;
   rating?: number;
+
+  hasMissingInfo?: number;
 };

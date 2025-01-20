@@ -15,7 +15,7 @@ import type {
 } from '@hemager/api-types';
 import { Result } from 'true-myth';
 
-import { Match, MatchDetail, UpdateCompetitionParametersCommand } from '@/generated/server';
+import { UpdateCompetitionParametersCommand } from '@/generated/server';
 
 import { DesktopApi } from './desktop-api';
 import { RestApi } from './rest-api';
@@ -29,10 +29,7 @@ export interface Api {
 
   CreateCompetition(data: CreateContestInput): Promise<Result<void, APIError>>;
 
-  UpdateCompetition(
-    id: UUID,
-    data: Omit<UpdateContestInput, 'id'>,
-  ): Promise<Result<void, APIError>>;
+  UpdateCompetition(data: UpdateContestInput): Promise<Result<void, APIError>>;
 
   GetCompetitionsCategories(): Promise<Result<Array<CategoryDto>, APIError>>;
 
@@ -53,9 +50,9 @@ export interface Api {
 
   GetGroup(groupId: UUID): Promise<Result<GroupDto, APIError>>;
 
-  GetMatch(id: UUID): Promise<Result<MatchDto, APIError>;
+  GetMatch(id: UUID): Promise<Result<MatchDto, APIError>>;
 
-  GetMatches(groupId: UUID): Promise<Result<MatchDto[], APIError>;
+  GetMatches(groupId: UUID): Promise<Result<MatchDto[], APIError>>;
 
   GetParticipants(competitionId: UUID): Promise<Result<RoundParticipantDto[], APIError>>;
 

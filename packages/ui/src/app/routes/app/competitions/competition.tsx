@@ -76,7 +76,9 @@ export const CompetitionRoute = () => {
             <Trans>Elimination</Trans>
           </TabsTrigger>
         </TabsList>
-        <TabsContent value="overview">{/* <Overview competition={competition} /> */}</TabsContent>
+        <TabsContent value="overview">
+          <Overview competition={competition} />
+        </TabsContent>
         <TabsContent value="groups">
           <Groups competitionId={competition.id} />
         </TabsContent>
@@ -92,7 +94,12 @@ export const CompetitionRoute = () => {
         id={competition.id}
         onOpenChange={setShowUpdateParameters}
         open={showUpdateParameters}
-        parameters={competition.parameters}
+        parameters={{
+          eliminationHits: competition.eliminationHits,
+          groupHits: competition.groupHits,
+          deploymentCriteria: competition.deploymentCriteria,
+          expectedParticipants: competition.expectedParticipants,
+        }}
       />
 
       <UpdateCompetition id={competition.id} onOpenChange={setShowUpdate} open={showUpdate} />

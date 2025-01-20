@@ -12,12 +12,11 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { useParticipants } from '@/features/competitors/api/get-participants';
 
 import { useCompetition } from '../../api/get-competition';
 import { useCompetitionsGroups } from '../../api/get-groups';
 import { useInitializeGroups } from '../../api/initialize-groups';
-import { mapParticipantsByGroup } from '../../helpers';
+import { APIError } from '@hemager/api-types';
 
 type GroupsProps = {
   competitionId: UUID;
@@ -25,21 +24,30 @@ type GroupsProps = {
 
 export const Groups: FC<GroupsProps> = ({ competitionId }) => {
   const groupsQuery = useCompetitionsGroups({ competitionId });
-  const participantQuery = useParticipants({ competitionId });
-
   const competitionQuery = useCompetition({
     competitionId,
   });
 
   const initializeGroups = useInitializeGroups();
 
-  if (groupsQuery.isLoading || participantQuery.isLoading) {
+  const groups = groupsQuery.data?.unwrapOrElse<APIError>((error) => error);
+  const competition = competitionQuery.data?.unwrapOrElse<APIError>((error) => error);
+
+  if ((groups && 'cause' in groups) || (competition && 'cause' in competition)) {
+    return (
+      <div>
+        <p>Something went wrong</p>
+      </div>
+    );
+  }
+
+  if (groupsQuery.isLoading) {
     return <div>Loading...</div>;
   }
 
-  const participantsByGroup = mapParticipantsByGroup(participantQuery.data ?? []);
+  // const participantsByGroup = mapParticipantsByGroup(participantQuery.data ?? []);
 
-  if (!competitionQuery.data?.parameters) {
+  if (!competition?.groupsCanBeCreated) {
     return (
       <Card>
         <CardHeader>
@@ -57,7 +65,7 @@ export const Groups: FC<GroupsProps> = ({ competitionId }) => {
     );
   }
 
-  if (groupsQuery.data?.length === 0 && competitionQuery.data?.parameters) {
+  if (groups?.length === 0 && competition?.groupsCanBeCreated) {
     return (
       <Card>
         <CardHeader>
@@ -73,7 +81,13 @@ export const Groups: FC<GroupsProps> = ({ competitionId }) => {
           </CardDescription>
         </CardHeader>
         <CardFooter>
-          <Button onClick={() => initializeGroups.mutate({ data: { contestId: competitionId } })}>
+          <Button
+            onClick={() =>
+              initializeGroups.mutate({
+                data: { contestId: competitionId, maxParticipantsPerGroup: 3 },
+              })
+            }
+          >
             <Trans>Initialize groups</Trans>
           </Button>
         </CardFooter>
@@ -83,21 +97,21 @@ export const Groups: FC<GroupsProps> = ({ competitionId }) => {
 
   return (
     <div className="grid grid-cols-4 gap-4">
-      {groupsQuery.data?.map((group) => (
+      {groups?.map((group) => (
         <Link to={pathnames.buildCompetitionGroupPath(group.id, competitionId)} key={group.id}>
           <Card className="col-span-4 transition-colors hover:bg-gray-50 sm:col-span-2 md:col-span-1">
             <CardHeader className="flex flex-row items-center justify-between space-y-0">
               <CardTitle>{group.name}</CardTitle>
               <CardDescription>
-                <Trans>Piste: {group.pisteNumber}</Trans>
+                <Trans>Piste: --</Trans>
               </CardDescription>
             </CardHeader>
 
             <CardContent>
               <ul className="divide-y divide-gray-200">
-                {participantsByGroup?.[group.id]?.map((participant) => (
+                {group.participants?.map((participant) => (
                   <li className="py-1">
-                    {participant.competitor.firstname} {participant.competitor.surname}
+                    {participant.contestant.firstname} {participant.contestant.surname}
                   </li>
                 ))}
               </ul>

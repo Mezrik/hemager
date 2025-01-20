@@ -1,16 +1,15 @@
-import { t } from '@lingui/macro';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { z } from 'zod';
 
-import { DeploymentTypeEnum } from '@/generated/server';
 import { MutationConfig } from '@/lib/react-query';
 import { api } from '@/services/api';
 
 import { getCompetitionQueryOptions } from './get-competition';
 import { getCompetitionsQueryOptions } from './get-competitions';
+import { DeploymentCriteria } from '@hemager/api-types';
 
 export const updateCompetitionParametersInputSchema = z.object({
-  deploymentType: z.nativeEnum(DeploymentTypeEnum),
+  deploymentCriteria: z.array(z.nativeEnum(DeploymentCriteria)),
   eliminationHits: z.coerce
     .number({
       required_error: 'Elimination hits field is required',
@@ -18,7 +17,8 @@ export const updateCompetitionParametersInputSchema = z.object({
     })
     .int()
     .positive()
-    .min(1, { message: 'Elimination hits field should be at least 1' }),
+    .min(1, { message: 'Elimination hits field should be at least 1' })
+    .optional(),
   expectedParticipants: z.coerce
     .number({
       required_error: 'Expected participants field is required',
@@ -26,7 +26,8 @@ export const updateCompetitionParametersInputSchema = z.object({
     })
     .int()
     .positive()
-    .min(1, { message: 'Expected participants field should be at least 1' }),
+    .min(1, { message: 'Expected participants field should be at least 1' })
+    .optional(),
   groupHits: z.coerce
     .number({
       required_error: 'Group hits field is required',
@@ -34,21 +35,8 @@ export const updateCompetitionParametersInputSchema = z.object({
     })
     .int()
     .positive()
-    .min(1, { message: 'Group hits field should be at least 1' }),
-  qualificationBasedOnRounds: z.coerce
-    .number({
-      required_error: 'Qualification based on rounds field is required',
-      invalid_type_error: 'Qualification based on rounds field must be a number',
-    })
-    .int()
-    .min(1, { message: 'Qualification based on rounds field should be at least 1' }),
-  roundsCount: z.coerce
-    .number({
-      required_error: 'Rounds count field is required',
-      invalid_type_error: 'Rounds count field must be a number',
-    })
-    .int()
-    .min(1, { message: 'Rounds count field should be at least 1' }),
+    .min(1, { message: 'Group hits field should be at least 1' })
+    .optional(),
 });
 
 export type UpdateCompetitionParametersInput = z.infer<
@@ -62,7 +50,8 @@ export const updateCompetitionParameters = ({
   data: UpdateCompetitionParametersInput;
   id: UUID;
 }) => {
-  return api.UpdateCompetitionParameters(id, { ...data });
+  console.log('in mutation', data, id);
+  return api.UpdateCompetition({ id, ...data });
 };
 
 type UseUpdateCompetitionParametersOptions = {

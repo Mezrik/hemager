@@ -114,16 +114,12 @@ export class Contest extends Entity {
     this._rounds = rounds;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access
-  @Transform(({ obj }) => obj._weapon?.id, { toPlainOnly: true })
-  @Expose({ name: 'weaponId' })
+  @Expose()
   get weapon() {
     return this._weapon;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access
-  @Transform(({ obj }) => obj._category?.id, { toPlainOnly: true })
-  @Expose({ name: 'categoryId' })
+  @Expose()
   get category() {
     return this._category;
   }
@@ -151,6 +147,16 @@ export class Contest extends Entity {
   @Expose()
   get rounds() {
     return this._rounds;
+  }
+
+  @Expose()
+  get groupsCanBeCreated() {
+    return (
+      !!this._properties.deploymentCriteria?.length &&
+      !!this._properties.expectedParticipants &&
+      !!this._properties.groupHits &&
+      !!this._properties.eliminationHits
+    );
   }
 
   update<K extends keyof ContestProperties>(key: K, value: ContestProperties[K]) {

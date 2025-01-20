@@ -26,6 +26,7 @@ app.on('ready', async () => {
 
   paths.forEach((event) => {
     ipcMain.handle(event, (e, data) => {
+      console.log('main', event, data);
       return invoke(event, data);
     });
   });

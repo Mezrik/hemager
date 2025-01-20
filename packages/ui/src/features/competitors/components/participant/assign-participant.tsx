@@ -31,6 +31,7 @@ import { useToast } from '@/hooks/ui/use-toast';
 import { useParticipants } from '../../api/get-participants';
 
 import { ParticipantDualList } from './participant-dual-list';
+import { APIError } from '@hemager/api-types';
 
 const FORM_ID = 'assign-competitors-form';
 
@@ -51,6 +52,8 @@ export const AssignParticipantsForm: FC<{
 
   const competitorsQuery = useCompetitors();
 
+  const competitors = competitorsQuery.data?.unwrapOrElse<APIError>((err) => err);
+
   const assignParticipantMutation = useAssignParticipants({
     mutationConfig: {
       onSuccess: () => {
@@ -61,6 +64,10 @@ export const AssignParticipantsForm: FC<{
       },
     },
   });
+
+  if (!competitors || 'cause' in competitors) {
+    return <div>Participants not found: {competitors?.cause}</div>;
+  }
 
   if (competitorsQuery.isLoading || !competitionId) {
     return <div>Loading...</div>;
@@ -89,7 +96,7 @@ export const AssignParticipantsForm: FC<{
             render={({ field }) => (
               <FormItem>
                 <ParticipantDualList
-                  options={competitorsQuery.data || []}
+                  options={competitors || []}
                   onChange={field.onChange}
                   selected={field.value ?? []}
                 />
@@ -179,8 +186,15 @@ export const AssignParticipant: FC<Omit<AssignParticipantProps, 'selectedPartici
   const isDesktop = useMediaQuery('(min-width: 768px)');
 
   const participantsQuery = useParticipants({ competitionId: props.competitionId });
+
+  const participants = participantsQuery.data?.unwrapOrElse<APIError>((err) => err);
+
+  if (!participants || 'cause' in participants) {
+    return <div>Participants not found: {participants?.cause}</div>;
+  }
+
   const selectedParticipantIds =
-    participantsQuery.data?.map((participant) => participant.competitor.id) || [];
+    participants?.map((participant) => participant.contestant.id) || [];
 
   if (isDesktop) {
     return <AssignParticipantDialog {...props} selectedParticipantIds={selectedParticipantIds} />;

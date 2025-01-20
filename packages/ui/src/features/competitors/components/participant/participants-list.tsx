@@ -12,6 +12,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { useParticipants } from '@/features/competitors/api/get-participants';
+import { APIError } from '@hemager/api-types';
 
 export const ParticipantsList: FC<{ competitionId: UUID }> = ({ competitionId }) => {
   const { _ } = useLingui();
@@ -22,7 +23,11 @@ export const ParticipantsList: FC<{ competitionId: UUID }> = ({ competitionId })
     return <div>Loading...</div>;
   }
 
-  const participants = participantsQuery.data;
+  const participants = participantsQuery.data?.unwrapOrElse<APIError>((err) => err);
+
+  if (!participants || 'cause' in participants) {
+    return <div>Participants not found: {participants?.cause}</div>;
+  }
 
   return (
     <Table>
@@ -30,8 +35,6 @@ export const ParticipantsList: FC<{ competitionId: UUID }> = ({ competitionId })
         <TableRow>
           <TableHead className="w-20">{_(msg`Nation`)}</TableHead>
           <TableHead>{_(msg`Name`)}</TableHead>
-          <TableHead>{_(msg`Deployment No.`)}</TableHead>
-          <TableHead>{_(msg`Points`)}</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -41,10 +44,8 @@ export const ParticipantsList: FC<{ competitionId: UUID }> = ({ competitionId })
               <CZ title={_(msg`Czech Republic`)} className="size-6" />
             </TableCell>
             <TableCell>
-              {participant.competitor.firstname} {participant.competitor.surname}
+              {participant.contestant.firstname} {participant.contestant.surname}
             </TableCell>
-            <TableCell>{participant.deploymentNumber}</TableCell>
-            <TableCell>{participant.points}</TableCell>
           </TableRow>
         ))}
       </TableBody>

@@ -4,19 +4,21 @@ import { Task } from 'true-myth';
 import { QueryError, QueryErrorTypes } from '@/common/errors';
 import { Query, QueryHandler } from '@/common/interfaces';
 import { TYPES } from '@/di-types';
-import { Contest } from '@/domain/contest/contest';
-import { ContestRepository } from '@/domain/contest/contest-repository';
+import { ContestantRepository } from '@/domain/contestant/contestant-repository';
+import { Contestant } from '@/domain/contestant/contestant';
 
 export class GetAllContestantsQuery implements Query {}
 
 export class GetAllContestantsQueryHandler
-  implements QueryHandler<GetAllContestantsQuery, Contest[]>
+  implements QueryHandler<GetAllContestantsQuery, Contestant[]>
 {
   queryToHandle = GetAllContestantsQuery.name;
 
-  constructor(@inject(TYPES.ContestRepository) private readonly _repository: ContestRepository) {}
+  constructor(
+    @inject(TYPES.ContestantRepository) private readonly _repository: ContestantRepository,
+  ) {}
 
-  execute(): Task<Contest[], QueryError> {
+  execute(): Task<Contestant[], QueryError> {
     return new Task((resolve, reject) => {
       this._repository
         .findAll()

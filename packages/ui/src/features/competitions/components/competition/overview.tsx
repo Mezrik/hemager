@@ -30,13 +30,17 @@ export const Overview: FC<{ competition: ContestDto }> = ({ competition }) => {
             <InfoListItem title={_(msg`Federation`)} description={competition.federationName} />
             <InfoListItem
               title={_(msg`Scope of competition`)}
-              description={getCompetionTypeCaption(competition.competitionType, _)}
+              description={
+                competition.contestType
+                  ? getCompetionTypeCaption(competition.contestType, _)
+                  : undefined
+              }
             />
-            <InfoListItem title={_(msg`Category`)} description={competition.category.name} />
-            <InfoListItem title={_(msg`Weapon`)} description={competition.weapon.name} />
+            <InfoListItem title={_(msg`Category`)} description={competition.category?.name} />
+            <InfoListItem title={_(msg`Weapon`)} description={competition.weapon?.name} />
             <InfoListItem
               title={_(msg`Gender`)}
-              description={getGenderCaption(competition.gender, _)}
+              description={competition.gender ? getGenderCaption(competition.gender, _) : undefined}
             />
             <InfoListItem
               title={_(msg`Date of the event`)}

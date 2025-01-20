@@ -21,18 +21,16 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from '@/components/ui/drawer';
-import { CompetitorResult } from '@/generated/server';
-
-import { getCompetitorsQueryOptions } from '../../api/get-competitors';
 import { useUpdateCompetitor } from '../../api/update-competitor';
 import { CompetitorEditForm } from '../forms/competitor-edit-form';
+import { ContestantDto } from '@hemager/api-types';
 
 const FORM_ID = 'create-competitor-form';
 
 type FillMissingDataProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  competitorsWithMissingData: CompetitorResult[];
+  competitorsWithMissingData: ContestantDto[];
 };
 
 const FillMissingDataForm: FC<FillMissingDataProps> = ({

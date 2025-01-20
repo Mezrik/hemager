@@ -38,12 +38,16 @@ export type ContestDto = {
   contestType?: ContestTypeEnum;
   gender?: GenderEnum;
   date: Date;
-  weaponId?: string;
-  categoryId?: string;
+
+  weapon?: WeaponDto;
+  category?: CategoryDto;
+
   expectedParticipants?: number;
   deploymentCriteria?: DeploymentCriteria[];
   groupHits?: number;
   eliminationHits?: number;
+
+  groupsCanBeCreated?: boolean;
 };
 
 export type WeaponDto = {

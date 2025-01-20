@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { getCompetitionsQueryOptions } from '@/features/competitions/api/get-competitions';
 import { RecentCompetitions } from '@/features/competitions/components/recent-competitions';
+import { useCreateCompetition } from '@/features/competitions/api/create-competition';
 
 export const dashboardLoader = (queryClient: QueryClient) => async () => {
   // const query = getCompetitionsQueryOptions();
@@ -21,19 +22,25 @@ export const dashboardLoader = (queryClient: QueryClient) => async () => {
 export const DashboardRoute = () => {
   const { _ } = useLingui();
 
+  const { mutate } = useCreateCompetition();
+
   console.log(window.electron);
 
   return (
     <div>
       <Button
         onClick={() =>
-          window.electron.contest.create({
-            name: 'string',
-            organizerName: 'string',
-            federationName: 'string',
-            contestType: ContestTypeEnum.national,
-            gender: GenderEnum.male,
-            date: new Date(),
+          mutate({
+            data: {
+              name: 'string',
+              organizerName: 'string',
+              federationName: 'string',
+              contestType: ContestTypeEnum.national,
+              gender: GenderEnum.male,
+              date: new Date(),
+              categoryId: 'string',
+              weaponId: 'string',
+            },
           })
         }
       >
