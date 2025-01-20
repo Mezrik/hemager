@@ -30,7 +30,7 @@ export class Match extends Model {
   participants: [MatchParticipant, MatchParticipant];
 
   @HasMany(() => MatchState)
-  states: MatchState[];
+  states?: MatchState[];
 }
 
 export const matchModelToEntity = (model: Match): MatchEntity => {
@@ -40,7 +40,7 @@ export const matchModelToEntity = (model: Match): MatchEntity => {
       new RoundParticipant(model.id, contestantModelToEntity(model.participants[0].contestant)),
       new RoundParticipant(model.id, contestantModelToEntity(model.participants[1].contestant)),
     ],
-    model.states.map((state) => matchStateModelToEntity(state)),
+    model.states?.map((state) => matchStateModelToEntity(state)),
     { id: model.id },
   );
 };

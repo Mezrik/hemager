@@ -89,7 +89,7 @@ export const GroupRoute = () => {
             </h3>
             <div className="grid grid-cols-3 gap-4">
               {matches?.map((match) => {
-                const [one, two] = match.participants;
+                const [one, two] = match.participants ?? [];
 
                 return (
                   one &&
@@ -98,8 +98,8 @@ export const GroupRoute = () => {
                       <MatchCard
                         key={match.id}
                         match={match}
-                        participantOne={{ ...one.contestant, points: 0 }}
-                        participantTwo={{ ...two.contestant, points: 0 }}
+                        participantOne={{ ...one?.contestant, points: 0 }}
+                        participantTwo={{ ...two?.contestant, points: 0 }}
                         onPreview={() => setShowMatchPreview(match.id)}
                         onEdit={() => navigate(pathnames.buildMatchPath(match.id, competitionId))}
                       />

@@ -1,7 +1,7 @@
 import { inject } from 'inversify';
 import { Task } from 'true-myth';
 
-import { QueryError, QueryErrorTypes } from '@/common/errors';
+import { ensureThrownError, QueryError, QueryErrorTypes } from '@/common/errors';
 import { Query, QueryHandler } from '@/common/interfaces';
 import { TYPES } from '@/di-types';
 import { Match } from '@/domain/match/match';
@@ -21,9 +21,15 @@ export class GetAllMatchesQueryHandler implements QueryHandler<GetAllMatchesQuer
       this._repository
         .findByGroupId(query.groupId)
         .then(resolve)
-        .catch(() =>
-          reject({ cause: 'Failed to get matches', type: QueryErrorTypes.CAUGHT_EXCEPTION }),
-        );
+        .catch((err) => {
+          const error = ensureThrownError(err);
+          console.error(error);
+
+          reject({
+            cause: `Failed to get matches - ${error.message}`,
+            type: QueryErrorTypes.CAUGHT_EXCEPTION,
+          });
+        });
     });
   }
 }

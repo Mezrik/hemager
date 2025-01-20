@@ -9,6 +9,7 @@ import { TYPES } from '@/di-types';
 import { ContestRepository } from '@/domain/contest/contest-repository';
 import { GroupRepository } from '@/domain/group/group-repository';
 import { RoundRepository } from '@/domain/round/round-repository';
+import { MatchRepository } from '@/domain/match/match-repository';
 
 export class InitializeGroupsCommand extends Command {
   constructor(
@@ -28,6 +29,7 @@ export class InitializeGroupsCommandHandler implements CommandHandler<Initialize
     @inject(TYPES.ContestRepository) private readonly _contestRepository: ContestRepository,
     @inject(TYPES.GroupRepository) private readonly _groupRepository: GroupRepository,
     @inject(TYPES.RoundRepository) private readonly _roundRepository: RoundRepository,
+    @inject(TYPES.MatchRepository) private readonly _matchRepository: MatchRepository,
     @inject(TYPES.TransactionManager) private readonly _transactionManager: TransactionManager,
   ) {}
 
@@ -92,10 +94,14 @@ export class InitializeGroupsCommandHandler implements CommandHandler<Initialize
           return;
         }
 
+        const matches = groups.flatMap((group) => group.initializeMatches());
+
         try {
           for (const group of groups) {
             await this._groupRepository.create(group, transaction);
           }
+
+          await this._matchRepository.bulkCreate(matches, transaction);
         } catch (err) {
           const error = ensureThrownError(err);
           console.error(error);
