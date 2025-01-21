@@ -6,15 +6,16 @@ import { CommandError, CommandErrorTypes, ensureThrownError } from '@/common/err
 import { CommandHandler } from '@/common/interfaces';
 import { TransactionManager } from '@/common/interfaces/transaction-manager';
 import { TYPES } from '@/di-types';
-import { ContestRepository } from '@/domain/contest/contest-repository';
-import { GroupRepository } from '@/domain/group/group-repository';
-import { RoundRepository } from '@/domain/round/round-repository';
 import { MatchRepository } from '@/domain/match/match-repository';
+import { MatchStateChange } from '@hemager/api-types';
+import { unwrapErr } from 'true-myth/test-support';
 
 export class UpdateMatchCommand extends Command {
   constructor(
-    public contestId: string,
-    public maxContestantsPerGroup: number,
+    public matchId: string,
+    public change: MatchStateChange,
+    public pointsTo?: string,
+    public point?: number,
     guid?: string,
   ) {
     super(guid);
@@ -34,7 +35,21 @@ export class UpdateMatchCommandHandler implements CommandHandler<UpdateMatchComm
     return new Task((resolve, reject) => {
       void this._transactionManager.execute(async (transaction) => {
         try {
-          const match = await this._matchRepository.findOne(command.contestId);
+          const match = await this._matchRepository.findOne(command.matchId);
+
+          if (!match) {
+            reject({ cause: 'Match not found', type: CommandErrorTypes.NOT_FOUND });
+            return;
+          }
+
+          const result = match.updateState(command.change, command.pointsTo, command.point);
+
+          if (result.isErr) {
+            reject({ cause: unwrapErr(result).cause, type: CommandErrorTypes.INCORRECT_INPUT });
+            return;
+          }
+
+          await this._matchRepository.update(match.id, match, transaction);
         } catch (err) {
           const error = ensureThrownError(err);
           console.error(error);

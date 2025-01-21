@@ -41,7 +41,11 @@ export const matchModelToEntity = (model: Match): MatchEntity => {
       new RoundParticipant(model.id, contestantModelToEntity(model.participants[1].contestant)),
     ],
     model.states?.map((state) => matchStateModelToEntity(state)),
-    { id: model.id },
+    {
+      id: model.id,
+      createdAt: model.createdAt,
+      updatedAt: model.updatedAt,
+    },
   );
 };
 

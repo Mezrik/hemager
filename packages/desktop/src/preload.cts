@@ -30,6 +30,7 @@ electron.contextBridge.exposeInMainWorld('electron', {
   match: {
     getOne: (id) => ipcInvoke('match.getOne', id),
     getAll: (groupId) => ipcInvoke('match.getAll', groupId),
+    update: (payload) => ipcInvoke('match.update', payload),
   },
 } satisfies API);
 

@@ -12,6 +12,7 @@ import type {
   GroupDto,
   RoundParticipantDto,
   MatchDto,
+  MatchUpdateInput,
 } from '@hemager/api-types';
 import { Result } from 'true-myth';
 
@@ -79,6 +80,10 @@ export class DesktopApi implements Api {
 
   GetMatches(groupId: UUID): Promise<Result<MatchDto[], APIError>> {
     return unwrapTask(window.electron.match.getAll(groupId));
+  }
+
+  MatchUpdate(payload: MatchUpdateInput): Promise<Result<void, APIError>> {
+    return unwrapTask(window.electron.match.update(payload));
   }
 
   GetParticipants(competitionId: UUID): Promise<Result<RoundParticipantDto[], APIError>> {

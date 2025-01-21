@@ -11,7 +11,7 @@ import {
 import { ContestantDto, CreateContestantInput, UpdateContestantInput } from "./contestant";
 import { APIError } from "./errors";
 import { GroupDto } from "./group";
-import { MatchDto } from "./match";
+import { MatchDto, MatchUpdateInput } from "./match";
 import { AssignParticipantsInput, RoundParticipantDto } from "./round";
 
 export type API = {
@@ -40,6 +40,7 @@ export type API = {
   match: {
     getOne: (id: string) => Task<MatchDto, APIError>;
     getAll: (groupId: string) => Task<MatchDto[], APIError>;
+    update: (payload: MatchUpdateInput) => Task<void, APIError>;
   };
 };
 

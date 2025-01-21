@@ -52,6 +52,8 @@ export const groupModelToEntity = (model: Group): GroupEntity => {
     model.referee ? refereeModelToEntity(model.referee) : undefined,
     {
       id: model.id,
+      createdAt: model.createdAt,
+      updatedAt: model.updatedAt,
     },
   );
 };

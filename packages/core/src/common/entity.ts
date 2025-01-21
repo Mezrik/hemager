@@ -22,6 +22,7 @@ class Entity implements EntityInterface {
     this._entityProperties.id = id;
   }
 
+  @Expose()
   public get createdAt() {
     return this._entityProperties.createdAt;
   }
@@ -30,6 +31,7 @@ class Entity implements EntityInterface {
     this._entityProperties.createdAt = createdAt;
   }
 
+  @Expose()
   public get updatedAt() {
     return this._entityProperties.updatedAt;
   }

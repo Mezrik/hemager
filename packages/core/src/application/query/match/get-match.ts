@@ -25,6 +25,7 @@ export class GetMatchQueryHandler implements QueryHandler<GetMatchQuery, Match> 
             reject({ cause: 'Match not found', type: QueryErrorTypes.NOT_FOUND });
             return;
           }
+
           resolve(match);
         })
         .catch(() =>

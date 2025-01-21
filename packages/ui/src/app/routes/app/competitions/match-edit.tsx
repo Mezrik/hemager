@@ -1,14 +1,11 @@
 import { msg, Trans } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
 import { ChevronLeft } from 'lucide-react';
-import { ComponentProps } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { BasicPageLayout } from '@/components/layouts';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { mapParticipantsByCompetitorId } from '@/features/competitions/helpers';
-import { useParticipants } from '@/features/competitors/api/get-participants';
 import { useMatch } from '@/features/matches/api/get-match';
 import { MatchEdit } from '@/features/matches/components/match-edit';
 
@@ -20,22 +17,15 @@ export const MatchEditRoute = () => {
 
   const matchQuery = useMatch({ matchId: params.matchId as string });
 
-  const participantQuery = useParticipants({ competitionId: params.competitionId as string });
+  const match = matchQuery.data?.unwrapOrElse((err) => err);
+
+  if (match && 'cause' in match) {
+    return <div>{match.cause}</div>;
+  }
 
   if (matchQuery.isLoading) {
     return <div>Loading...</div>;
   }
-
-  const participantsByCompetitorId = mapParticipantsByCompetitorId(participantQuery.data ?? []);
-
-  const participantsById = Object.values(participantsByCompetitorId).reduce(
-    (acc, participant) => {
-      acc[participant.competitor.id] = participant.competitor;
-
-      return acc;
-    },
-    {} as ComponentProps<typeof MatchEdit>['participantsById'],
-  );
 
   return (
     <BasicPageLayout
@@ -46,17 +36,9 @@ export const MatchEditRoute = () => {
           <Trans>Go back</Trans>
         </Button>
       }
+      className="flex min-h-0 flex-col"
     >
-      <Card>
-        <CardHeader></CardHeader>
-        <CardContent>
-          <MatchEdit
-            match={matchQuery.data}
-            participantsById={participantsById}
-            matchId={params.matchId as string}
-          />
-        </CardContent>
-      </Card>
+      <MatchEdit match={match} />
     </BasicPageLayout>
   );
 };

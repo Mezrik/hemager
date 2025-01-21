@@ -11,7 +11,7 @@ export class BaseRepository<T extends Model, U extends Entity> implements Reposi
   private _entity: new (...args: any) => U;
   protected _modelToEntity: (model: T) => U;
   protected _entityToAttributes: (entity: U) => Attributes<T>;
-  private _include?: Includeable | Includeable[];
+  protected _include?: Includeable | Includeable[];
 
   constructor(
     db: Sequelize,

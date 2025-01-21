@@ -34,13 +34,58 @@ export class Match extends Entity {
 
   @Expose()
   get matchStates() {
-    return this._matchStates;
+    const orderedStates = this._matchStates.sort((a, b) => {
+      const aTime = a.timestamp?.getTime() ?? 0;
+      const bTime = b.timestamp?.getTime() ?? 0;
+      return aTime - bTime;
+    });
+
+    const end = orderedStates.findIndex((state) => state.change === MatchStateChange.matchEnd);
+
+    if (end > -1) {
+      // move end to the end
+      orderedStates.push(orderedStates.splice(end, 1)[0]);
+    }
+
+    return orderedStates;
   }
 
   @Expose()
   get matchStart(): Date | undefined {
     const start = this._matchStates.find((state) => state.change === MatchStateChange.matchStart);
     return start?.createdAt;
+  }
+
+  @Expose()
+  get matchEnd(): Date | undefined {
+    const end = this._matchStates.find((state) => state.change === MatchStateChange.matchEnd);
+    return end?.createdAt;
+  }
+
+  @Expose()
+  get paused(): boolean {
+    const lastFightStart = this.matchStates.findLastIndex(
+      (state) => state.change === MatchStateChange.fightStart,
+    );
+
+    const lastFightStop = this.matchStates.findLastIndex(
+      (state) => state.change === MatchStateChange.fightStop,
+    );
+
+    return lastFightStart < lastFightStop;
+  }
+
+  @Expose()
+  get winner(): string | undefined {
+    const [first, second] = this.points;
+    if (first > second) {
+      return this._participants[0].contestantId;
+    } else if (second > first) {
+      return this._participants[1].contestantId;
+    }
+
+    // not ended or draw
+    return undefined;
   }
 
   @Expose()
@@ -52,6 +97,10 @@ export class Match extends Entity {
   }
 
   public startMatch(): Result<MatchState[], MatchError> {
+    if (!!this.matchEnd) {
+      return err({ cause: 'Match already ended' });
+    }
+
     if (this._matchStates.find((state) => state.change === MatchStateChange.matchStart)) {
       return err({ cause: 'Match already started' });
     }
@@ -62,7 +111,7 @@ export class Match extends Entity {
   }
 
   public endMatch(): Result<MatchState[], MatchError> {
-    if (this._matchStates.find((state) => state.change === MatchStateChange.matchEnd)) {
+    if (!!this.matchEnd) {
       return err({ cause: 'Match already ended' });
     }
 
@@ -72,11 +121,15 @@ export class Match extends Entity {
   }
 
   public startFight(): Result<MatchState[], MatchError> {
-    const lastFightStart = this._matchStates.findLastIndex(
+    if (!!this.matchEnd) {
+      return err({ cause: 'Match already ended' });
+    }
+
+    const lastFightStart = this.matchStates.findLastIndex(
       (state) => state.change === MatchStateChange.fightStart,
     );
 
-    const lastFightStop = this._matchStates.findLastIndex(
+    const lastFightStop = this.matchStates.findLastIndex(
       (state) => state.change === MatchStateChange.fightStop,
     );
 
@@ -90,15 +143,11 @@ export class Match extends Entity {
   }
 
   public stopFight(): Result<MatchState[], MatchError> {
-    const lastFightStart = this._matchStates.findLastIndex(
-      (state) => state.change === MatchStateChange.fightStart,
-    );
+    if (!!this.matchEnd) {
+      return err({ cause: 'Match already ended' });
+    }
 
-    const lastFightStop = this._matchStates.findLastIndex(
-      (state) => state.change === MatchStateChange.fightStop,
-    );
-
-    if (lastFightStart < lastFightStop) {
+    if (this.paused) {
       return err({ cause: 'Fight already stopped' });
     }
 
@@ -108,6 +157,10 @@ export class Match extends Entity {
   }
 
   public addPoints(points: number, to: string): Result<MatchState[], MatchError> {
+    if (!!this.matchEnd) {
+      return err({ cause: 'Match already ended' });
+    }
+
     const participantIndex = this._participants.findIndex(
       (participant) => participant.contestantId === to,
     );
@@ -124,6 +177,38 @@ export class Match extends Entity {
 
     this._matchStates.push(new MatchState(MatchStateChange.pointAdded, this.id, to, points));
 
+    // TODO: End match when max points is reached
+    if (currentPoints + points === 5) {
+      this._matchStates.push(new MatchState(MatchStateChange.matchEnd, this.id));
+    }
+
     return ok(this._matchStates);
+  }
+
+  public updateState(change: MatchStateChange, pointsTo?: string, points: number = 1) {
+    switch (change) {
+      case MatchStateChange.matchStart:
+        return this.startMatch();
+      case MatchStateChange.matchEnd:
+        return this.endMatch();
+      case MatchStateChange.fightStart:
+        return this.startFight();
+      case MatchStateChange.fightStop:
+        return this.stopFight();
+      case MatchStateChange.pointAdded:
+        if (!pointsTo) {
+          return err({ cause: 'Points receiver is required' });
+        }
+
+        return this.addPoints(points, pointsTo);
+      case MatchStateChange.pointSubtracted:
+        if (!pointsTo) {
+          return err({ cause: 'Points receiver is required' });
+        }
+
+        return this.addPoints(-points, pointsTo ?? '');
+      default:
+        return err({ cause: 'Invalid state change' });
+    }
   }
 }

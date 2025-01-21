@@ -61,6 +61,8 @@ export const matchStateModelToEntity = (model: MatchState): MatchStateEntity => 
     model.points,
     {
       id: model.id,
+      createdAt: model.createdAt,
+      updatedAt: model.updatedAt,
     },
   );
 };

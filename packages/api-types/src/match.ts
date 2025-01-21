@@ -7,6 +7,7 @@ export type MatchStateDto = {
   matchId: string;
   pointToContestantId?: string;
   points?: number;
+  timestamp?: Date;
 };
 
 export type MatchDto = {
@@ -14,4 +15,16 @@ export type MatchDto = {
   groupId: string;
   participants: [RoundParticipantDto, RoundParticipantDto];
   matchStates: MatchStateDto[];
+  matchStart?: Date;
+  matchEnd?: Date;
+  paused?: boolean;
+  winner?: string;
+  points: [number, number];
+};
+
+export type MatchUpdateInput = {
+  matchId: string;
+  change: MatchStateChange;
+  pointsTo?: string;
+  point?: number;
 };

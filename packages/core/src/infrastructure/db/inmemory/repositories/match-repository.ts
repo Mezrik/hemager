@@ -16,6 +16,7 @@ import { MatchParticipant } from '../models/match-participant.model';
 import { nanoid } from 'nanoid';
 import { Contestant } from '../models/contestant.model';
 import { MatchState } from '../models/match-state.model';
+import { instanceToPlain } from 'class-transformer';
 
 @injectable()
 export class MatchRepository
@@ -43,16 +44,7 @@ export class MatchRepository
 
     const groups = await repo.findAll({
       where: { groupId },
-      include: [
-        {
-          model: this._db.getRepository(MatchParticipant),
-          include: [
-            {
-              model: this._db.getRepository(Contestant),
-            },
-          ],
-        },
-      ],
+      include: this._include,
     });
 
     return groups.map((group) => this._modelToEntity(group));
@@ -77,5 +69,21 @@ export class MatchRepository
       ),
       { transaction },
     );
+  }
+
+  override async update(id: string, item: Match, transaction?: Transaction): Promise<void> {
+    const payload = this._entityToAttributes(item);
+    const stateRepo = this._db.getRepository(MatchState);
+
+    stateRepo.bulkCreate(
+      item.matchStates.map((state) => instanceToPlain(state)),
+      { transaction, ignoreDuplicates: true },
+    );
+
+    // @ts-expect-error Property 'id' does not exist on type 'U'.
+    await this._dbRepo.update(payload, {
+      where: { id },
+      transaction,
+    });
   }
 }

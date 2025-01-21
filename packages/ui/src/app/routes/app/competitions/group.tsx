@@ -1,5 +1,5 @@
 import { APIError } from '@hemager/api-types';
-import { msg } from '@lingui/macro';
+import { msg, Trans } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
 import { CZ } from 'country-flag-icons/react/3x2';
 import { useState } from 'react';
@@ -21,6 +21,8 @@ import { useParticipants } from '@/features/competitors/api/get-participants';
 import { useMatches } from '@/features/matches/api/get-matches';
 import { MatchCard } from '@/features/matches/components/match-card';
 import { MatchPreview } from '@/features/matches/components/match-preview';
+import { Button } from '@/components/ui/button';
+import { ChevronLeft } from 'lucide-react';
 
 export const GroupRoute = () => {
   const { _ } = useLingui();
@@ -52,7 +54,16 @@ export const GroupRoute = () => {
   }
 
   return (
-    <BasicPageLayout title={group.name} subtitle={_(msg`Group`)}>
+    <BasicPageLayout
+      title={group.name}
+      subtitle={_(msg`Group`)}
+      actions={
+        <Button onClick={() => navigate(-1)}>
+          <ChevronLeft className="mr-2 size-4" />
+          <Trans>Go back</Trans>
+        </Button>
+      }
+    >
       <div className="grid grid-cols-9 gap-4">
         <Card className="col-span-9 pt-6 lg:col-span-4">
           <CardContent>
@@ -90,6 +101,7 @@ export const GroupRoute = () => {
             <div className="grid grid-cols-3 gap-4">
               {matches?.map((match) => {
                 const [one, two] = match.participants ?? [];
+                const [onePoints, twoPoints] = match.points ?? [];
 
                 return (
                   one &&
@@ -98,8 +110,8 @@ export const GroupRoute = () => {
                       <MatchCard
                         key={match.id}
                         match={match}
-                        participantOne={{ ...one?.contestant, points: 0 }}
-                        participantTwo={{ ...two?.contestant, points: 0 }}
+                        participantOne={{ ...one?.contestant, points: onePoints }}
+                        participantTwo={{ ...two?.contestant, points: twoPoints }}
                         onPreview={() => setShowMatchPreview(match.id)}
                         onEdit={() => navigate(pathnames.buildMatchPath(match.id, competitionId))}
                       />
