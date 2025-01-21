@@ -15,6 +15,7 @@ import { Transaction } from 'sequelize';
 import { MatchParticipant } from '../models/match-participant.model';
 import { nanoid } from 'nanoid';
 import { Contestant } from '../models/contestant.model';
+import { MatchState } from '../models/match-state.model';
 
 @injectable()
 export class MatchRepository
@@ -22,7 +23,19 @@ export class MatchRepository
   implements MatchRepositoryInterface
 {
   constructor(@inject(TYPES.Db) private _db: Sequelize) {
-    super(_db, MatchModel, Match, matchModelToEntity, entityToMatchAttributes);
+    super(_db, MatchModel, Match, matchModelToEntity, entityToMatchAttributes, [
+      {
+        model: _db.getRepository(MatchParticipant),
+        include: [
+          {
+            model: _db.getRepository(Contestant),
+          },
+        ],
+      },
+      {
+        model: _db.getRepository(MatchState),
+      },
+    ]);
   }
 
   async findByGroupId(groupId: string): Promise<Match[]> {

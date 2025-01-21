@@ -6,6 +6,7 @@ export type MatchStateDto = {
   change: MatchStateChange;
   matchId: string;
   pointToContestantId?: string;
+  points?: number;
 };
 
 export type MatchDto = {

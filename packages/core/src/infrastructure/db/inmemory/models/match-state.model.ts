@@ -45,14 +45,24 @@ export class MatchState extends Model {
   @Column(DataType.UUID)
   pointToContestantId?: string;
 
+  @AllowNull
+  @Column(DataType.INTEGER)
+  points?: number;
+
   @BelongsTo(() => Contestant)
   pointToContestant: Contestant;
 }
 
 export const matchStateModelToEntity = (model: MatchState): MatchStateEntity => {
-  return new MatchStateEntity(model.change, model.matchId, model.pointToContestantId, {
-    id: model.id,
-  });
+  return new MatchStateEntity(
+    model.change,
+    model.matchId,
+    model.pointToContestantId,
+    model.points,
+    {
+      id: model.id,
+    },
+  );
 };
 
 export const entityToMatchStateAttributes = (entity: MatchStateEntity) => {
@@ -61,6 +71,7 @@ export const entityToMatchStateAttributes = (entity: MatchStateEntity) => {
     matchId: entity.matchId,
     change: entity.change,
     pointToContestantId: entity.pointToContestantId,
+    points: entity.points,
     createdAt: entity.createdAt,
     updatedAt: entity.updatedAt,
   };

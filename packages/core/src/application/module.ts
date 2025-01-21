@@ -20,6 +20,7 @@ import { GetAllGroupsQueryHandler } from './query/groups/get-all-groups.ts';
 import { GetGroupQueryHandler } from './query/groups/get-group.ts';
 import { GetAllMatchesQueryHandler } from './query/match/get-all-matches.ts';
 import { GetMatchQueryHandler } from './query/match/get-match.ts';
+import { UpdateMatchCommandHandler } from './command/match/update-match.ts';
 
 export const applicationModule = new ContainerModule((bind: interfaces.Bind) => {
   bind<QueryHandler>(TYPES.QueryHandler).to(GetAllContestsQueryHandler);
@@ -43,4 +44,5 @@ export const applicationModule = new ContainerModule((bind: interfaces.Bind) => 
   bind<CommandHandler>(TYPES.CommandHandler).to(UpdateContestantCommandHandler);
   bind<CommandHandler>(TYPES.CommandHandler).to(AssignParticipantsCommandHandler);
   bind<CommandHandler>(TYPES.CommandHandler).to(InitializeGroupsCommandHandler);
+  bind<CommandHandler>(TYPES.CommandHandler).to(UpdateMatchCommandHandler);
 });
