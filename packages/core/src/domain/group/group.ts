@@ -5,6 +5,7 @@ import { Entity, EntityProperties } from '@/common/entity';
 import { Referee } from '../contest/referee';
 import { RoundParticipant } from '../round/round-participant';
 import { Match } from '../match/match';
+import { sortMatches } from '../match/helpers';
 
 export class Group extends Entity {
   constructor(
@@ -33,23 +34,24 @@ export class Group extends Entity {
 
   public initializeMatches() {
     const matches: Match[] = [];
-    for (const participant of this.participants) {
-      this.participants.forEach((p) => {
-        if (p.contestantId !== participant.contestantId) {
-          matches.push(
-            new Match(
-              this.id,
-              [
-                new RoundParticipant(this._roundId, p.contestant),
-                new RoundParticipant(this._roundId, participant.contestant),
-              ],
-              [],
-            ),
-          );
-        }
-      });
+
+    for (let i = 0; i < this.participants.length; i++) {
+      for (let j = i + 1; j < this.participants.length; j++) {
+        matches.push(
+          new Match(
+            this.id,
+            [
+              new RoundParticipant(this._roundId, this.participants[i].contestant),
+              new RoundParticipant(this._roundId, this.participants[j].contestant),
+            ],
+            [],
+          ),
+        );
+      }
     }
 
-    return matches;
+    const { merged, rest } = sortMatches(matches);
+
+    return [...merged, ...rest];
   }
 }

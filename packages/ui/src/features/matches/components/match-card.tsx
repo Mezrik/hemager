@@ -1,28 +1,29 @@
 import { Trans } from '@lingui/macro';
-import { Eye, Pencil } from 'lucide-react';
+import { CrownIcon, Eye, Pencil } from 'lucide-react';
 import { FC } from 'react';
 
 import { Button } from '@/components/ui/button';
 
-import { MatchParticipant } from '../types';
 import { MatchDto } from '@hemager/api-types';
+import { cn } from '@/utils/class-names';
 
 type MatchCardProps = {
   match: MatchDto;
-  participantOne: MatchParticipant;
-  participantTwo: MatchParticipant;
   onPreview: VoidFunction;
   onEdit: VoidFunction;
 };
 
-export const MatchCard: FC<MatchCardProps> = ({
-  participantOne,
-  participantTwo,
-  onPreview,
-  onEdit,
-}) => {
+export const MatchCard: FC<MatchCardProps> = ({ match, onPreview, onEdit }) => {
+  const [participantOne, participantTwo] = match.participants;
+  const [participantOnePoints, participantTwoPoints] = match.points;
+
   return (
-    <div className="w-full space-y-1.5 rounded-lg bg-gray-100 px-4 py-2  transition-colors">
+    <div
+      className={cn(
+        'w-full space-y-1.5 rounded-lg px-4 py-2 transition-colors',
+        match.matchEnd ? 'bg-gray-100' : 'bg-gray-300',
+      )}
+    >
       <div className="flex items-start justify-between">
         <div>
           <span className="text-xs uppercase tracking-wider text-gray-400">
@@ -36,25 +37,37 @@ export const MatchCard: FC<MatchCardProps> = ({
               <Trans>Preview</Trans>
             </span>
           </Button>
-          <Button className="cursor-pointer" variant="outline" size="xs" onClick={onEdit}>
-            <Pencil className="size-4" />
-            <span className="sr-only">
-              <Trans>Edit</Trans>
-            </span>
-          </Button>
+          {!match.matchEnd && (
+            <Button className="cursor-pointer" variant="outline" size="xs" onClick={onEdit}>
+              <Pencil className="size-4" />
+              <span className="sr-only">
+                <Trans>Edit</Trans>
+              </span>
+            </Button>
+          )}
         </div>
       </div>
       <div className="flex justify-between gap-4">
-        <span>
-          {participantOne.firstname} {participantOne.surname}
-        </span>
-        <span>{participantOne.points ?? 0}</span>
+        <div className="flex gap-2 items-center">
+          <div>
+            {participantOne.contestant.firstname} {participantOne.contestant.surname}
+          </div>
+          {participantOne.contestant.id === match.winner && (
+            <CrownIcon className="size-4 text-yellow-400" />
+          )}
+        </div>
+        <div>{participantOnePoints ?? 0}</div>
       </div>
       <div className="flex justify-between gap-4">
-        <span>
-          {participantTwo.firstname} {participantTwo.surname}
-        </span>
-        <span>{participantTwo.points ?? 0}</span>
+        <div className="flex gap-2 items-center">
+          <div>
+            {participantTwo.contestant.firstname} {participantTwo.contestant.surname}
+          </div>
+          {participantTwo.contestant.id === match.winner && (
+            <CrownIcon className="size-4 text-yellow-400" />
+          )}
+        </div>
+        <div>{participantTwoPoints ?? 0}</div>
       </div>
     </div>
   );

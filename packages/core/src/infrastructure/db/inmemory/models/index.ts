@@ -11,6 +11,7 @@ import { Referee } from './referee.model.ts';
 import { RoundParticipant } from './round-participant.model.ts';
 import { Round } from './round.model.ts';
 import { Weapon } from './weapon.model.ts';
+import { GroupMatchResult } from './group-match-result.model.ts';
 
 export const models = [
   Contest,
@@ -26,4 +27,5 @@ export const models = [
   Match,
   MatchParticipant,
   MatchState,
+  GroupMatchResult,
 ];

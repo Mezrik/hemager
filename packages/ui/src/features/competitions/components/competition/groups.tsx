@@ -1,6 +1,6 @@
 import { APIError } from '@hemager/api-types';
-import { Trans } from '@lingui/macro';
-import { FC } from 'react';
+import { msg, Trans } from '@lingui/macro';
+import { FC, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { pathnames } from '@/app/pathnames';
@@ -17,16 +17,21 @@ import {
 import { useCompetition } from '../../api/get-competition';
 import { useCompetitionsGroups } from '../../api/get-groups';
 import { useInitializeGroups } from '../../api/initialize-groups';
+import { InputBase, Label } from '@/components/ui/form';
+import { useLingui } from '@lingui/react';
 
 type GroupsProps = {
   competitionId: UUID;
 };
 
 export const Groups: FC<GroupsProps> = ({ competitionId }) => {
+  const { _ } = useLingui();
   const groupsQuery = useCompetitionsGroups({ competitionId });
   const competitionQuery = useCompetition({
     competitionId,
   });
+
+  const [maxPerGroup, setMaxPerGroup] = useState(4);
 
   const initializeGroups = useInitializeGroups();
 
@@ -81,15 +86,28 @@ export const Groups: FC<GroupsProps> = ({ competitionId }) => {
           </CardDescription>
         </CardHeader>
         <CardFooter>
-          <Button
-            onClick={() =>
-              initializeGroups.mutate({
-                data: { contestId: competitionId, maxParticipantsPerGroup: 4 },
-              })
-            }
-          >
-            <Trans>Initialize groups</Trans>
-          </Button>
+          <div className="flex gap-2 flex-col">
+            <div className="flex flex-col gap-2">
+              <Label>
+                <Trans>Max participants per group</Trans>
+              </Label>
+              <InputBase
+                value={maxPerGroup}
+                onChange={(e) => setMaxPerGroup(parseInt(e.target.value, 10))}
+                type="number"
+                className="max-w-52"
+              />
+            </div>
+            <Button
+              onClick={() =>
+                initializeGroups.mutate({
+                  data: { contestId: competitionId, maxParticipantsPerGroup: maxPerGroup },
+                })
+              }
+            >
+              <Trans>Initialize groups</Trans>
+            </Button>
+          </div>
         </CardFooter>
       </Card>
     );

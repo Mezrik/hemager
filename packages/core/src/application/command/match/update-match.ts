@@ -9,6 +9,8 @@ import { TYPES } from '@/di-types';
 import { MatchRepository } from '@/domain/match/match-repository';
 import { MatchStateChange } from '@hemager/api-types';
 import { unwrapErr } from 'true-myth/test-support';
+import { GroupMatchResult } from '@/domain/group/group-match-result';
+import { GroupRepository } from '@/domain/group/group-repository';
 
 export class UpdateMatchCommand extends Command {
   constructor(
@@ -28,6 +30,7 @@ export class UpdateMatchCommandHandler implements CommandHandler<UpdateMatchComm
 
   constructor(
     @inject(TYPES.MatchRepository) private readonly _matchRepository: MatchRepository,
+    @inject(TYPES.GroupRepository) private readonly _groupRepository: GroupRepository,
     @inject(TYPES.TransactionManager) private readonly _transactionManager: TransactionManager,
   ) {}
 
@@ -47,6 +50,26 @@ export class UpdateMatchCommandHandler implements CommandHandler<UpdateMatchComm
           if (result.isErr) {
             reject({ cause: unwrapErr(result).cause, type: CommandErrorTypes.INCORRECT_INPUT });
             return;
+          }
+
+          if (match.matchEnd) {
+            const firstResult = new GroupMatchResult(
+              match.id,
+              match.participants[0].contestantId,
+              match.groupId,
+              match.points[0],
+              match.points[1],
+            );
+
+            const secondResult = new GroupMatchResult(
+              match.id,
+              match.participants[1].contestantId,
+              match.groupId,
+              match.points[1],
+              match.points[0],
+            );
+
+            await this._groupRepository.insertResults([firstResult, secondResult], transaction);
           }
 
           await this._matchRepository.update(match.id, match, transaction);

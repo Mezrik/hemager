@@ -100,23 +100,15 @@ export const GroupRoute = () => {
             </h3>
             <div className="grid grid-cols-3 gap-4">
               {matches?.map((match) => {
-                const [one, two] = match.participants ?? [];
-                const [onePoints, twoPoints] = match.points ?? [];
-
                 return (
-                  one &&
-                  two && (
-                    <div className="col-span-1">
-                      <MatchCard
-                        key={match.id}
-                        match={match}
-                        participantOne={{ ...one?.contestant, points: onePoints }}
-                        participantTwo={{ ...two?.contestant, points: twoPoints }}
-                        onPreview={() => setShowMatchPreview(match.id)}
-                        onEdit={() => navigate(pathnames.buildMatchPath(match.id, competitionId))}
-                      />
-                    </div>
-                  )
+                  <div className="col-span-1">
+                    <MatchCard
+                      key={match.id}
+                      match={match}
+                      onPreview={() => setShowMatchPreview(match.id)}
+                      onEdit={() => navigate(pathnames.buildMatchPath(match.id, competitionId))}
+                    />
+                  </div>
                 );
               })}
             </div>

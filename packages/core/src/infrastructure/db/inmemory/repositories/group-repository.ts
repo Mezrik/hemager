@@ -6,6 +6,7 @@ import { Sequelize } from 'sequelize-typescript';
 import { TYPES } from '@/di-types';
 import { Group } from '@/domain/group/group';
 import { GroupRepository as GroupRepositoryInterface } from '@/domain/group/group-repository';
+import { GroupMatchResult as GroupMatchResultModel } from '../models/group-match-result.model';
 
 import { BaseRepository } from '../base-repository';
 import { Contestant } from '../models/contestant.model';
@@ -15,6 +16,7 @@ import {
   Group as GroupModel,
   groupModelToEntity,
 } from '../models/group.model';
+import { GroupMatchResult } from '@/domain/group/group-match-result';
 
 @injectable()
 export class GroupRepository
@@ -66,5 +68,14 @@ export class GroupRepository
 
     //@ts-expect-error  Something is wrong here
     return null;
+  }
+
+  async insertResults(result: GroupMatchResult[], transaction?: Transaction): Promise<void> {
+    const repo = this._db.getRepository(GroupMatchResultModel);
+
+    await repo.bulkCreate(
+      result.map((item) => instanceToPlain(item)),
+      { transaction },
+    );
   }
 }
