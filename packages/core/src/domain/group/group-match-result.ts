@@ -3,9 +3,9 @@ import { Expose } from 'class-transformer';
 import { Entity, EntityProperties } from '@/common/entity';
 
 import { Referee } from '../contest/referee';
-import { RoundParticipant } from '../round/round-participant';
-import { Match } from '../match/match';
 import { sortMatches } from '../match/helpers';
+import { Match } from '../match/match';
+import { RoundParticipant } from '../round/round-participant';
 
 export class GroupMatchResult extends Entity {
   constructor(

@@ -1,14 +1,15 @@
+import { MatchStateChange } from '@hemager/api-types';
+import { Expose } from 'class-transformer';
+import { Result } from 'true-myth';
+import { err, ok } from 'true-myth/result';
+
 import { Entity, EntityProperties } from '@/common/entity';
+import { InternalError } from '@/common/errors';
 
 import { RoundParticipant } from '../round/round-participant';
 
-import { MatchState } from './match-state';
-import { Expose } from 'class-transformer';
-import { Result } from 'true-myth';
-import { InternalError } from '@/common/errors';
-import { MatchStateChange } from '@hemager/api-types';
-import { err, ok } from 'true-myth/result';
 import { getContestantMatchPoints } from './helpers';
+import { MatchState } from './match-state';
 
 export type MatchError = InternalError;
 
@@ -97,7 +98,7 @@ export class Match extends Entity {
   }
 
   public startMatch(): Result<MatchState[], MatchError> {
-    if (!!this.matchEnd) {
+    if (this.matchEnd) {
       return err({ cause: 'Match already ended' });
     }
 
@@ -111,7 +112,7 @@ export class Match extends Entity {
   }
 
   public endMatch(): Result<MatchState[], MatchError> {
-    if (!!this.matchEnd) {
+    if (this.matchEnd) {
       return err({ cause: 'Match already ended' });
     }
 
@@ -121,7 +122,7 @@ export class Match extends Entity {
   }
 
   public startFight(): Result<MatchState[], MatchError> {
-    if (!!this.matchEnd) {
+    if (this.matchEnd) {
       return err({ cause: 'Match already ended' });
     }
 
@@ -143,7 +144,7 @@ export class Match extends Entity {
   }
 
   public stopFight(): Result<MatchState[], MatchError> {
-    if (!!this.matchEnd) {
+    if (this.matchEnd) {
       return err({ cause: 'Match already ended' });
     }
 
@@ -157,7 +158,7 @@ export class Match extends Entity {
   }
 
   public addPoints(points: number, to: string): Result<MatchState[], MatchError> {
-    if (!!this.matchEnd) {
+    if (this.matchEnd) {
       return err({ cause: 'Match already ended' });
     }
 

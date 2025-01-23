@@ -1,5 +1,6 @@
 import { APIError } from '@hemager/api-types';
 import { msg, Trans } from '@lingui/macro';
+import { useLingui } from '@lingui/react';
 import { FC, useState } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -13,12 +14,11 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { InputBase, Label } from '@/components/ui/form';
 
 import { useCompetition } from '../../api/get-competition';
 import { useCompetitionsGroups } from '../../api/get-groups';
 import { useInitializeGroups } from '../../api/initialize-groups';
-import { InputBase, Label } from '@/components/ui/form';
-import { useLingui } from '@lingui/react';
 
 type GroupsProps = {
   competitionId: UUID;
@@ -86,7 +86,7 @@ export const Groups: FC<GroupsProps> = ({ competitionId }) => {
           </CardDescription>
         </CardHeader>
         <CardFooter>
-          <div className="flex gap-2 flex-col">
+          <div className="flex flex-col gap-2">
             <div className="flex flex-col gap-2">
               <Label>
                 <Trans>Max participants per group</Trans>

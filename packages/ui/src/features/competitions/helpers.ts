@@ -1,8 +1,8 @@
+import { ContestTypeEnum, GenderEnum, RoundParticipantDto } from '@hemager/api-types';
 import { I18n } from '@lingui/core';
 import { msg } from '@lingui/macro';
 
 import { MenGenderIcon, MixedGenderIcon, WomenGenderIcon } from '@/assets/icons';
-import { ContestTypeEnum, GenderEnum, RoundParticipantDto } from '@hemager/api-types';
 
 export const getCompetionTypeCaption = (competitionType: ContestTypeEnum, _: I18n['_']) => {
   switch (competitionType) {

@@ -1,3 +1,4 @@
+import { ContestantDto } from '@hemager/api-types';
 import { msg, Trans } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
 import { useQueryClient } from '@tanstack/react-query';
@@ -21,9 +22,9 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from '@/components/ui/drawer';
+
 import { useUpdateCompetitor } from '../../api/update-competitor';
 import { CompetitorEditForm } from '../forms/competitor-edit-form';
-import { ContestantDto } from '@hemager/api-types';
 
 const FORM_ID = 'create-competitor-form';
 

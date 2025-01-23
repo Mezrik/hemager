@@ -1,3 +1,4 @@
+import { DeploymentCriteria } from '@hemager/api-types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { z } from 'zod';
 
@@ -6,7 +7,6 @@ import { api } from '@/services/api';
 
 import { getCompetitionQueryOptions } from './get-competition';
 import { getCompetitionsQueryOptions } from './get-competitions';
-import { DeploymentCriteria } from '@hemager/api-types';
 
 export const updateCompetitionParametersInputSchema = z.object({
   deploymentCriteria: z.array(z.nativeEnum(DeploymentCriteria)),

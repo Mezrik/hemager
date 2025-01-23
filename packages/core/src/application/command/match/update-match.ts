@@ -1,16 +1,16 @@
+import { MatchStateChange } from '@hemager/api-types';
 import { inject, injectable } from 'inversify';
 import Task from 'true-myth/task';
+import { unwrapErr } from 'true-myth/test-support';
 
 import { Command } from '@/common/command';
 import { CommandError, CommandErrorTypes, ensureThrownError } from '@/common/errors';
 import { CommandHandler } from '@/common/interfaces';
 import { TransactionManager } from '@/common/interfaces/transaction-manager';
 import { TYPES } from '@/di-types';
-import { MatchRepository } from '@/domain/match/match-repository';
-import { MatchStateChange } from '@hemager/api-types';
-import { unwrapErr } from 'true-myth/test-support';
 import { GroupMatchResult } from '@/domain/group/group-match-result';
 import { GroupRepository } from '@/domain/group/group-repository';
+import { MatchRepository } from '@/domain/match/match-repository';
 
 export class UpdateMatchCommand extends Command {
   constructor(

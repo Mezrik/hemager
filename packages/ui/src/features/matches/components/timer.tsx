@@ -1,7 +1,8 @@
+import { MatchStateDto } from '@hemager/api-types';
 import { Duration, intervalToDuration } from 'date-fns';
 import { FC, useEffect, useRef, useState } from 'react';
+
 import { convertDurationToString, statesToDuration } from '../helpers';
-import { MatchStateDto } from '@hemager/api-types';
 
 type Props = {
   states?: MatchStateDto[];

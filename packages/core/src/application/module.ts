@@ -9,6 +9,7 @@ import { UpdateContestCommandHandler } from './command/contest/update-contest.ts
 import { CreateContestantCommandHandler } from './command/contestant/create-contestant.ts';
 import { UpdateContestantCommandHandler } from './command/contestant/update-contestant.ts';
 import { InitializeGroupsCommandHandler } from './command/groups/initialize-group.ts';
+import { UpdateMatchCommandHandler } from './command/match/update-match.ts';
 import { GetAllCategoriesQueryHandler } from './query/constest/get-all-categories.ts';
 import { GetAllContestsQueryHandler } from './query/constest/get-all-contests.ts';
 import { GetAllParticipantsQueryHandler } from './query/constest/get-all-participants.ts';
@@ -20,7 +21,6 @@ import { GetAllGroupsQueryHandler } from './query/groups/get-all-groups.ts';
 import { GetGroupQueryHandler } from './query/groups/get-group.ts';
 import { GetAllMatchesQueryHandler } from './query/match/get-all-matches.ts';
 import { GetMatchQueryHandler } from './query/match/get-match.ts';
-import { UpdateMatchCommandHandler } from './command/match/update-match.ts';
 
 export const applicationModule = new ContainerModule((bind: interfaces.Bind) => {
   bind<QueryHandler>(TYPES.QueryHandler).to(GetAllContestsQueryHandler);

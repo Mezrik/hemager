@@ -1,12 +1,12 @@
 import { APIError, MatchDto, MatchUpdateInput } from '@hemager/api-types';
 import { Task } from 'true-myth';
 
+import { UpdateMatchCommand } from '@/application/command/match/update-match';
 import { GetAllMatchesQuery } from '@/application/query/match/get-all-matches';
 import { GetMatchQuery } from '@/application/query/match/get-match';
 import { commandErrorToAPIError, queryErrorToAPIError } from '@/common/errors';
 import { CommandBus, QueryBus } from '@/common/interfaces';
 import { instanceToPlain } from '@/common/utils/transformer';
-import { UpdateMatchCommand } from '@/application/command/match/update-match';
 
 export const matchHandlers = (_queryBus: QueryBus, _commandBus: CommandBus) => {
   return {

@@ -1,4 +1,3 @@
-import { UpdateCompetitionParametersCommand } from '@/generated/server';
 import {
   ContestDto,
   APIError,
@@ -15,6 +14,9 @@ import {
   InitializeGroupsInput,
 } from '@hemager/api-types';
 import { Result } from 'true-myth';
+
+import { UpdateCompetitionParametersCommand } from '@/generated/server';
+
 import { Api } from './api';
 
 export class RestApi implements Api {

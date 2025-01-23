@@ -8,8 +8,8 @@ import { TransactionManager } from '@/common/interfaces/transaction-manager';
 import { TYPES } from '@/di-types';
 import { ContestRepository } from '@/domain/contest/contest-repository';
 import { GroupRepository } from '@/domain/group/group-repository';
-import { RoundRepository } from '@/domain/round/round-repository';
 import { MatchRepository } from '@/domain/match/match-repository';
+import { RoundRepository } from '@/domain/round/round-repository';
 
 export class InitializeGroupsCommand extends Command {
   constructor(

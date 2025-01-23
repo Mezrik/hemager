@@ -1,10 +1,9 @@
+import { MatchDto } from '@hemager/api-types';
 import { Trans } from '@lingui/macro';
 import { CrownIcon, Eye, Pencil } from 'lucide-react';
 import { FC } from 'react';
 
 import { Button } from '@/components/ui/button';
-
-import { MatchDto } from '@hemager/api-types';
 import { cn } from '@/utils/class-names';
 
 type MatchCardProps = {
@@ -48,7 +47,7 @@ export const MatchCard: FC<MatchCardProps> = ({ match, onPreview, onEdit }) => {
         </div>
       </div>
       <div className="flex justify-between gap-4">
-        <div className="flex gap-2 items-center">
+        <div className="flex items-center gap-2">
           <div>
             {participantOne.contestant.firstname} {participantOne.contestant.surname}
           </div>
@@ -59,7 +58,7 @@ export const MatchCard: FC<MatchCardProps> = ({ match, onPreview, onEdit }) => {
         <div>{participantOnePoints ?? 0}</div>
       </div>
       <div className="flex justify-between gap-4">
-        <div className="flex gap-2 items-center">
+        <div className="flex items-center gap-2">
           <div>
             {participantTwo.contestant.firstname} {participantTwo.contestant.surname}
           </div>

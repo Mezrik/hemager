@@ -25,14 +25,12 @@ import {
 } from '@/components/ui/form';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { CompetitionTypeEnum, GenderEnum } from '@/generated/server';
-
+import { cn } from '@/utils/class-names';
 import { formatUIDate } from '@/utils/date';
+
 import { useCompetitionCategories } from '../../api/get-competition-categories';
 import { useWeapons } from '../../api/get-weapons';
-
 import { getCompetionTypeCaption, getGenderCaption } from '../../helpers';
-
-import { cn } from '@/utils/class-names';
 
 const getCompetitionTypeOptions = (_: I18n['_']): RadioOption[] => [
   {

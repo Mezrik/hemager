@@ -1,3 +1,4 @@
+import { APIError } from '@hemager/api-types';
 import { msg, Trans } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
 import { CaretDownIcon } from '@radix-ui/react-icons';
@@ -17,7 +18,6 @@ import { CompetitorsTable } from '@/features/competitors/components/competitors-
 import { CreateCompetitor } from '@/features/competitors/components/dialog/create-competitor';
 import { FillMissingData } from '@/features/competitors/components/dialog/fill-missing-data';
 import { ImportCompetitorsDialog } from '@/features/competitors/components/dialog/import-competitors';
-import { APIError } from '@hemager/api-types';
 
 export const competitorsLoader = (queryClient: QueryClient) => async () => {
   const query = getCompetitorsQueryOptions();

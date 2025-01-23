@@ -2,11 +2,13 @@ import { APIError } from '@hemager/api-types';
 import { msg, Trans } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
 import { CZ } from 'country-flag-icons/react/3x2';
+import { ChevronLeft } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { pathnames } from '@/app/pathnames';
 import { BasicPageLayout } from '@/components/layouts';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import {
   Table,
@@ -21,8 +23,6 @@ import { useParticipants } from '@/features/competitors/api/get-participants';
 import { useMatches } from '@/features/matches/api/get-matches';
 import { MatchCard } from '@/features/matches/components/match-card';
 import { MatchPreview } from '@/features/matches/components/match-preview';
-import { Button } from '@/components/ui/button';
-import { ChevronLeft } from 'lucide-react';
 
 export const GroupRoute = () => {
   const { _ } = useLingui();
@@ -95,7 +95,7 @@ export const GroupRoute = () => {
         </Card>
         <Card className="col-span-9 pt-6 lg:col-span-5">
           <CardContent>
-            <h3 className="text-primary-foreground mb-2 text-lg font-semibold">
+            <h3 className="mb-2 text-lg font-semibold text-primary-foreground">
               {_(msg`Round 1`)}
             </h3>
             <div className="grid grid-cols-3 gap-4">

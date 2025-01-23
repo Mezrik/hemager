@@ -49,7 +49,7 @@ export const CompetitionCard: FC<CompetitionCard> = ({
             {GenderIcon && gender && (
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <GenderIcon className="text-primary size-5" />
+                  <GenderIcon className="size-5 text-primary" />
                 </TooltipTrigger>
                 <TooltipContent>{getGenderCaption(gender, _)}</TooltipContent>
               </Tooltip>

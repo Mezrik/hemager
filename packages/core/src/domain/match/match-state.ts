@@ -1,7 +1,7 @@
 import { MatchStateChange } from '@hemager/api-types';
+import { Expose } from 'class-transformer';
 
 import { Entity, EntityProperties } from '@/common/entity';
-import { Expose } from 'class-transformer';
 
 export class MatchState extends Entity {
   constructor(

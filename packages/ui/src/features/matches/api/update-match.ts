@@ -1,8 +1,9 @@
+import { MatchUpdateInput } from '@hemager/api-types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { MutationConfig } from '@/lib/react-query';
 import { api } from '@/services/api';
-import { MatchUpdateInput } from '@hemager/api-types';
+
 import { getMatchQueryOptions } from './get-match';
 import { getMatchesQueryOptions } from './get-matches';
 

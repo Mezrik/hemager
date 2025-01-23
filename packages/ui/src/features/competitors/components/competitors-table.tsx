@@ -1,3 +1,4 @@
+import { ContestantDto } from '@hemager/api-types';
 import { Trans } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
 import { CircleAlert, Pencil, Trash } from 'lucide-react';
@@ -18,7 +19,6 @@ import { getGenderAbbrv } from '@/features/competitions/helpers';
 import { formatUIDate } from '@/utils/date';
 
 import { UpdateCompetitor } from './dialog/update-competitor';
-import { ContestantDto } from '@hemager/api-types';
 
 export const CompetitorsTable: FC<{
   data: ContestantDto[];

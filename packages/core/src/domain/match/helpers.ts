@@ -1,6 +1,7 @@
 import { MatchStateChange } from '@hemager/api-types';
-import { MatchState } from './match-state';
+
 import { Match } from './match';
+import { MatchState } from './match-state';
 
 export const getContestantMatchPoints = (contestantId: string, matchStates: MatchState[]) => {
   return matchStates.reduce((acc, state) => {
@@ -26,7 +27,7 @@ const compareMatches = (a: Match, b: Match) => {
   );
 };
 export const sortMatches = (matches: Match[]): { rest: Match[]; merged: Match[] } => {
-  let el = matches.shift();
+  const el = matches.shift();
 
   return matches.length === 0
     ? { rest: [] as Match[], merged: [el] as Match[] }
@@ -37,9 +38,9 @@ const insert = (el: Match, result: { rest: Match[]; merged: Match[] }) => {
   result.rest.unshift(el);
 
   for (let i = 0; i < result.rest.length; i++) {
-    let restItem = result.rest[i];
+    const restItem = result.rest[i];
     for (let j = 0; j < result.merged.length; j++) {
-      let mergedItem = result.merged[j];
+      const mergedItem = result.merged[j];
       if (!compareMatches(mergedItem, restItem)) {
         if (!compareMatches(result.merged[result.merged.length - 1], restItem)) {
           result.merged.push(restItem);

@@ -9,8 +9,8 @@ import {
 } from 'sequelize-typescript';
 
 import { Contestant } from './contestant.model';
-import { Match } from './match.model';
 import { Group } from './group.model';
+import { Match } from './match.model';
 
 @Table({ tableName: 'GroupMatchResult', modelName: 'GroupMatchResult' })
 export class GroupMatchResult extends Model {

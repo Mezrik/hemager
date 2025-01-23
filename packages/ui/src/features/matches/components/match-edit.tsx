@@ -1,15 +1,17 @@
-import { Trans } from '@lingui/macro';
-import { FC } from 'react';
-
 import { APIError, MatchDto, MatchStateChange } from '@hemager/api-types';
-import { useUpdateMatch } from '../api/update-match';
+import { Trans } from '@lingui/macro';
+import { useQueryClient } from '@tanstack/react-query';
+import { FC } from 'react';
+import { Result } from 'true-myth';
+
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/ui/use-toast';
-import { Timer } from './timer';
-import { MatchStateAxis } from './match-state-axis';
-import { Result } from 'true-myth';
-import { useQueryClient } from '@tanstack/react-query';
+
 import { getMatchesQueryOptions } from '../api/get-matches';
+import { useUpdateMatch } from '../api/update-match';
+
+import { MatchStateAxis } from './match-state-axis';
+import { Timer } from './timer';
 
 type MatchEditProps = {
   match?: MatchDto;
@@ -97,7 +99,7 @@ export const MatchEdit: FC<MatchEditProps> = ({ match }) => {
 
   return (
     <>
-      <div className="flex items-center gap-4 justify-center">
+      <div className="flex items-center justify-center gap-4">
         <div className="flex items-center gap-4">
           <div>
             {participantOne.contestant.firstname} {participantOne.contestant.surname}
@@ -163,7 +165,7 @@ export const MatchEdit: FC<MatchEditProps> = ({ match }) => {
         )}
       </div>
 
-      <div className="overflow-y-auto flex-grow flex justify-center">
+      <div className="flex grow justify-center overflow-y-auto">
         <MatchStateAxis match={match} />
       </div>
     </>

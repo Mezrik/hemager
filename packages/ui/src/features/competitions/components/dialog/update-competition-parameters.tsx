@@ -1,3 +1,4 @@
+import { ContestDto, DeploymentCriteria } from '@hemager/api-types';
 import { I18n } from '@lingui/core';
 import { msg, Trans } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
@@ -40,7 +41,6 @@ import {
   useUpdateCompetitionParameters,
 } from '@/features/competitions/api/update-competition-parameters';
 import { useToast } from '@/hooks/ui/use-toast';
-import { ContestDto, DeploymentCriteria } from '@hemager/api-types';
 
 export type CompetitionParameters = Pick<
   ContestDto,

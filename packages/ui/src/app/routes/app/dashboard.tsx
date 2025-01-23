@@ -7,9 +7,9 @@ import { useEffect } from 'react';
 import { BasicPageLayout } from '@/components/layouts';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useCreateCompetition } from '@/features/competitions/api/create-competition';
 import { getCompetitionsQueryOptions } from '@/features/competitions/api/get-competitions';
 import { RecentCompetitions } from '@/features/competitions/components/recent-competitions';
-import { useCreateCompetition } from '@/features/competitions/api/create-competition';
 
 export const dashboardLoader = (queryClient: QueryClient) => async () => {
   // const query = getCompetitionsQueryOptions();

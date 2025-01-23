@@ -1,10 +1,12 @@
 import { MatchDto, MatchStateChange, MatchStateDto, RoundParticipantDto } from '@hemager/api-types';
-import { FC } from 'react';
-import { convertDurationToString, mapStateChangeToCaption } from '../helpers';
 import { Trans } from '@lingui/macro';
 import { intervalToDuration } from 'date-fns';
-import { formatUIDateWithTime } from '@/utils/date';
+import { FC } from 'react';
+
 import { cn } from '@/utils/class-names';
+import { formatUIDateWithTime } from '@/utils/date';
+
+import { convertDurationToString, mapStateChangeToCaption } from '../helpers';
 
 const MatchStateBubble: FC<{ state: MatchStateDto; className?: string }> = ({
   state,
@@ -34,7 +36,7 @@ const MatchStateEntry: FC<{
   const pointToRight = state.pointToContestantId === participants[1].contestant.id;
 
   const info = (
-    <div className="flex gap-4 pb-2 border-b-2 border-gray-200 ">
+    <div className="flex gap-4 border-b-2 border-gray-200 pb-2 ">
       <div className="flex gap-1">
         <span className="font-bold">
           <Trans>Elapsed:</Trans>
@@ -89,7 +91,7 @@ export const MatchStateAxis: FC<{ match: MatchDto }> = ({ match }) => {
   const states = match.matchStates;
 
   return (
-    <div className="flex flex-col relative py-6 gap-4 w-fit">
+    <div className="relative flex w-fit flex-col gap-4 py-6">
       {states.map((state) => (
         <MatchStateEntry state={state} start={matchStart} participants={match.participants} />
       ))}

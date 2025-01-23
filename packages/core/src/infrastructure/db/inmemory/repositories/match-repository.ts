@@ -1,4 +1,7 @@
+import { instanceToPlain } from 'class-transformer';
 import { inject, injectable } from 'inversify';
+import { nanoid } from 'nanoid';
+import { Transaction } from 'sequelize';
 import { Sequelize } from 'sequelize-typescript';
 
 import { TYPES } from '@/di-types';
@@ -6,17 +9,14 @@ import { Match } from '@/domain/match/match';
 import { MatchRepository as MatchRepositoryInterface } from '@/domain/match/match-repository';
 
 import { BaseRepository } from '../base-repository';
+import { Contestant } from '../models/contestant.model';
+import { MatchParticipant } from '../models/match-participant.model';
+import { MatchState } from '../models/match-state.model';
 import {
   entityToMatchAttributes,
   matchModelToEntity,
   Match as MatchModel,
 } from '../models/match.model';
-import { Transaction } from 'sequelize';
-import { MatchParticipant } from '../models/match-participant.model';
-import { nanoid } from 'nanoid';
-import { Contestant } from '../models/contestant.model';
-import { MatchState } from '../models/match-state.model';
-import { instanceToPlain } from 'class-transformer';
 
 @injectable()
 export class MatchRepository

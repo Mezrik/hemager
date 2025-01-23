@@ -1,5 +1,4 @@
 import { inject, injectable } from 'inversify';
-import { Op } from 'sequelize';
 import { Sequelize } from 'sequelize-typescript';
 
 import { TYPES } from '@/di-types';
