@@ -95,18 +95,19 @@ export const GroupRoute = () => {
         </Card>
         <Card className="col-span-9 pt-6 lg:col-span-5">
           <CardContent>
-            <h3 className="mb-2 text-lg font-semibold text-primary-foreground">
+            <h3 className="text-primary-foreground mb-2 text-lg font-semibold">
               {_(msg`Round 1`)}
             </h3>
             <div className="grid grid-cols-3 gap-4">
-              {matches?.map((match) => {
+              {matches?.map((match, i) => {
                 return (
-                  <div className="col-span-1">
+                  <div className="col-span-1" key={match.id}>
                     <MatchCard
                       key={match.id}
                       match={match}
                       onPreview={() => setShowMatchPreview(match.id)}
                       onEdit={() => navigate(pathnames.buildMatchPath(match.id, competitionId))}
+                      index={i}
                     />
                   </div>
                 );

@@ -162,6 +162,10 @@ export class Match extends Entity {
       return err({ cause: 'Match already ended' });
     }
 
+    if (!this.paused) {
+      return err({ cause: 'Fight not paused. Please stop the fight first.' });
+    }
+
     const participantIndex = this._participants.findIndex(
       (participant) => participant.contestantId === to,
     );

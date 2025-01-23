@@ -10,9 +10,10 @@ type MatchCardProps = {
   match: MatchDto;
   onPreview: VoidFunction;
   onEdit: VoidFunction;
+  index?: number;
 };
 
-export const MatchCard: FC<MatchCardProps> = ({ match, onPreview, onEdit }) => {
+export const MatchCard: FC<MatchCardProps> = ({ match, onPreview, onEdit, index }) => {
   const [participantOne, participantTwo] = match.participants;
   const [participantOnePoints, participantTwoPoints] = match.points;
 
@@ -25,8 +26,8 @@ export const MatchCard: FC<MatchCardProps> = ({ match, onPreview, onEdit }) => {
     >
       <div className="flex items-start justify-between">
         <div>
-          <span className="text-xs uppercase tracking-wider text-gray-400">
-            <Trans>Match</Trans>
+          <span className="text-xs uppercase tracking-wider text-gray-500">
+            <Trans>Match{typeof index === 'number' ? ` ${index + 1}` : null}</Trans>
           </span>
         </div>
         <div className="flex justify-end gap-2">

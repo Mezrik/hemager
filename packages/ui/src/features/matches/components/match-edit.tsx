@@ -52,7 +52,7 @@ export const MatchEdit: FC<MatchEditProps> = ({ match }) => {
   };
 
   const handleMatchStart = () => {
-    matchMutation
+    void matchMutation
       .mutateAsync({
         data: { matchId: match.id, change: MatchStateChange.matchStart },
       })
@@ -60,7 +60,7 @@ export const MatchEdit: FC<MatchEditProps> = ({ match }) => {
   };
 
   const handlePointAdd = (point: number, pointsTo: string) => {
-    matchMutation
+    void matchMutation
       .mutateAsync({
         data: { matchId: match.id, change: MatchStateChange.pointAdded, point, pointsTo },
       })
@@ -68,7 +68,7 @@ export const MatchEdit: FC<MatchEditProps> = ({ match }) => {
   };
 
   const handleFightStart = () => {
-    matchMutation
+    void matchMutation
       .mutateAsync({
         data: { matchId: match.id, change: MatchStateChange.fightStart },
       })
@@ -76,7 +76,7 @@ export const MatchEdit: FC<MatchEditProps> = ({ match }) => {
   };
 
   const handleFightPause = () => {
-    matchMutation
+    void matchMutation
       .mutateAsync({
         data: { matchId: match.id, change: MatchStateChange.fightStop },
       })
@@ -84,7 +84,7 @@ export const MatchEdit: FC<MatchEditProps> = ({ match }) => {
   };
 
   const handleMatchEnd = () => {
-    matchMutation
+    void matchMutation
       .mutateAsync({
         data: { matchId: match.id, change: MatchStateChange.matchEnd },
       })
@@ -104,13 +104,16 @@ export const MatchEdit: FC<MatchEditProps> = ({ match }) => {
           <div>
             {participantOne.contestant.firstname} {participantOne.contestant.surname}
           </div>
-          <div className="flex size-14 items-center justify-center rounded bg-primary text-xl text-primary-foreground">
+          <div className="bg-primary text-primary-foreground flex size-14 items-center justify-center rounded text-xl">
             {participantOnePoints}
           </div>
 
           <div>
             {matchInProgress && (
-              <Button onClick={() => handlePointAdd(1, participantOne.contestant.id)}>
+              <Button
+                onClick={() => handlePointAdd(1, participantOne.contestant.id)}
+                disabled={!match.paused}
+              >
                 <Trans>Add point</Trans>
               </Button>
             )}
@@ -125,13 +128,16 @@ export const MatchEdit: FC<MatchEditProps> = ({ match }) => {
           <div>
             {participantTwo.contestant.firstname} {participantTwo.contestant.surname}
           </div>
-          <div className="flex size-14 items-center justify-center rounded bg-primary text-xl text-primary-foreground">
+          <div className="bg-primary text-primary-foreground flex size-14 items-center justify-center rounded text-xl">
             {participantTwoPoints}
           </div>
 
           <div>
             {matchInProgress && (
-              <Button onClick={() => handlePointAdd(1, participantTwo.contestant.id)}>
+              <Button
+                onClick={() => handlePointAdd(1, participantTwo.contestant.id)}
+                disabled={!match.paused}
+              >
                 <Trans>Add point</Trans>
               </Button>
             )}

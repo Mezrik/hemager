@@ -12,7 +12,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Form, FormField, FormItem, FormLabel, FormMessage, InputBase } from '@/components/ui/form';
-import { toast } from '@/hooks/ui/use-toast';
+import { useToast } from '@/hooks/ui/use-toast';
 
 import { importCompetitorInputSchema, useImportCompetitor } from '../../api/import-competitor';
 
@@ -26,6 +26,7 @@ const FORM_ID = 'import-competitor-form';
 
 export const ImportCompetitorsDialog: FC<ImportCompetitorsProps> = (props) => {
   const { _ } = useLingui();
+  const { toast } = useToast();
 
   const importCompetitorMutation = useImportCompetitor({
     mutationConfig: {

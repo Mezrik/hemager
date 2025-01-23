@@ -9,8 +9,10 @@ import { api } from '@/services/api';
 import { getCompetitionsGroupsQueryOptions } from './get-groups';
 
 export const initializeGroupsInputSchema = z.object({
-  contestId: z.string().uuid(t``),
-  maxParticipantsPerGroup: z.number(),
+  contestId: z.string().nanoid(t``),
+  maxParticipantsPerGroup: z.coerce
+    .number()
+    .min(4, t`The minimum number of participants per group is 4`),
 });
 
 export type InitializeGroupsInput = z.infer<typeof initializeGroupsInputSchema>;

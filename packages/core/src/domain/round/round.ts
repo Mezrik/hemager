@@ -48,11 +48,21 @@ export class Round extends Entity {
     targetGroupSize: number,
     criteria: DeploymentCriteria[],
   ): Result<Group[], InternalError> {
+    const MIN_GROUP_SIZE = 4;
+
+    if (targetGroupSize < MIN_GROUP_SIZE) {
+      return Result.err({ cause: `Target group size must be at least ${MIN_GROUP_SIZE}` });
+    }
+
     if (this._participants?.length < targetGroupSize * 2) {
       return Result.err({ cause: 'Insufficient participants assigned to this round' });
     }
 
-    const groupCount = Math.ceil(this._participants?.length / targetGroupSize);
+    const groupCount = Math.floor(this._participants.length / targetGroupSize);
+
+    if (groupCount === 0) {
+      return Result.err({ cause: 'Not enough participants to form even a single group' });
+    }
 
     const groupedParticipants: RoundParticipant[][] = Array.from({ length: groupCount }, () => []);
 
@@ -73,7 +83,6 @@ export class Round extends Entity {
 
         for (let i = 0; i < groupCount; i++) {
           const group = groupedParticipants[i];
-          if (group.length >= targetGroupSize) continue; // Enforce size limit
 
           const conflictCount = criteria.reduce((conflicts, criterion) => {
             if (criterion === DeploymentCriteria.rating && isRated) {
@@ -101,12 +110,32 @@ export class Round extends Entity {
           }
         }
 
-        groupedParticipants[bestGroupIndex].push(contestant);
+        groupedParticipants[bestGroupIndex]?.push(contestant);
       }
     };
 
-    distribute(ratedContestants, true); // Distribute rated contestants first
-    distribute(unratedContestants, false); // Then distribute unrated contestants
+    distribute(ratedContestants, true);
+    distribute(unratedContestants, false);
+
+    const smallGroups = groupedParticipants.filter((g) => g.length < MIN_GROUP_SIZE);
+    const largeGroups = groupedParticipants.filter((g) => g.length > MIN_GROUP_SIZE);
+
+    for (const smallGroup of smallGroups) {
+      while (smallGroup.length < MIN_GROUP_SIZE && largeGroups.length > 0) {
+        const largestGroup = largeGroups.reduce((maxGroup, currentGroup) =>
+          currentGroup.length > maxGroup.length ? currentGroup : maxGroup,
+        );
+
+        const movedParticipant = largestGroup.pop();
+        if (movedParticipant) {
+          smallGroup.push(movedParticipant);
+        }
+
+        if (largestGroup.length <= MIN_GROUP_SIZE) {
+          largeGroups.splice(largeGroups.indexOf(largestGroup), 1);
+        }
+      }
+    }
 
     const groups = groupedParticipants.map((participants) => {
       return new Group(this.id, participants);

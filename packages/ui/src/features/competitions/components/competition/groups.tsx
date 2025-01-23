@@ -14,26 +14,39 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { InputBase, Label } from '@/components/ui/form';
+import { Form, Input, InputBase, Label } from '@/components/ui/form';
+import { useToast } from '@/hooks/ui/use-toast';
 
 import { useCompetition } from '../../api/get-competition';
 import { useCompetitionsGroups } from '../../api/get-groups';
-import { useInitializeGroups } from '../../api/initialize-groups';
+import { initializeGroupsInputSchema, useInitializeGroups } from '../../api/initialize-groups';
 
 type GroupsProps = {
   competitionId: UUID;
 };
 
+const LOWEST_GROUP_SIZE = 4;
+
 export const Groups: FC<GroupsProps> = ({ competitionId }) => {
   const { _ } = useLingui();
+  const { toast } = useToast();
   const groupsQuery = useCompetitionsGroups({ competitionId });
   const competitionQuery = useCompetition({
     competitionId,
   });
 
-  const [maxPerGroup, setMaxPerGroup] = useState(4);
-
-  const initializeGroups = useInitializeGroups();
+  const initializeGroups = useInitializeGroups({
+    mutationConfig: {
+      onSettled: (data) => {
+        data?.unwrapOrElse((error) =>
+          toast({
+            description: error.cause,
+            variant: 'destructive',
+          }),
+        );
+      },
+    },
+  });
 
   const groups = groupsQuery.data?.unwrapOrElse<APIError>((error) => error);
   const competition = competitionQuery.data?.unwrapOrElse<APIError>((error) => error);
@@ -86,28 +99,37 @@ export const Groups: FC<GroupsProps> = ({ competitionId }) => {
           </CardDescription>
         </CardHeader>
         <CardFooter>
-          <div className="flex flex-col gap-2">
-            <div className="flex flex-col gap-2">
-              <Label>
-                <Trans>Max participants per group</Trans>
-              </Label>
-              <InputBase
-                value={maxPerGroup}
-                onChange={(e) => setMaxPerGroup(parseInt(e.target.value, 10))}
-                type="number"
-                className="max-w-52"
-              />
-            </div>
-            <Button
-              onClick={() =>
-                initializeGroups.mutate({
-                  data: { contestId: competitionId, maxParticipantsPerGroup: maxPerGroup },
-                })
-              }
-            >
-              <Trans>Initialize groups</Trans>
-            </Button>
-          </div>
+          <Form
+            schema={initializeGroupsInputSchema}
+            onSubmit={(data) => {
+              console.log(data);
+              initializeGroups.mutate({ data });
+            }}
+            options={{
+              defaultValues: {
+                contestId: competitionId,
+                maxParticipantsPerGroup: LOWEST_GROUP_SIZE,
+              },
+            }}
+          >
+            {({ formState, register }) => (
+              <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-2">
+                  <Input
+                    label={_(msg`Ideal number participants per group`)}
+                    error={formState.errors['maxParticipantsPerGroup']}
+                    registration={register('maxParticipantsPerGroup')}
+                    type="number"
+                    className="max-w-60"
+                  />
+                </div>
+                <input type="hidden" {...register('contestId')} />
+                <Button type="submit">
+                  <Trans>Initialize groups</Trans>
+                </Button>
+              </div>
+            )}
+          </Form>
         </CardFooter>
       </Card>
     );

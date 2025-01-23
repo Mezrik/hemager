@@ -15,7 +15,7 @@ export type InputProps = BaseInputProps & {
 };
 
 export const InputBase = React.forwardRef<HTMLInputElement, BaseInputProps>(
-  ({ className, type, label, ...props }, ref) => (
+  ({ className, type, label: _, ...props }, ref) => (
     <input
       {...props}
       type={type}
@@ -28,8 +28,10 @@ export const InputBase = React.forwardRef<HTMLInputElement, BaseInputProps>(
   ),
 );
 
+InputBase.displayName = 'InputBase';
+
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, label, error, ...props }, ref) => {
+  ({ className, label, error, ...props }, ref) => {
     return (
       <FieldWrapper label={label} error={error} className={className}>
         <InputBase {...props} ref={ref} {...props.registration} />
