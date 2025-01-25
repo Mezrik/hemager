@@ -13,6 +13,7 @@ import type {
   RoundParticipantDto,
   MatchDto,
   MatchUpdateInput,
+  ClubDto,
 } from '@hemager/api-types';
 import { Result } from 'true-myth';
 
@@ -64,6 +65,10 @@ export interface Api {
   ImportCompetitor(file: File): Promise<void>;
 
   InitializeGroups(payload: InitializeGroupsInput): Promise<Result<void, APIError>>;
+
+  GetClubs(): Promise<Result<ClubDto[], APIError>>;
+
+  GetClub(id: UUID): Promise<Result<ClubDto, APIError>>;
 
   UpdateCompetitionParameters(
     competitionId: UUID,

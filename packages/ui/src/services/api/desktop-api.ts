@@ -13,6 +13,7 @@ import type {
   RoundParticipantDto,
   MatchDto,
   MatchUpdateInput,
+  ClubDto,
 } from '@hemager/api-types';
 import { Result } from 'true-myth';
 
@@ -49,6 +50,14 @@ export class DesktopApi implements Api {
 
   CreateCompetitor(command: CreateContestantInput): Promise<Result<void, APIError>> {
     return unwrapTask(window.electron.contestant.create(command));
+  }
+
+  GetClub(id: UUID): Promise<Result<ClubDto, APIError>> {
+    return unwrapTask(window.electron.club.getOne(id));
+  }
+
+  GetClubs(): Promise<Result<ClubDto[], APIError>> {
+    return unwrapTask(window.electron.club.getAll());
   }
 
   UpdateCompetitor(

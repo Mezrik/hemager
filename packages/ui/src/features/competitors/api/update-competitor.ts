@@ -1,8 +1,8 @@
+import { GenderEnum } from '@hemager/api-types';
 import { t } from '@lingui/macro';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { z } from 'zod';
 
-import { GenderEnum } from '@/generated/server';
 import { MutationConfig } from '@/lib/react-query';
 import { api } from '@/services/api';
 
@@ -11,18 +11,16 @@ import { getCompetitorsQueryOptions } from './get-competitors';
 export const updateCompetitorInputSchema = z.object({
   firstname: z.string().min(1, t`Firstname is required`),
   surname: z.string().min(1, t`Surname is required`),
-  gender: z.nativeEnum(GenderEnum),
-  license: z.string().min(1, t`License is required`),
-  licenseFie: z.string(),
-  birthdate: z.date({ message: t`Date of birth is required` }),
-  clubId: z.string().uuid().optional(),
+  gender: z.nativeEnum(GenderEnum).optional(),
+  birthdate: z.date().optional(),
+  clubId: z.string().nanoid().optional(),
+  rating: z.coerce.number().optional(),
 });
 
 export type updateCompetitorInput = z.infer<typeof updateCompetitorInputSchema>;
 
 export const updateCompetitor = ({ data, id }: { data: updateCompetitorInput; id: UUID }) => {
-  const birthdate = data.birthdate.toISOString();
-  return api.UpdateCompetitor(id, { ...data, birthdate });
+  return api.UpdateCompetitor(id, { ...data });
 };
 
 type UseUpdateCompetitorOptions = {
@@ -39,11 +37,11 @@ export const useUpdateCompetitor = ({
   const { onSuccess, ...rest } = mutationConfig || {};
 
   return useMutation({
-    onSuccess: (...args) => {
+    onSuccess: async (...args) => {
       !noRefetch &&
-        queryClient.invalidateQueries({
+        (await queryClient.invalidateQueries({
           queryKey: getCompetitorsQueryOptions().queryKey,
-        });
+        }));
       onSuccess?.(...args);
     },
     ...rest,

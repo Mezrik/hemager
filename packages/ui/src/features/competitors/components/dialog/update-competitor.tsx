@@ -22,6 +22,7 @@ import {
 } from '@/components/ui/drawer';
 import { Spinner } from '@/components/ui/spinner';
 
+import { useClubs } from '../../api/get-clubs';
 import { useCompetitor } from '../../api/get-competitor';
 import { useUpdateCompetitor } from '../../api/update-competitor';
 import { CompetitorEditForm } from '../forms/competitor-edit-form';
@@ -37,8 +38,15 @@ type UpdateCompetitorProps = {
 const UpdateCompetitorForm: FC<{ onSubmit: () => void; id: UUID }> = ({ onSubmit, id }) => {
   const createCompetitorMutation = useUpdateCompetitor();
   const competitorQuery = useCompetitor({ competitorId: id });
+  const clubsQuery = useClubs();
 
-  if (competitorQuery.isLoading) return <Spinner />;
+  if (competitorQuery.isLoading || clubsQuery.isLoading) return <Spinner />;
+
+  const contestant = competitorQuery.data?.unwrapOrElse((err) => err);
+  const clubs = clubsQuery.data?.unwrapOrElse((err) => err);
+
+  if (clubs && 'cause' in clubs) return <div>{clubs.cause}</div>;
+  if (contestant && 'cause' in contestant) return <div>{contestant.cause}</div>;
 
   return (
     <CompetitorEditForm
@@ -48,11 +56,9 @@ const UpdateCompetitorForm: FC<{ onSubmit: () => void; id: UUID }> = ({ onSubmit
         onSubmit();
       }}
       defaultValues={{
-        ...(competitorQuery.data ?? {}),
-        birthdate: competitorQuery.data?.birthdate
-          ? new Date(competitorQuery.data?.birthdate)
-          : undefined,
+        ...(contestant ?? {}),
       }}
+      clubs={clubs ?? []}
     />
   );
 };

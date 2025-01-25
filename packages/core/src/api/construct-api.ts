@@ -5,6 +5,7 @@ import Task from 'true-myth/task';
 import { CommandBus, QueryBus } from '@/common/interfaces';
 import { TYPES } from '@/di-types';
 
+import { clubHandlers } from './handlers/club';
 import { contestHandlers } from './handlers/contest';
 import { contestantHandlers } from './handlers/contestant';
 import { groupHandlers } from './handlers/group';
@@ -19,6 +20,7 @@ export const constructAPI = (app: Container) => {
     contestant: contestantHandlers(queryBus, commandBus),
     group: groupHandlers(queryBus, commandBus),
     match: matchHandlers(queryBus, commandBus),
+    club: clubHandlers(queryBus, commandBus),
   } satisfies API;
 
   const generatePaths = <T extends Record<string, any>>(api: T): APIPaths<T>[] => {

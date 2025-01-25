@@ -27,6 +27,15 @@ export type ClubDto = {
   name: string;
 };
 
+export type CreateClubInput = {
+  name: string;
+};
+
+export type UpdateClubInput = {
+  id: string;
+  name: string;
+};
+
 export type ContestantDto = {
   id: string;
   firstname: string;

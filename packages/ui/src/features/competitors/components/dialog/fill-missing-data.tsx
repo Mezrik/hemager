@@ -1,7 +1,6 @@
 import { ContestantDto } from '@hemager/api-types';
 import { msg, Trans } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
-import { useQueryClient } from '@tanstack/react-query';
 import { FC, useEffect, useState } from 'react';
 import { useMediaQuery } from 'usehooks-ts';
 
@@ -22,7 +21,9 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from '@/components/ui/drawer';
+import { Spinner } from '@/components/ui/spinner';
 
+import { useClubs } from '../../api/get-clubs';
 import { useUpdateCompetitor } from '../../api/update-competitor';
 import { CompetitorEditForm } from '../forms/competitor-edit-form';
 
@@ -38,8 +39,9 @@ const FillMissingDataForm: FC<FillMissingDataProps> = ({
   competitorsWithMissingData,
   onOpenChange,
 }) => {
-  const queryClient = useQueryClient();
   const [editingI, setEditingI] = useState(0);
+
+  const clubsQuery = useClubs();
 
   useEffect(() => {
     console.log(
@@ -68,6 +70,12 @@ const FillMissingDataForm: FC<FillMissingDataProps> = ({
   console.log(competitor);
   if (!competitor) return null;
 
+  if (clubsQuery.isLoading) return <Spinner />;
+
+  const clubs = clubsQuery.data?.unwrapOrElse((err) => err);
+
+  if (clubs && 'cause' in clubs) return <div>{clubs.cause}</div>;
+
   return (
     <>
       <div className="flex items-center justify-between gap-4">
@@ -89,6 +97,7 @@ const FillMissingDataForm: FC<FillMissingDataProps> = ({
           ...(competitor ?? {}),
           birthdate: competitor.birthdate ? new Date(competitor.birthdate) : undefined,
         }}
+        clubs={clubs ?? []}
       />
     </>
   );

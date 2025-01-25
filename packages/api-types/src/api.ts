@@ -8,7 +8,14 @@ import {
   UpdateContestInput,
   WeaponDto,
 } from "./contest";
-import { ContestantDto, CreateContestantInput, UpdateContestantInput } from "./contestant";
+import {
+  ClubDto,
+  ContestantDto,
+  CreateClubInput,
+  CreateContestantInput,
+  UpdateClubInput,
+  UpdateContestantInput,
+} from "./contestant";
 import { APIError } from "./errors";
 import { GroupDto } from "./group";
 import { MatchDto, MatchUpdateInput } from "./match";
@@ -32,6 +39,12 @@ export type API = {
     update: (payload: UpdateContestantInput) => Task<void, APIError>;
     getAll: () => Task<ContestantDto[], APIError>;
     getOne: (id: string) => Task<ContestantDto, APIError>;
+  };
+  club: {
+    create: (payload: CreateClubInput) => Task<void, APIError>;
+    update: (payload: UpdateClubInput) => Task<void, APIError>;
+    getAll: () => Task<ClubDto[], APIError>;
+    getOne: (id: string) => Task<ClubDto, APIError>;
   };
   group: {
     getOne: (id: string) => Task<GroupDto, APIError>;

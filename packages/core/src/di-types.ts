@@ -13,4 +13,5 @@ export const TYPES = {
   ContestantRepository: Symbol('ContestantRepository'),
   GroupRepository: Symbol('GroupRepository'),
   MatchRepository: Symbol('MatchRepository'),
+  ClubRepository: Symbol('ClubRepository'),
 };

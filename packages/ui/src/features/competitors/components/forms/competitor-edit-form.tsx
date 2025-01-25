@@ -1,3 +1,4 @@
+import { ClubDto, GenderEnum } from '@hemager/api-types';
 import { I18n } from '@lingui/core';
 import { msg, t, Trans } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
@@ -17,21 +18,24 @@ import {
   Input,
   RadioGroupFormField,
   RadioOption,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from '@/components/ui/form';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { getGenderCaption } from '@/features/competitions/helpers';
-import { GenderEnum } from '@/generated/server';
 import { cn } from '@/utils/class-names';
 import { formatUIDate } from '@/utils/date';
 
 export const editCompetitorInputSchema = z.object({
   firstname: z.string().min(1, t`Firstname is required`),
   surname: z.string().min(1, t`Surname is required`),
-  gender: z.nativeEnum(GenderEnum),
-  license: z.string().min(1, t`License is required`),
-  licenseFie: z.string(),
-  birthdate: z.date({ message: t`Date of birth is required` }),
-  clubId: z.string().uuid().optional(),
+  gender: z.nativeEnum(GenderEnum).optional(),
+  birthdate: z.date().optional(),
+  clubId: z.string().nanoid().optional(),
+  rating: z.coerce.number().optional(),
 });
 
 const getGenderOptions = (_: I18n['_']): RadioOption[] => [
@@ -51,6 +55,7 @@ const getGenderOptions = (_: I18n['_']): RadioOption[] => [
 
 type CompetitorEditFormProps = {
   onSubmit: (values: z.infer<typeof editCompetitorInputSchema>) => void;
+  clubs: ClubDto[];
   formID: string;
   defaultValues?: Partial<z.infer<typeof editCompetitorInputSchema>>;
 };
@@ -59,6 +64,7 @@ export const CompetitorEditForm: FC<CompetitorEditFormProps> = ({
   onSubmit,
   formID,
   defaultValues,
+  clubs,
 }) => {
   const { _ } = useLingui();
 
@@ -93,15 +99,39 @@ export const CompetitorEditForm: FC<CompetitorEditFormProps> = ({
             control={control}
             options={getGenderOptions(_)}
           />
+
           <Input
-            label={_(msg`License`)}
-            error={formState.errors['license']}
-            registration={register('license')}
+            label={_(msg`Rating`)}
+            error={formState.errors['rating']}
+            type="number"
+            registration={register('rating')}
           />
-          <Input
-            label={_(msg`License FIE`)}
-            error={formState.errors['licenseFie']}
-            registration={register('licenseFie')}
+
+          <FormField
+            control={control}
+            name="clubId"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  <Trans>Club</Trans>
+                </FormLabel>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select a club" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {clubs.map((c) => (
+                      <SelectItem value={c.id} key={c.id}>
+                        {c.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
           />
 
           <FormField

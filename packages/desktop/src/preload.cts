@@ -32,6 +32,12 @@ electron.contextBridge.exposeInMainWorld('electron', {
     getAll: (groupId) => ipcInvoke('match.getAll', groupId),
     update: (payload) => ipcInvoke('match.update', payload),
   },
+  club: {
+    getOne: (id) => ipcInvoke('club.getOne', id),
+    getAll: () => ipcInvoke('club.getAll'),
+    create: (payload) => ipcInvoke('club.create', payload),
+    update: (payload) => ipcInvoke('club.update', payload),
+  },
 } satisfies API);
 
 function ipcInvoke<Key extends APIPathUnion>(key: Key, payload?: any): Task<any, APIError> {

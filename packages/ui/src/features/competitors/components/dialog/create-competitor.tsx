@@ -20,8 +20,10 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from '@/components/ui/drawer';
+import { Spinner } from '@/components/ui/spinner';
 
 import { useCreateCompetitor } from '../../api/create-competitor';
+import { useClubs } from '../../api/get-clubs';
 import { CompetitorEditForm } from '../forms/competitor-edit-form';
 
 const FORM_ID = 'create-competitor-form';
@@ -34,6 +36,14 @@ type CreateCompetitorProps = {
 const CreateCompetitorForm: FC<{ onSubmit: () => void }> = ({ onSubmit }) => {
   const createCompetitorMutation = useCreateCompetitor();
 
+  const clubsQuery = useClubs();
+
+  if (clubsQuery.isLoading) return <Spinner />;
+
+  const clubs = clubsQuery.data?.unwrapOrElse((err) => err);
+
+  if (clubs && 'cause' in clubs) return <div>{clubs.cause}</div>;
+
   return (
     <CompetitorEditForm
       formID={FORM_ID}
@@ -41,6 +51,7 @@ const CreateCompetitorForm: FC<{ onSubmit: () => void }> = ({ onSubmit }) => {
         createCompetitorMutation.mutate({ data: values });
         onSubmit();
       }}
+      clubs={clubs ?? []}
     />
   );
 };
