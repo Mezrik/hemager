@@ -63,7 +63,7 @@ export class UpdateContestantCommandHandler implements CommandHandler<UpdateCont
         });
 
         try {
-          await this._repository.create(contestant);
+          await this._repository.update(command.id, contestant);
         } catch (err) {
           const error = ensureThrownError(err);
           reject({ cause: error.message, type: CommandErrorTypes.CAUGHT_EXCEPTION });

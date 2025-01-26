@@ -57,6 +57,7 @@ const UpdateCompetitorForm: FC<{ onSubmit: () => void; id: UUID }> = ({ onSubmit
       }}
       defaultValues={{
         ...(contestant ?? {}),
+        clubId: contestant?.club?.id,
       }}
       clubs={clubs ?? []}
     />
