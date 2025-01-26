@@ -1,4 +1,4 @@
-import { GenderEnum } from '@hemager/api-types';
+import { Country, GenderEnum } from '@hemager/api-types';
 import { t } from '@lingui/macro';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { z } from 'zod';
@@ -15,6 +15,7 @@ export const updateCompetitorInputSchema = z.object({
   birthdate: z.date().optional(),
   clubId: z.string().nanoid().optional(),
   rating: z.coerce.number().optional(),
+  nationality: z.nativeEnum(Country).optional(),
 });
 
 export type updateCompetitorInput = z.infer<typeof updateCompetitorInputSchema>;

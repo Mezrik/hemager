@@ -1,4 +1,4 @@
-import { GenderEnum } from '@hemager/api-types';
+import { Country, GenderEnum } from '@hemager/api-types';
 import { inject, injectable } from 'inversify';
 import Task from 'true-myth/task';
 
@@ -18,6 +18,7 @@ export class CreateContestantCommand extends Command {
     public birthdate?: Date,
     public gender?: GenderEnum,
     public rating?: number,
+    public nationality?: Country,
     guid?: string,
   ) {
     super(guid);
@@ -52,6 +53,7 @@ export class CreateContestantCommandHandler implements CommandHandler<CreateCont
           rating: command.rating,
 
           club: club ?? undefined,
+          nationality: command.nationality,
         });
 
         try {

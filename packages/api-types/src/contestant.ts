@@ -1,4 +1,4 @@
-import { GenderEnum } from "./enums";
+import { Country, GenderEnum } from "./enums";
 
 export type CreateContestantInput = {
   firstname: string;
@@ -8,6 +8,7 @@ export type CreateContestantInput = {
   birthdate?: Date;
   gender?: GenderEnum;
   rating?: number;
+  nationality?: Country;
 };
 
 export type UpdateContestantInput = {
@@ -20,6 +21,7 @@ export type UpdateContestantInput = {
   birthdate?: Date;
   gender?: GenderEnum;
   rating?: number;
+  nationality?: Country;
 };
 
 export type ClubDto = {

@@ -28,6 +28,7 @@ export const contestantHandlers = (_queryBus: QueryBus, _commandBus: CommandBus)
             payload.birthdate,
             payload.gender,
             payload.rating,
+            payload.nationality,
           ),
         );
 
@@ -50,6 +51,7 @@ export const contestantHandlers = (_queryBus: QueryBus, _commandBus: CommandBus)
             payload.birthdate,
             payload.gender,
             payload.rating,
+            payload.nationality,
           ),
         );
 

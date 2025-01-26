@@ -1,4 +1,4 @@
-import { ClubDto, GenderEnum } from '@hemager/api-types';
+import { ClubDto, Country, GenderEnum } from '@hemager/api-types';
 import { I18n } from '@lingui/core';
 import { msg, t, Trans } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
@@ -28,6 +28,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { getGenderCaption } from '@/features/competitions/helpers';
 import { cn } from '@/utils/class-names';
 import { formatUIDate } from '@/utils/date';
+import { spaceOnCapitalLetter } from '@/utils/string';
 
 export const editCompetitorInputSchema = z.object({
   firstname: z.string().min(1, t`Firstname is required`),
@@ -36,6 +37,7 @@ export const editCompetitorInputSchema = z.object({
   birthdate: z.date().optional(),
   clubId: z.string().nanoid().optional(),
   rating: z.coerce.number().optional(),
+  nationality: z.nativeEnum(Country).optional(),
 });
 
 const getGenderOptions = (_: I18n['_']): RadioOption[] => [
@@ -125,6 +127,33 @@ export const CompetitorEditForm: FC<CompetitorEditFormProps> = ({
                     {clubs.map((c) => (
                       <SelectItem value={c.id} key={c.id}>
                         {c.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={control}
+            name="nationality"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  <Trans>Nationality</Trans>
+                </FormLabel>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select a country" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {Object.entries(Country).map(([key, value]) => (
+                      <SelectItem value={value} key={value}>
+                        {spaceOnCapitalLetter(key)}
                       </SelectItem>
                     ))}
                   </SelectContent>
