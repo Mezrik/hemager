@@ -1,14 +1,18 @@
 import { inject, injectable } from 'inversify';
+import { QueryTypes } from 'sequelize';
 import { Sequelize } from 'sequelize-typescript';
 
+import { instanceToPlain } from '@/common/utils/transformer';
 import { TYPES } from '@/di-types';
 import { Round } from '@/domain/round/round';
 import { RoundRepository as RoundRepositoryInterface } from '@/domain/round/round-repository';
+import { RoundResult } from '@/domain/round/round-result';
 
 import { BaseRepository } from '../base-repository';
 import { Club } from '../models/club.model';
 import { Contestant } from '../models/contestant.model';
 import { RoundParticipant } from '../models/round-participant.model';
+import { RoundResultAggregated } from '../models/round-result-aggregated';
 import {
   entityToRoundAttributes,
   Round as RoundModel,
@@ -65,5 +69,43 @@ export class RoundRepository
     );
 
     await repo.bulkCreate(toBeCreated.map((id) => ({ roundId, contestantId: id })));
+  }
+
+  public async getRoundResults(roundId: string): Promise<RoundResult[]> {
+    return await this._db
+      .query(
+        `SELECT
+          C.firstname,
+          C.surname,
+          COUNT(*) AS totalContests,
+          winCount,
+          contestPointsFor,
+          contestPointsAgainst
+          FROM (
+              SELECT
+                  GM.contestantId,
+                  R.contestId,
+                  SUM(GM.pointsFor) AS contestPointsFor,
+                  SUM(GM.pointsAgainst) AS contestPointsAgainst,
+                  SUM(CASE WHEN GM.pointsFor > GM.pointsAgainst THEN 1 ELSE 0 END) AS winCount,
+                  R.id AS roundId
+              FROM GroupMatchResult AS GM
+                  JOIN "Group" AS G ON G.id = GM.groupId
+                  JOIN Round AS R ON R.id = G.roundId
+              GROUP BY GM.contestantId, R.contestId
+          ) AS contestAgg
+          JOIN Contestant AS C ON C.id = contestAgg.contestantId
+          WHERE roundId = ${roundId}
+          GROUP BY C.firstname, C.surname;
+          `,
+        {
+          model: RoundResultAggregated,
+          mapToModel: true,
+          type: QueryTypes.SELECT,
+        },
+      )
+      .then((results: RoundResultAggregated[]) => {
+        return results.map((result) => instanceToPlain(result) as RoundResult);
+      });
   }
 }

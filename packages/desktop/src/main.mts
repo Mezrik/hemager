@@ -10,9 +10,10 @@ const reactDevToolsPath = path.join(
   '/Library/Application\ Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/6.0.1_0',
 );
 
-app.on('ready', async () => {
+app.on('ready', () => {
   console.log(reactDevToolsPath);
-  await session.defaultSession.loadExtension(reactDevToolsPath);
+
+  session.defaultSession.loadExtension(reactDevToolsPath);
 
   const win = new BrowserWindow({
     width: 800,
@@ -23,7 +24,7 @@ app.on('ready', async () => {
     },
   });
 
-  const application = await initialize();
+  const application = initialize();
   const { invoke, paths } = constructAPI(application);
 
   win.loadURL('http://localhost:8080');
