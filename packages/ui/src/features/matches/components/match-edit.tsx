@@ -104,7 +104,7 @@ export const MatchEdit: FC<MatchEditProps> = ({ match }) => {
           <div>
             {participantOne.contestant.firstname} {participantOne.contestant.surname}
           </div>
-          <div className="bg-primary text-primary-foreground flex size-14 items-center justify-center rounded text-xl">
+          <div className="flex size-14 items-center justify-center rounded bg-primary text-xl text-primary-foreground">
             {participantOnePoints}
           </div>
 
@@ -128,7 +128,7 @@ export const MatchEdit: FC<MatchEditProps> = ({ match }) => {
           <div>
             {participantTwo.contestant.firstname} {participantTwo.contestant.surname}
           </div>
-          <div className="bg-primary text-primary-foreground flex size-14 items-center justify-center rounded text-xl">
+          <div className="flex size-14 items-center justify-center rounded bg-primary text-xl text-primary-foreground">
             {participantTwoPoints}
           </div>
 

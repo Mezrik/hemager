@@ -95,7 +95,7 @@ export const GroupRoute = () => {
         </Card>
         <Card className="col-span-9 pt-6 lg:col-span-5">
           <CardContent>
-            <h3 className="text-primary-foreground mb-2 text-lg font-semibold">
+            <h3 className="mb-2 text-lg font-semibold text-primary-foreground">
               {_(msg`Round 1`)}
             </h3>
             <div className="grid grid-cols-3 gap-4">
