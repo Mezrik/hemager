@@ -16,6 +16,7 @@ import { GetAllCategoriesQueryHandler } from './query/constest/get-all-categorie
 import { GetAllContestsQueryHandler } from './query/constest/get-all-contests.ts';
 import { GetAllParticipantsQueryHandler } from './query/constest/get-all-participants.ts';
 import { GetAllWeaponsQueryHandler } from './query/constest/get-all-weapons.ts';
+import { GetContestResultsQueryHandler } from './query/constest/get-contest-results.ts';
 import { GetContestQueryHandler } from './query/constest/get-contest.ts';
 import { GetAllClubsQueryHandler } from './query/contestant/get-all-clubs.ts';
 import { GetAllContestantsQueryHandler } from './query/contestant/get-all-contestants.ts';
@@ -30,6 +31,7 @@ export const applicationModule = new ContainerModule((bind: interfaces.Bind) => 
   bind<QueryHandler>(TYPES.QueryHandler).to(GetAllContestsQueryHandler);
   bind<QueryHandler>(TYPES.QueryHandler).to(GetAllWeaponsQueryHandler);
   bind<QueryHandler>(TYPES.QueryHandler).to(GetAllCategoriesQueryHandler);
+  bind<QueryHandler>(TYPES.QueryHandler).to(GetContestResultsQueryHandler);
 
   bind<QueryHandler>(TYPES.QueryHandler).to(GetContestQueryHandler);
   bind<QueryHandler>(TYPES.QueryHandler).to(GetAllContestantsQueryHandler);

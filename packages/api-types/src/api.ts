@@ -11,6 +11,7 @@ import {
 import {
   ClubDto,
   ContestantDto,
+  ContestResultDto,
   CreateClubInput,
   CreateContestantInput,
   UpdateClubInput,
@@ -33,6 +34,8 @@ export type API = {
     initGroups: (payload: InitializeGroupsInput) => Task<void, APIError>;
     getAllParticipants: (id: string) => Task<RoundParticipantDto[], APIError>;
     assignParticipants: (payload: AssignParticipantsInput) => Task<void, APIError>;
+
+    getResults: (contestId: string) => Task<ContestResultDto[], APIError>;
   };
   contestant: {
     create: (payload: CreateContestantInput) => Task<void, APIError>;

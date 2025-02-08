@@ -8,6 +8,7 @@ import {
   InitializeGroupsInput,
   RoundParticipantDto,
   AssignParticipantsInput,
+  ContestResultDto,
 } from '@hemager/api-types';
 import { Task } from 'true-myth';
 
@@ -20,6 +21,7 @@ import { GetAllContestsQuery } from '@/application/query/constest/get-all-contes
 import { GetAllParticipantsQuery } from '@/application/query/constest/get-all-participants';
 import { GetAllWeaponsQuery } from '@/application/query/constest/get-all-weapons';
 import { GetContestQuery } from '@/application/query/constest/get-contest';
+import { GetContestResultsQuery } from '@/application/query/constest/get-contest-results';
 import { commandErrorToAPIError, queryErrorToAPIError } from '@/common/errors';
 import { CommandBus, QueryBus } from '@/common/interfaces';
 import { instanceToPlain } from '@/common/utils/transformer';
@@ -145,6 +147,19 @@ export const contestHandlers = (_queryBus: QueryBus, _commandBus: CommandBus) =>
           .match({
             Resolved: () => resolve(),
             Rejected: (error) => reject(commandErrorToAPIError(error)),
+          });
+      });
+    },
+
+    getResults: function (contestId: string): Task<ContestResultDto[], APIError> {
+      return new Task((resolve, reject) => {
+        void _queryBus
+          .execute<GetContestQuery, ContestDto>(new GetContestResultsQuery(contestId))
+          .match({
+            Resolved: (contest) => {
+              return resolve(instanceToPlain(contest) as ContestResultDto[]);
+            },
+            Rejected: (error) => reject(queryErrorToAPIError(error)),
           });
       });
     },

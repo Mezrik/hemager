@@ -49,3 +49,9 @@ export type ContestantDto = {
 
   hasMissingInfo?: number;
 };
+
+export type ContestResultDto = {
+  roundId: string;
+  constestantId: string;
+  winCount: number;
+};

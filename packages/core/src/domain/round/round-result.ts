@@ -4,7 +4,7 @@ export class RoundResult {
   constructor(
     private _roundId: string,
     private _contestantId: string,
-    private _winCount: string,
+    private _winCount: number,
   ) {}
 
   @Expose()
