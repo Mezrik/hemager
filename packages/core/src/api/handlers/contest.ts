@@ -154,10 +154,10 @@ export const contestHandlers = (_queryBus: QueryBus, _commandBus: CommandBus) =>
     getResults: function (contestId: string): Task<ContestResultDto[], APIError> {
       return new Task((resolve, reject) => {
         void _queryBus
-          .execute<GetContestQuery, ContestDto>(new GetContestResultsQuery(contestId))
+          .execute<GetContestQuery, ContestResultDto[]>(new GetContestResultsQuery(contestId))
           .match({
-            Resolved: (contest) => {
-              return resolve(instanceToPlain(contest) as ContestResultDto[]);
+            Resolved: (results) => {
+              return resolve(results.map((p) => instanceToPlain(p) as ContestResultDto));
             },
             Rejected: (error) => reject(queryErrorToAPIError(error)),
           });

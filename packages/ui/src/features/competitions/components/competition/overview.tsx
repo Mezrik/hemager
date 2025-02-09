@@ -1,4 +1,4 @@
-import { ContestDto } from '@hemager/api-types';
+import { APIError, ContestDto } from '@hemager/api-types';
 import { msg, Trans } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
 import { FC, useState } from 'react';
@@ -8,9 +8,9 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { InfoList, InfoListItem } from '@/components/ui/info-list';
 import { formatUIDate } from '@/utils/date';
 
-import { AssignParticipant } from '../../../competitors/components/participant/assign-participant';
-import { ParticipantsList } from '../../../competitors/components/participant/participants-list';
 import { getCompetionTypeCaption, getGenderCaption } from '../../helpers';
+import { AssignParticipant } from '../participant/assign-participant';
+import { ParticipantsList } from '../participant/participants-list';
 
 export const Overview: FC<{ competition: ContestDto }> = ({ competition }) => {
   const { _ } = useLingui();

@@ -5,7 +5,7 @@ import { z } from 'zod';
 import { MutationConfig } from '@/lib/react-query';
 import { api } from '@/services/api';
 
-import { getParticipantsQueryOptions } from './get-participants';
+import { getParticipantsQueryOptions } from '../../competitions/api/get-participants';
 
 export const assignParticipantsInputSchema = z.object({
   contestId: z.string().nanoid(t`Select correct competition`),

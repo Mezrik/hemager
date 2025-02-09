@@ -16,6 +16,8 @@ electron.contextBridge.exposeInMainWorld('electron', {
     initGroups: (payload) => ipcInvoke('contest.initGroups', payload),
     getAllParticipants: (id) => ipcInvoke('contest.getAllParticipants', id),
     assignParticipants: (payload) => ipcInvoke('contest.assignParticipants', payload),
+
+    getResults: (contestId) => ipcInvoke('contest.getResults', contestId),
   },
   contestant: {
     create: (payload) => ipcInvoke('contestant.create', payload),

@@ -1,7 +1,7 @@
 import { inject } from 'inversify';
 import { Task } from 'true-myth';
 
-import { QueryError, QueryErrorTypes } from '@/common/errors';
+import { ensureThrownError, QueryError, QueryErrorTypes } from '@/common/errors';
 import { Query, QueryHandler } from '@/common/interfaces';
 import { TYPES } from '@/di-types';
 import { ContestRepository } from '@/domain/contest/contest-repository';
@@ -54,7 +54,9 @@ export class GetContestResultsQueryHandler
 
       asyncFn()
         .then((results) => resolve(results ?? []))
-        .catch(() => {
+        .catch((err) => {
+          const error = ensureThrownError(err);
+          console.error(error);
           reject({
             cause: 'Failed to get contest results',
             type: QueryErrorTypes.CAUGHT_EXCEPTION,

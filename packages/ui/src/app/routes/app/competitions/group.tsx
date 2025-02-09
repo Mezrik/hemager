@@ -19,7 +19,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { useCompetitionGroup } from '@/features/competitions/api/get-group';
-import { useParticipants } from '@/features/competitors/api/get-participants';
+import { useParticipants } from '@/features/competitions/api/get-participants';
 import { useMatches } from '@/features/matches/api/get-matches';
 import { MatchCard } from '@/features/matches/components/match-card';
 import { MatchPreview } from '@/features/matches/components/match-preview';

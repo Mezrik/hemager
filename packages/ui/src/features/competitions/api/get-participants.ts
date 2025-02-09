@@ -7,7 +7,9 @@ export const getParticipantsQueryOptions = (competitionId: UUID) => {
   return queryOptions({
     queryKey: ['participants-for-competition', competitionId],
     queryFn: async () => {
-      return await api.GetParticipants(competitionId);
+      const temp = await api.GetParticipants(competitionId);
+      console.log(temp, competitionId);
+      return temp;
     },
   });
 };

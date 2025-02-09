@@ -2,7 +2,7 @@ import { t } from '@lingui/macro';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { z } from 'zod';
 
-import { getParticipantsQueryOptions } from '@/features/competitors/api/get-participants';
+import { getParticipantsQueryOptions } from '@/features/competitions/api/get-participants';
 import { MutationConfig } from '@/lib/react-query';
 import { api } from '@/services/api';
 

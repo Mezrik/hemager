@@ -1,3 +1,4 @@
+import { plainToInstance } from 'class-transformer';
 import { inject, injectable } from 'inversify';
 import { QueryTypes } from 'sequelize';
 import { Sequelize } from 'sequelize-typescript';
@@ -75,8 +76,7 @@ export class RoundRepository
     return await this._db
       .query(
         `SELECT
-          C.firstname,
-          C.surname,
+          C.id AS contestantId,
           COUNT(*) AS totalContests,
           winCount,
           contestPointsFor,
@@ -95,17 +95,15 @@ export class RoundRepository
               GROUP BY GM.contestantId, R.contestId
           ) AS contestAgg
           JOIN Contestant AS C ON C.id = contestAgg.contestantId
-          WHERE roundId = ${roundId}
+          WHERE roundId = '${roundId}'
           GROUP BY C.firstname, C.surname;
           `,
         {
-          model: RoundResultAggregated,
-          mapToModel: true,
           type: QueryTypes.SELECT,
         },
       )
-      .then((results: RoundResultAggregated[]) => {
-        return results.map((result) => instanceToPlain(result) as RoundResult);
+      .then((results) => {
+        return results.map((result) => plainToInstance(RoundResult, result));
       });
   }
 }

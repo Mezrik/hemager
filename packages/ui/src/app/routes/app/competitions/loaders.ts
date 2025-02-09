@@ -4,7 +4,7 @@ import { LoaderFunctionArgs } from 'react-router-dom';
 import { getCompetitionQueryOptions } from '@/features/competitions/api/get-competition';
 import { getCompetitionsQueryOptions } from '@/features/competitions/api/get-competitions';
 import { getCompetitionGroupQueryOptions } from '@/features/competitions/api/get-group';
-import { getParticipantsQueryOptions } from '@/features/competitors/api/get-participants';
+import { getParticipantsQueryOptions } from '@/features/competitions/api/get-participants';
 import { getMatchQueryOptions } from '@/features/matches/api/get-match';
 import { getMatchesQueryOptions } from '@/features/matches/api/get-matches';
 

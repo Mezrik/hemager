@@ -14,6 +14,7 @@ import type {
   MatchDto,
   MatchUpdateInput,
   ClubDto,
+  ContestResultDto,
 } from '@hemager/api-types';
 import { Result } from 'true-myth';
 
@@ -28,6 +29,8 @@ export interface Api {
   GetCompetitions(): Promise<Result<Array<ContestDto>, APIError>>;
 
   GetCompetition(id: UUID): Promise<Result<ContestDto, APIError>>;
+
+  GetContestResults(id: UUID): Promise<Result<ContestResultDto[], APIError>>;
 
   CreateCompetition(data: CreateContestInput): Promise<Result<void, APIError>>;
 

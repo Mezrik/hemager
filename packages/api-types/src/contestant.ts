@@ -52,6 +52,6 @@ export type ContestantDto = {
 
 export type ContestResultDto = {
   roundId: string;
-  constestantId: string;
+  contestantId: string;
   winCount: number;
 };
